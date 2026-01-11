@@ -1,64 +1,183 @@
 "use client";
 
 import logo from "../src/GKI.png";
+import kpop1 from "../src/kpop1.png";
+import kpop2 from "../src/kpop2.png";
 import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 
+/**
+ * 전체화면에 딱 맞는 슬라이더 (네비 아래~푸터 위)
+ * 슬라이드 이미지는 화면 크기에 맞게 꽉 차게 나오도록 object-fit: cover 적용
+ */
 function SwiperSlider() {
-  const images = ["/image1.jpg", "/image2.jpg", "/image3.jpg"];
-  const [current, setCurrent] = useState(0);
-  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // 이미지 2개 슬라이드로
+  const images = [
+    {
+      src: kpop1?.src || (typeof kpop1 === "string" ? kpop1 : ""),
+      alt: "슬라이드 1",
+    },
+    {
+      src: kpop2?.src || (typeof kpop2 === "string" ? kpop2 : ""),
+      alt: "슬라이드 2",
+    },
+  ];
 
+  const headerWidth = "1500px";
+  const sliderHeight = "500px";
+
+  const [current, setCurrent] = useState(0);
+  const slideInterval = useRef<NodeJS.Timeout | null>(null);
+
+  // 자동 슬라이드 (3초 간격)
   useEffect(() => {
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-    }
-    timeoutRef.current = setTimeout(() => {
+    slideInterval.current = setInterval(() => {
       setCurrent((prev) => (prev + 1) % images.length);
-    }, 2500);
+    }, 5000);
     return () => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
+      if (slideInterval.current) clearInterval(slideInterval.current);
     };
-  }, [current]);
+  }, []);
+
+  // 수동 컨트롤
+  const goToPrev = () =>
+    setCurrent(current === 0 ? images.length - 1 : current - 1);
+  const goToNext = () => setCurrent((current + 1) % images.length);
 
   return (
-    <div className="flex w-full h-[200px] relative">
-      {images.map((src, idx) => (
-        <img
-          key={src}
-          src={src}
-          alt={`슬라이드 ${idx + 1}`}
-          className={`absolute inset-0 w-full h-full object-cover transition-transform duration-700 ${
-            idx === current
-              ? "translate-x-0 z-10 opacity-100"
-              : idx < current
-              ? "-translate-x-full opacity-0"
-              : "translate-x-full opacity-0"
-          }`}
-          style={{ borderRadius: 12 }}
-        />
-      ))}
-      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-2">
-        {images.map((_, idx) => (
-          <div
+    <div
+      className="relative w-full flex-1 overflow-hidden select-none"
+      style={{
+        minHeight: sliderHeight,
+        width: "100%",
+        maxWidth: headerWidth,
+        margin: "0 auto",
+        display: "flex",
+        alignItems: "stretch",
+        justifyContent: "center",
+        borderRadius: "12px",
+        boxShadow: "0 4px 24px 0 rgba(0,0,0,0.07)",
+        background: "#f9fbff",
+        position: "relative",
+      }}
+    >
+      {/* 슬라이드 */}
+      <div
+        className="w-full h-full"
+        style={{
+          width: "100%",
+          height: sliderHeight,
+          borderRadius: "12px",
+          overflow: "hidden",
+          position: "relative",
+        }}
+      >
+        {images.map((img, idx) => (
+          <img
             key={idx}
-            className={`w-2 h-2 rounded-full bg-white border ${
-              current === idx
-                ? "bg-blue-500 border-blue-600"
-                : "bg-white/70 border-white/60"
-            }`}
-          ></div>
+            src={img.src}
+            alt={img.alt}
+            style={{
+              width: "100%",
+              height: sliderHeight,
+              objectFit: "cover",
+              borderRadius: "12px",
+              position: "absolute",
+              top: 0,
+              left: 0,
+              opacity: current === idx ? 1 : 0,
+              zIndex: current === idx ? 1 : 0,
+              transition: "opacity 0.7s",
+              background: "#eee",
+              pointerEvents: current === idx ? "auto" : "none",
+            }}
+            draggable={false}
+          />
         ))}
+        {/* 좌우 버튼 */}
+        <button
+          aria-label="이전 슬라이드"
+          onClick={goToPrev}
+          style={{
+            position: "absolute",
+            left: 10,
+            top: "50%",
+            transform: "translateY(-50%)",
+            background: "rgba(255,255,255,0.7)",
+            border: "none",
+            borderRadius: "50%",
+            cursor: "pointer",
+            width: 36,
+            height: 36,
+            zIndex: 2,
+            fontSize: 20,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          &#8592;
+        </button>
+        <button
+          aria-label="다음 슬라이드"
+          onClick={goToNext}
+          style={{
+            position: "absolute",
+            right: 10,
+            top: "50%",
+            transform: "translateY(-50%)",
+            background: "rgba(255,255,255,0.7)",
+            border: "none",
+            borderRadius: "50%",
+            cursor: "pointer",
+            width: 36,
+            height: 36,
+            zIndex: 2,
+            fontSize: 20,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          &#8594;
+        </button>
+        {/* 인디케이터 */}
+        <div
+          style={{
+            position: "absolute",
+            left: "50%",
+            bottom: 14,
+            transform: "translateX(-50%)",
+            display: "flex",
+            gap: 8,
+            zIndex: 3,
+          }}
+        >
+          {images.map((_, idx) => (
+            <span
+              key={idx}
+              style={{
+                display: "inline-block",
+                width: 10,
+                height: 10,
+                borderRadius: "50%",
+                background: idx === current ? "#0073e8" : "#bbb",
+                opacity: 0.9,
+                cursor: "pointer",
+                border:
+                  idx === current ? "2px solid #0073e8" : "2px solid #f9fbff",
+                transition: "all 0.2s",
+              }}
+              onClick={() => setCurrent(idx)}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );
 }
 
-/**
- * submenuData: 메뉴 이름과 하위 메뉴 라벨 및 경로 정의
- */
+// 네비게이션, 푸터 등 전체적인 화면 크기를 고려하여 중앙 배치와 정렬 유지
 const submenuData = [
   {
     label: "진흥원 소개",
@@ -106,23 +225,20 @@ const submenuData = [
   },
 ];
 
-// 로고 컴포넌트
 function LogoArea() {
   return (
     <div className="flex justify-start">
       <a href="#">
-        {/* logo는 next/image 사용 권장, 여기선 img로 대체 */}
         <img
           src={logo.src ? logo.src : "/fallback.png"}
           alt="로고"
-          style={{ width: 200, height: 100 }}
+          style={{ width: 200, height: 100, objectFit: "contain" }}
         />
       </a>
     </div>
   );
 }
 
-// 데스크탑 네비 상단 메뉴 - 메뉴 헤더 중앙 정렬
 function NavBar() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const navRef = useRef<HTMLDivElement>(null);
@@ -138,7 +254,6 @@ function NavBar() {
     return () => document.removeEventListener("mousedown", handleClick);
   }, []);
 
-  // accessibility: esc키로도 닫기
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setOpenIndex(null);
@@ -152,7 +267,6 @@ function NavBar() {
       ref={navRef}
       className="w-full border-b border-gray-200 bg-white z-30"
       style={{
-        // box-shadow: 네비 그림자
         boxShadow: "0 2px 6px 0 rgba(0,0,0,0.04)",
       }}
     >
@@ -160,16 +274,13 @@ function NavBar() {
         className="mx-auto flex items-center justify-between px-5 py-1"
         style={{ position: "relative" }}
       >
-        {/* 좌측: 로고 영역 */}
         <LogoArea />
-        {/* 중앙: 메뉴 (중앙 정렬) */}
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
           <div className="flex items-center gap-1">
             {submenuData.map((menu, idx) => (
               <div
                 key={menu.label}
                 className="relative group"
-                // 마우스/키보드 접근 모두 지원
                 onMouseEnter={() => setOpenIndex(idx)}
                 onMouseLeave={() => setOpenIndex(null)}
                 tabIndex={0}
@@ -191,7 +302,6 @@ function NavBar() {
                 >
                   {menu.label}
                 </button>
-                {/* 드롭다운, 상단에서 바로 아래에 펼침 */}
                 {openIndex === idx && (
                   <div
                     className="absolute left-1/2 -translate-x-1/2 mt-1 bg-white border border-gray-200 rounded shadow-xl min-w-[176px] z-40"
@@ -217,41 +327,34 @@ function NavBar() {
             ))}
           </div>
         </div>
-        {/* 우측: 추후 로그인/설정 등 아이콘 추가 가능 */}
-        {/* 아직 우측 컨텐츠가 없으므로 빈 div로 공간 확보, 필요 시 여기에 추가 */}
         <div style={{ width: 48 }}></div>
       </div>
     </div>
   );
 }
 
-// FooterBarItem은 사용되지 않으므로 제거하거나, 사용하려면 export 및 반환 필요
-// 삭제 혹은 사용 안함 표시
-// const FooterBarItem = () => (
-//   <span
-//     aria-hidden
-//     className="inline-block mx-3 h-4"
-//     style={{
-//       borderLeft: "1px solid #bdbdbd",
-//       height: 16,
-//       marginLeft: 12,
-//       marginRight: 12,
-//     }}
-//   ></span>
-// );
-
-/** 대충의 레이아웃 및 푸터 스타일 - 참고용 */
+/** 푸터 영역: 전체 가로 중앙 정렬 및 최소화된 패딩/간격 유지 */
 function Footer() {
   return (
-    <footer className="bg-gray-300 border-t border-gray-200 text-gray-700 leading-tight mt-24 text-sm">
+    <footer
+      className="bg-gray-300 border-t border-gray-200 text-gray-700 leading-tight text-sm"
+      style={{
+        width: "100vw",
+        position: "static",
+        left: "unset",
+        right: "unset",
+        marginLeft: "unset",
+        marginRight: "unset",
+        maxWidth: "100vw",
+      }}
+    >
       <div className="container mx-auto px-10 py-7 flex flex-wrap gap-10 justify-between items-center footer-bar-wrap">
-        {/* 각 아이템 옆에 수직 작대기(구분선)를 명시적으로 추가 */}
         <div className="flex items-center w-full gap-0">
           <div className="flex flex-1 items-center gap-2 leading-tight pr-8">
             <img
               src={logo.src ? logo.src : "/fallback.png"}
               alt="로고"
-              style={{ width: 110, height: 60 }}
+              style={{ width: 110, height: 60, objectFit: "contain" }}
             />
             <div className="flex flex-col gap-1">
               <b style={{ fontSize: 20, display: "block", marginBottom: 8 }}>
@@ -302,7 +405,6 @@ function Footer() {
               </div>
             </div>
           </div>
-          {/* 세로 작대기(구분선) */}
           <div
             aria-hidden
             className="hidden lg:block"
@@ -350,26 +452,29 @@ function Footer() {
   );
 }
 
+/** 전체 레이아웃: 화면을 세로/가로 모두 꽉 채운 상태로, 슬라이드는 main 전체 확장 */
 export default function Home() {
   return (
-    <div className="min-h-screen flex flex-col bg-white">
-      {/* 네비게이션 */}
+    <div
+      className="min-h-screen flex flex-col bg-white"
+      style={{
+        width: "100vw",
+        overflowX: "hidden",
+      }}
+    >
       <NavBar />
-      {/* 메인 컨텐츠 - 실제 페이지 본문 영역 */}
-      <main className="flex-1 container mx-auto px-10 py-12">
-        {/* 실제 컨텐츠 영역은 여기에 추가 */}
-        <div className="text-center text-xl text-gray-600 py-16">
-          {/* 이미지 자동 왼쪽 스와이프 슬라이더 */}
-          <div className="mb-6 font-bold text-gray-800 text-2xl">
-            한국진흥원 홈페이지
-          </div>
-          <div className="relative w-full max-w-xl mx-auto overflow-hidden rounded-lg shadow-md">
-            <SwiperSlider />
-          </div>
-          <div>서비스 준비중입니다.</div>
-        </div>
+      <main
+        className="flex-1 flex flex-col justify-stretch p-0 m-0"
+        style={{
+          width: "100vw",
+          maxWidth: "100vw",
+          height: "100%",
+          minHeight: 0,
+          minWidth: 0,
+        }}
+      >
+        <SwiperSlider />
       </main>
-      {/* Footer */}
       <Footer />
     </div>
   );
