@@ -65,8 +65,8 @@ export const translations = {
         scheduled: "예정",
       },
     },
-    // Instructors
-    instructors: {
+    // InstructorDetail
+    instructorDetail: {
       title: "강사진 소개",
       description: "전문적이고 경험이 풍부한 강사진을 소개합니다.",
       role: "강사",
@@ -120,7 +120,8 @@ export const translations = {
     footer: {
       organization: "Global K-POP Promotion Foundation",
       address: "Address",
-      addressValue: "6F, 11, Apgujeong-ro 32-gil, Gangnam-gu, Seoul (Sinsa-dong)",
+      addressValue:
+        "6F, 11, Apgujeong-ro 32-gil, Gangnam-gu, Seoul (Sinsa-dong)",
       representative: "CEO",
       email: "Email",
       phone: "02) 2160-1171",
@@ -153,8 +154,8 @@ export const translations = {
         scheduled: "Scheduled",
       },
     },
-    // Instructors
-    instructors: {
+    // InstructorDetail
+    instructorDetail: {
       title: "Our Instructors",
       description: "Meet our professional and experienced instructors.",
       role: "Instructor",
@@ -171,4 +172,3 @@ export const translations = {
     },
   },
 };
-
