@@ -24,12 +24,12 @@ export function Sidebar({ title, items }: SidebarProps) {
   const pathname = usePathname();
 
   return (
-    <aside className="min-w-[180px] w-48">
+    <aside className="w-full md:min-w-[180px] md:w-48">
       <nav
         aria-label={`${title} 관련 서브메뉴`}
-        className="bg-gray-50 rounded-xl p-4 shadow flex flex-col gap-2"
+        className="bg-gray-50 rounded-xl p-3 md:p-4 shadow flex flex-col gap-2 md:sticky md:top-20 self-start"
       >
-        <h2 className="text-lg font-bold text-gray-700 mb-3 ml-1">{title}</h2>
+        <h2 className="text-base md:text-lg font-bold text-gray-700 mb-2 md:mb-3 ml-1">{title}</h2>
         {items.map((item, idx) => {
           const isActive = pathname === item.path;
           // Use unique key combining path and index for duplicates

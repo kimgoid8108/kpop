@@ -8,34 +8,34 @@ import logo from "../src/GKI.png";
 export const Footer = memo(function Footer() {
   return (
     <footer
-      className="bg-gray-300 border-t border-gray-200 text-gray-700 leading-tight text-sm"
+      className="bg-gray-300 border-t border-gray-200 text-gray-700 leading-tight text-sm w-full"
       style={{
-        width: "100vw",
         position: "static",
         left: "unset",
         right: "unset",
         marginLeft: "unset",
         marginRight: "unset",
-        maxWidth: "100vw",
+        maxWidth: "100%",
       }}
     >
-      <div className="container mx-auto px-10 py-7 flex flex-wrap gap-10 justify-between items-center footer-bar-wrap">
-        <div className="flex items-center w-full gap-0">
-          <div className="flex flex-1 items-center gap-2 leading-tight pr-8">
+      <div className="container mx-auto px-4 md:px-6 lg:px-10 py-4 md:py-7 flex flex-wrap gap-4 md:gap-6 lg:gap-10 justify-between items-center footer-bar-wrap">
+        <div className="flex flex-col md:flex-row items-start md:items-center w-full gap-4 md:gap-0">
+          <div className="flex flex-1 items-start md:items-center gap-2 leading-tight pr-0 md:pr-8">
             {/* 하단 로고 */}
             <img
               src={logo?.src || "/fallback.png"}
               alt="로고"
-              style={{ width: 110, height: 60, objectFit: "contain" }}
+              className="w-20 h-12 md:w-24 md:h-14 lg:w-28 lg:h-16"
+              style={{ objectFit: "contain" }}
               loading="lazy"
               draggable={false}
             />
             <div className="flex flex-col gap-1">
-              <b style={{ fontSize: 20, display: "block", marginBottom: 8 }}>
+              <b className="text-base md:text-lg lg:text-xl block mb-2 md:mb-4">
                 글로벌케이팝진흥원
               </b>
               <div
-                className="flex flex-wrap items-center gap-x-4 gap-y-1"
+                className="flex flex-col md:flex-row md:flex-wrap items-start md:items-center gap-x-2 md:gap-x-4 gap-y-1"
                 style={{ marginBottom: 4 }}
               >
                 <span className="flex items-center">
@@ -93,16 +93,14 @@ export const Footer = memo(function Footer() {
             }}
           ></div>
           {/* 우측: 대표 연락처, 운영시간, 담당자 이메일 등 */}
-          <div className="flex flex-col flex-1 min-w-[180px] pl-8">
-            <b
-              style={{ fontSize: 20, display: "inline-block", margin: "8px 0" }}
-            >
+          <div className="flex flex-col flex-1 min-w-[180px] pl-0 md:pl-8 w-full md:w-auto">
+            <b className="text-base md:text-lg lg:text-xl inline-block my-2 md:my-2">
               02) 2160-1171
             </b>
-            <span style={{ display: "inline-block", margin: "5px 0" }}>
+            <span className="text-sm md:text-base inline-block my-1 md:my-1">
               평일 09:00 ~ 18:00 (점심 12:00 ~ 13:00)
             </span>
-            <span style={{ display: "inline-block", margin: "5px 0" }}>
+            <span className="text-sm md:text-base inline-block my-1 md:my-1">
               이메일 : mpp_op@squarenet.co.kr
             </span>
             <div

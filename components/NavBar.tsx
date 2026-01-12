@@ -11,7 +11,7 @@ export const submenuData = [
     path: "/intro/greeting",
     submenu: [
       { label: "인사말", path: "/intro/greeting" },
-      { label: "진흥원 소개", path: "/intro/greeting" },
+      { label: "진흥원 소개", path: "/intro/about" },
       { label: "활동현황", path: "/intro/activities" },
       { label: "유관협력기관", path: "/intro/partners" },
     ],
@@ -61,15 +61,16 @@ export const submenuData = [
 const LogoArea = memo(function LogoArea() {
   return (
     <div className="flex justify-start">
-      <a href="#" tabIndex={-1}>
+      <Link href="/" tabIndex={-1}>
         <img
           src={logo?.src || "/fallback.png"}
           alt="로고"
-          style={{ width: 200, height: 100, objectFit: "contain" }}
+          className="w-32 h-16 md:w-48 md:h-24 lg:w-50 lg:h-25"
+          style={{ objectFit: "contain" }}
           loading="lazy"
           draggable={false}
         />
-      </a>
+      </Link>
     </div>
   );
 });
@@ -118,18 +119,21 @@ export const NavBar = memo(function NavBar() {
   return (
     <div
       ref={navRef}
-      className="w-full border-b border-gray-200 bg-white z-30"
+      className="w-full border-b border-gray-200 bg-white sticky top-0"
       style={{
         boxShadow: "0 2px 6px 0 rgba(0,0,0,0.04)",
+        maxWidth: "100%",
+        zIndex: 10000,
+        overflow: "visible",
       }}
     >
       <div
-        className="mx-auto flex items-center justify-between px-5 py-1"
-        style={{ position: "relative" }}
+        className="mx-auto flex items-center justify-between px-2 md:px-5 py-1"
+        style={{ position: "relative", overflow: "visible" }}
       >
         <LogoArea />
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-          <nav className="flex items-center gap-1" aria-label="주메뉴">
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hidden md:block" style={{ overflow: "visible" }}>
+          <nav className="flex items-center gap-0.5 md:gap-1" aria-label="주메뉴" style={{ overflow: "visible" }}>
             {submenuData.map((menu, idx) => (
               <div
                 key={menu.label}
@@ -140,7 +144,7 @@ export const NavBar = memo(function NavBar() {
                 {/* 메인 메뉴 */}
                 <Link
                   href={menu.path}
-                  className={`text-base font-semibold px-5 py-2 rounded transition-colors
+                  className={`text-xs md:text-sm lg:text-base font-semibold px-2 md:px-3 lg:px-5 py-2 rounded transition-colors
                   ${
                     openIndex === idx
                       ? "bg-blue-50 text-blue-700"
@@ -161,8 +165,13 @@ export const NavBar = memo(function NavBar() {
                 {/* 서브메뉴 */}
                 {openIndex === idx && (
                   <div
-                    className="absolute left-1/2 -translate-x-1/2 mt-1 bg-white border border-gray-200 rounded shadow-xl min-w-[176px] z-40"
-                    style={{ minWidth: 180 }}
+                    className="absolute left-1/2 -translate-x-1/2 mt-1 bg-white border border-gray-200 rounded shadow-xl min-w-[176px]"
+                    style={{ 
+                      minWidth: 180, 
+                      zIndex: 10001,
+                      position: "absolute",
+                      top: "100%",
+                    }}
                     role="menu"
                   >
                     <div className="py-2 px-1 flex flex-col items-stretch">
@@ -184,7 +193,7 @@ export const NavBar = memo(function NavBar() {
             ))}
           </nav>
         </div>
-        <div style={{ width: 48 }}></div>
+        <div className="w-8 md:w-12 lg:w-48"></div>
       </div>
     </div>
   );

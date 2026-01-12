@@ -10,7 +10,7 @@ export default function IntroductionGreeting() {
   const introMenu = submenuData.find((menu) => menu.label === "진흥원");
 
   return (
-    <div className="max-w-5xl mx-auto my-16 px-4 flex gap-8">
+    <div className="w-full max-w-5xl mx-auto my-8 md:my-16 px-4 flex flex-col md:flex-row gap-4 md:gap-8 box-border">
       {/* 왼쪽 사이드 서브 메뉴 */}
       {introMenu && (
         <Sidebar title={introMenu.label} items={introMenu.submenu} />
@@ -18,8 +18,8 @@ export default function IntroductionGreeting() {
 
       {/* 메인 컨텐츠 */}
       <div className="flex-1 min-w-0">
-        <h1 className="text-4xl font-bold mb-6 text-gray-900">원장님 인사말</h1>
-        <section className="bg-white rounded-xl shadow p-8">
+        <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 md:mb-6 text-gray-900">원장님 인사말</h1>
+        <section className="bg-white rounded-xl shadow p-4 md:p-6 lg:p-8">
           {/* 화면(비주얼 영역) 추가 */}
           <div className="flex justify-center items-center mb-10">
             <video
@@ -58,7 +58,7 @@ export default function IntroductionGreeting() {
             앞으로도 <b className="text-indigo-700">글로벌케이팝진흥원</b>에
             많은 관심과 성원 부탁드립니다.
           </p>
-          <div className="text-right mt-8 text-black-600 text-[30px] text-bold">
+          <div className="text-right mt-6 md:mt-8 text-black-600 text-lg md:text-xl lg:text-[30px] font-bold">
             <span>글로벌케이팝진흥원 원장 천범주</span>
           </div>
         </section>

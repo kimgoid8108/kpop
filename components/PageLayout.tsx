@@ -15,18 +15,16 @@ interface PageLayoutProps {
 export function PageLayout({ children }: PageLayoutProps) {
   return (
     <div
-      className="min-h-screen flex flex-col bg-white"
+      className="min-h-screen flex flex-col bg-white w-full overflow-x-hidden"
       style={{
-        width: "100vw",
-        overflowX: "hidden",
+        maxWidth: "100%",
       }}
     >
       <NavBar />
       <main
-        className="flex-1 flex flex-col justify-stretch"
+        className="flex-1 flex flex-col justify-stretch w-full overflow-x-hidden"
         style={{
-          width: "100%",
-          maxWidth: "100vw",
+          maxWidth: "100%",
           minHeight: 0,
           minWidth: 0,
         }}
