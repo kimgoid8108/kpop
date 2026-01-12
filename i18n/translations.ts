@@ -28,6 +28,11 @@ export const translations = {
     progress: "진도관리",
     exam: "시험/과제",
     students: "수강생 관리",
+    // 서브메뉴 - 커뮤니티
+    notice: "공지사항",
+    reviews: "강의후기",
+    inquiry: "문의",
+    policy: "약관 정책",
     // Footer
     footer: {
       organization: "글로벌케이팝진흥원",
