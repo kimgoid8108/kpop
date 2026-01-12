@@ -2,10 +2,13 @@
 
 import React, { memo } from "react";
 import logo from "../src/GKI.png";
+import { useLanguage } from "./LanguageContext";
 
 // ----- Footer 컴포넌트 -----
 // 페이지 하단의 연락처, 주소, 사업자 정보 등 표시
 export const Footer = memo(function Footer() {
+  const { t } = useLanguage();
+
   return (
     <footer
       className="bg-gray-300 border-t border-gray-200 text-gray-700 leading-tight text-sm w-full"
@@ -24,7 +27,7 @@ export const Footer = memo(function Footer() {
             {/* 하단 로고 */}
             <img
               src={logo?.src || "/fallback.png"}
-              alt="로고"
+              alt={t("footer.organization")}
               className="w-20 h-12 md:w-24 md:h-14 lg:w-28 lg:h-16"
               style={{ objectFit: "contain" }}
               loading="lazy"
@@ -32,7 +35,7 @@ export const Footer = memo(function Footer() {
             />
             <div className="flex flex-col gap-1">
               <b className="text-base md:text-lg lg:text-xl block mb-2 md:mb-4">
-                글로벌케이팝진흥원
+                {t("footer.organization")}
               </b>
               <div
                 className="flex flex-col md:flex-row md:flex-wrap items-start md:items-center gap-x-2 md:gap-x-4 gap-y-1"
@@ -47,7 +50,7 @@ export const Footer = memo(function Footer() {
                       alignItems: "center",
                     }}
                   >
-                    주소
+                    {t("footer.address")}
                   </b>
                   {/* 구분선 */}
                   <span
@@ -62,18 +65,18 @@ export const Footer = memo(function Footer() {
                     }}
                   ></span>
                   <span style={{ display: "flex", alignItems: "center" }}>
-                    서울특별시 강남구 압구정로 32길 11 (신사동) 6층
+                    {t("footer.addressValue")}
                   </span>
                 </span>
                 <span>
                   <b className="text-gray-800" style={{ marginRight: 2 }}>
-                    대표
+                    {t("footer.representative")}
                   </b>{" "}
                   천범주
                 </span>
                 <span>
                   <b className="text-gray-800" style={{ marginRight: 2 }}>
-                    이메일
+                    {t("footer.email")}
                   </b>{" "}
                   global@gw.global.ac.kr
                 </span>
@@ -95,20 +98,19 @@ export const Footer = memo(function Footer() {
           {/* 우측: 대표 연락처, 운영시간, 담당자 이메일 등 */}
           <div className="flex flex-col flex-1 min-w-[180px] pl-0 md:pl-8 w-full md:w-auto">
             <b className="text-base md:text-lg lg:text-xl inline-block my-2 md:my-2">
-              02) 2160-1171
+              {t("footer.phone")}
             </b>
             <span className="text-sm md:text-base inline-block my-1 md:my-1">
-              평일 09:00 ~ 18:00 (점심 12:00 ~ 13:00)
+              {t("footer.hours")}
             </span>
             <span className="text-sm md:text-base inline-block my-1 md:my-1">
-              이메일 : mpp_op@squarenet.co.kr
+              {t("footer.email")} : mpp_op@squarenet.co.kr
             </span>
             <div
               className="text-xs text-gray-500 mt-2"
               style={{ marginTop: 12 }}
             >
-              &copy; {new Date().getFullYear()} 글로벌케이팝진흥원. All rights
-              reserved.
+              &copy; {new Date().getFullYear()} {t("footer.copyright")}
             </div>
           </div>
         </div>
@@ -127,4 +129,3 @@ export const Footer = memo(function Footer() {
     </footer>
   );
 });
-
