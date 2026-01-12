@@ -65,8 +65,8 @@ export const translations = {
         scheduled: "예정",
       },
     },
-    // InstructorDetail
-    instructorDetail: {
+    // Instructors Page
+    instructorsPage: {
       title: "강사진 소개",
       description: "전문적이고 경험이 풍부한 강사진을 소개합니다.",
       role: "강사",
@@ -154,8 +154,8 @@ export const translations = {
         scheduled: "Scheduled",
       },
     },
-    // InstructorDetail
-    instructorDetail: {
+    // Instructors Page
+    instructorsPage: {
       title: "Our Instructors",
       description: "Meet our professional and experienced instructors.",
       role: "Instructor",

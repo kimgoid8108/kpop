@@ -80,7 +80,12 @@ const LogoArea = memo(function LogoArea() {
 // ----- NavBar 컴포넌트 -----
 export const NavBar = memo(function NavBar() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mobileSubmenuOpen, setMobileSubmenuOpen] = useState<number | null>(
+    null
+  );
   const navRef = useRef<HTMLDivElement>(null);
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
   const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const { isAuthenticated, logout } = useAuth();
   const router = useRouter();
@@ -125,16 +130,10 @@ export const NavBar = memo(function NavBar() {
   const translatedMenuData = useMemo(() => {
     return submenuData.map((menu) => ({
       ...menu,
-      label:
-        typeof t(menuTranslationMap[menu.label] || menu.label) === "object"
-          ? "" // 만약 번역값이 object면 빈 문자열로 처리
-          : t(menuTranslationMap[menu.label] || menu.label),
+      label: t(menuTranslationMap[menu.label] || menu.label),
       submenu: menu.submenu.map((item) => ({
         ...item,
-        label:
-          typeof t(submenuTranslationMap[item.label] || item.label) === "object"
-            ? "" // 만약 번역값이 object면 빈 문자열로 처리
-            : t(submenuTranslationMap[item.label] || item.label),
+        label: t(submenuTranslationMap[item.label] || item.label),
       })),
     }));
   }, [language, t]);
@@ -155,11 +154,27 @@ export const NavBar = memo(function NavBar() {
     setLanguage(language === "ko" ? "en" : "ko");
   };
 
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
+    setMobileSubmenuOpen(null);
+  };
+
+  const toggleMobileSubmenu = (index: number) => {
+    setMobileSubmenuOpen(mobileSubmenuOpen === index ? null : index);
+  };
+
   // 외부 클릭시 닫기
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
       if (navRef.current && !navRef.current.contains(e.target as Node)) {
         setOpenIndex(null);
+      }
+      if (
+        mobileMenuRef.current &&
+        !mobileMenuRef.current.contains(e.target as Node) &&
+        !(e.target as HTMLElement).closest("[data-mobile-menu-button]")
+      ) {
+        setMobileMenuOpen(false);
       }
     };
     document.addEventListener("mousedown", handleClick);
@@ -206,6 +221,31 @@ export const NavBar = memo(function NavBar() {
         style={{ position: "relative", overflow: "visible" }}
       >
         <LogoArea />
+        {/* 모바일 햄버거 버튼 */}
+        <button
+          data-mobile-menu-button
+          onClick={toggleMobileMenu}
+          className="md:hidden flex flex-col gap-1.5 p-2 text-gray-700 hover:text-blue-700 focus:outline-none"
+          aria-label="메뉴"
+          aria-expanded={mobileMenuOpen}
+        >
+          <span
+            className={`block h-0.5 w-6 bg-current transition-all ${
+              mobileMenuOpen ? "rotate-45 translate-y-2" : ""
+            }`}
+          />
+          <span
+            className={`block h-0.5 w-6 bg-current transition-all ${
+              mobileMenuOpen ? "opacity-0" : ""
+            }`}
+          />
+          <span
+            className={`block h-0.5 w-6 bg-current transition-all ${
+              mobileMenuOpen ? "-rotate-45 -translate-y-2" : ""
+            }`}
+          />
+        </button>
+        {/* 데스크톱 메뉴 */}
         <div
           className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hidden md:block"
           style={{ overflow: "visible" }}
@@ -245,8 +285,7 @@ export const NavBar = memo(function NavBar() {
                     aria-haspopup="true"
                     aria-expanded={openIndex === originalIdx}
                   >
-                    {/* menu.label이 object일 경우 빈 문자열로 처리 */}
-                    {typeof menu.label === "string" ? menu.label : ""}
+                    {menu.label}
                   </Link>
 
                   {/* 서브메뉴 */}
@@ -265,21 +304,13 @@ export const NavBar = memo(function NavBar() {
                         {Array.isArray(menu.submenu) &&
                           menu.submenu.map((item, idx2) => (
                             <Link
-                              // (item.label이 object가 아닌 string만 key로 사용)
-                              key={
-                                (typeof item.label === "string"
-                                  ? item.label
-                                  : "") +
-                                item.path +
-                                idx2
-                              }
+                              key={item.path + idx2}
                               href={item.path}
-                              className="px-4 py-2 text-gray-800 hover:bg-blue-50 hover:text-blue-800 rounded transition-colors text-base whitespace-nowrap"
+                              className="px-4 py-2 text-gray-800 hover:bg-blue-50 hover:text-blue-800 rounded transition-colors text-sm md:text-base whitespace-nowrap"
                               style={{ fontWeight: 500 }}
                               role="menuitem"
                             >
-                              {/* item.label이 object일 경우 빈 문자열로 처리 */}
-                              {typeof item.label === "string" ? item.label : ""}
+                              {item.label}
                             </Link>
                           ))}
                       </div>
@@ -305,13 +336,13 @@ export const NavBar = memo(function NavBar() {
                 href="/mypage"
                 className="text-xs md:text-sm lg:text-base font-semibold px-3 md:px-4 py-2 text-gray-700 hover:text-blue-700 hover:bg-blue-50 rounded transition-colors"
               >
-                {typeof t("mypage") === "string" ? t("mypage") : ""}
+                {t("mypage")}
               </Link>
               <button
                 onClick={handleLogout}
                 className="text-xs md:text-sm lg:text-base font-semibold px-3 md:px-4 py-2 text-gray-700 hover:text-blue-700 hover:bg-blue-50 rounded transition-colors"
               >
-                {typeof t("logout") === "string" ? t("logout") : ""}
+                {t("logout")}
               </button>
             </>
           ) : (
@@ -319,11 +350,69 @@ export const NavBar = memo(function NavBar() {
               href="/login"
               className="text-xs md:text-sm lg:text-base font-semibold px-3 md:px-4 py-2 text-gray-700 hover:text-blue-700 hover:bg-blue-50 rounded transition-colors"
             >
-              {typeof t("login") === "string" ? t("login") : ""}
+              {t("login")}
             </Link>
           )}
         </div>
       </div>
+      {/* 모바일 메뉴 */}
+      {mobileMenuOpen && (
+        <div
+          ref={mobileMenuRef}
+          className="md:hidden absolute top-full left-0 right-0 bg-white border-t border-gray-200 shadow-lg"
+          style={{ zIndex: 10001 }}
+        >
+          <nav className="flex flex-col py-2">
+            {filteredMenuData.map((menu, idx) => {
+              const hasSubmenu =
+                Array.isArray(menu.submenu) && menu.submenu.length > 0;
+              return (
+                <div key={menu.path + idx} className="border-b border-gray-100">
+                  {hasSubmenu ? (
+                    <>
+                      <button
+                        onClick={() => toggleMobileSubmenu(idx)}
+                        className="w-full flex items-center justify-between px-4 py-3 text-left text-base font-semibold text-gray-700 hover:bg-gray-50"
+                      >
+                        <span>{menu.label}</span>
+                        <span
+                          className={`transform transition-transform ${
+                            mobileSubmenuOpen === idx ? "rotate-180" : ""
+                          }`}
+                        >
+                          ▼
+                        </span>
+                      </button>
+                      {mobileSubmenuOpen === idx && (
+                        <div className="bg-gray-50">
+                          {menu.submenu.map((item, idx2) => (
+                            <Link
+                              key={item.path + idx2}
+                              href={item.path}
+                              onClick={() => setMobileMenuOpen(false)}
+                              className="block px-8 py-2 text-sm text-gray-600 hover:bg-blue-50 hover:text-blue-700"
+                            >
+                              {item.label}
+                            </Link>
+                          ))}
+                        </div>
+                      )}
+                    </>
+                  ) : (
+                    <Link
+                      href={menu.path}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="block px-4 py-3 text-base font-semibold text-gray-700 hover:bg-gray-50"
+                    >
+                      {menu.label}
+                    </Link>
+                  )}
+                </div>
+              );
+            })}
+          </nav>
+        </div>
+      )}
     </div>
   );
 });

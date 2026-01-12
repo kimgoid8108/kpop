@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
 import { translations } from "../i18n/translations";
 
 type Language = "ko" | "en";
@@ -8,7 +8,7 @@ type Language = "ko" | "en";
 interface LanguageContextType {
   language: Language;
   setLanguage: (lang: Language) => void;
-  t: (key: string) => any;
+  t: (key: string) => string;
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
@@ -24,14 +24,16 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
-  const setLanguage = (lang: Language) => {
+  const setLanguage = useCallback((lang: Language) => {
     setLanguageState(lang);
     localStorage.setItem("language", lang);
-  };
+  }, []);
 
-  const t = (key: string): any => {
+  // 타입 안전한 번역 함수 - 항상 문자열 반환
+  const t = useCallback((key: string): string => {
     const keys = key.split(".");
     let value: any = translations[language];
+    
     for (const k of keys) {
       value = value?.[k];
       if (value === undefined) {
@@ -43,8 +45,16 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
         break;
       }
     }
-    return value !== undefined ? value : key;
-  };
+    
+    // 문자열이면 반환, 아니면 빈 문자열 또는 키 반환
+    if (typeof value === "string") {
+      return value;
+    }
+    if (value === undefined || value === null) {
+      return key;
+    }
+    return String(value);
+  }, [language]);
 
   return (
     <LanguageContext.Provider value={{ language, setLanguage, t }}>
@@ -60,4 +70,3 @@ export function useLanguage() {
   }
   return context;
 }
-
