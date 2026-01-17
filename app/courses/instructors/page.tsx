@@ -2,8 +2,7 @@
 
 import React, { useState } from "react";
 import { PageLayout } from "../../../components/PageLayout";
-import { Sidebar } from "../../../components/Sidebar";
-import { submenuData } from "../../../components/NavBar";
+import { AutoT } from "../../../components/AutoT";
 
 // 예시 강사진 데이터 (각 강사의 'level' 추가: '강사', '중등', '초등')
 const instructors = [
@@ -126,7 +125,7 @@ function InstructorCard({ instructor }: { instructor: InstructorType }) {
           <span
             className={`inline-block mb-3 px-3 py-1 rounded-full text-white text-xs font-semibold ${badgeColor}`}
           >
-            {badgeText}
+            <AutoT text={badgeText} />
           </span>
           {/* 이름 */}
           <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
@@ -139,14 +138,14 @@ function InstructorCard({ instructor }: { instructor: InstructorType }) {
           {/* 담당 과정(있으면) */}
           {instructor.course && (
             <div className="text-sm text-indigo-700 font-semibold mb-4">
-              {instructor.course}
+              <AutoT text={instructor.course} />
             </div>
           )}
           {/* 스펙 목록 */}
           <ul className="space-y-3 mt-2 text-gray-700 text-[15px] leading-relaxed list-disc pl-5">
             {instructor.spec.map((s, i) => (
               <li key={i} className="">
-                {s}
+                <AutoT text={s} />
               </li>
             ))}
           </ul>
@@ -164,7 +163,6 @@ const FILTERS = [
 ];
 
 export default function InstructorsPage() {
-  const coursesMenu = submenuData.find((menu) => menu.label === "교육과정");
   const [selectedFilter, setSelectedFilter] = useState<string>("전체");
 
   // 필터링
@@ -175,17 +173,14 @@ export default function InstructorsPage() {
 
   return (
     <PageLayout>
-      <div className="max-w-5xl mx-auto my-8 md:my-16 px-4 flex flex-col md:flex-row gap-4 md:gap-8">
-        {coursesMenu && (
-          <Sidebar title={coursesMenu.label} items={coursesMenu.submenu} />
-        )}
-        <div className="flex-1 min-w-0">
+      <div className="max-w-5xl mx-auto my-8 md:my-16 px-4">
+        <div className="w-full">
           <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 md:mb-6 text-gray-900">
-            강사진 소개
+            <AutoT text="강사진 소개" />
           </h1>
           <section className="bg-white rounded-xl shadow p-4 md:p-6 lg:p-8">
             <p className="mb-8 text-lg text-gray-800 leading-relaxed">
-              전문적이고 경험이 풍부한 강사진을 소개합니다.
+              <AutoT text="전문적이고 경험이 풍부한 강사진을 소개합니다." />
             </p>
 
             {/* 수준별 필터 버튼 */}
@@ -203,7 +198,7 @@ export default function InstructorsPage() {
                   onClick={() => setSelectedFilter(f.value)}
                   type="button"
                 >
-                  {f.label}
+                  <AutoT text={f.label} />
                 </button>
               ))}
             </div>
@@ -218,7 +213,7 @@ export default function InstructorsPage() {
                 ))
               ) : (
                 <div className="text-center text-gray-500 py-12">
-                  해당 수준의 강사가 없습니다.
+                  <AutoT text="해당 수준의 강사가 없습니다." />
                 </div>
               )}
             </div>

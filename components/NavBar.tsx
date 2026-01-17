@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import logo from "../src/GKI.png";
 import { useAuth } from "./AuthContext";
 import { useLanguage } from "./LanguageContext";
+import { AutoT } from "./AutoT";
 
 // ----- submenuData: 네비게이션 메뉴와 하위 서브메뉴 정보 -----
 export const submenuData = [
@@ -89,61 +90,14 @@ export const NavBar = memo(function NavBar() {
   const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const { isAuthenticated, logout } = useAuth();
   const router = useRouter();
-  const { language, setLanguage, t } = useLanguage();
-
-  // 메뉴 라벨과 번역 키 매핑
-  const menuTranslationMap: Record<string, string> = {
-    진흥원: "intro",
-    교육과정: "courses",
-    "취득 자격증": "certificates",
-    강의실: "classroom",
-    커뮤니티: "community",
-  };
-
-  const submenuTranslationMap: Record<string, string> = {
-    // 진흥원 서브메뉴
-    인사말: "greeting",
-    "진흥원 소개": "intro.about",
-    활동현황: "activities",
-    유관협력기관: "partners",
-    // 교육과정 서브메뉴
-    과정구성: "structure",
-    "강사진 소개": "instructors",
-    "교육 특성": "features",
-    학습가이드: "guide",
-    // 취득 자격증 서브메뉴
-    "자격증 소개": "cert.about",
-    "관련자격증 및 활동": "related",
-    // 강의실 서브메뉴
-    강의리스트: "class.list",
-    진도관리: "progress",
-    "시험/과제": "exam",
-    "수강생 관리": "students",
-    // 커뮤니티 서브메뉴
-    공지사항: "notice",
-    강의후기: "reviews",
-    문의: "inquiry",
-    "약관 정책": "policy",
-  };
-
-  // 언어에 따라 번역된 메뉴 데이터 생성
-  const translatedMenuData = useMemo(() => {
-    return submenuData.map((menu) => ({
-      ...menu,
-      label: t(menuTranslationMap[menu.label] || menu.label),
-      submenu: menu.submenu.map((item) => ({
-        ...item,
-        label: t(submenuTranslationMap[item.label] || item.label),
-      })),
-    }));
-  }, [language, t]);
+  const { language, setLanguage } = useLanguage();
 
   // 로그인 상태에 따라 메뉴 필터링 (강의실 메뉴는 로그인 시에만 표시)
   const filteredMenuData = useMemo(() => {
-    return translatedMenuData.filter(
+    return submenuData.filter(
       (menu) => menu.path !== "/classroom/list" || isAuthenticated
     );
-  }, [translatedMenuData, isAuthenticated]);
+  }, [isAuthenticated]);
 
   const handleLogout = () => {
     logout();
@@ -256,15 +210,11 @@ export const NavBar = memo(function NavBar() {
             style={{ overflow: "visible" }}
           >
             {filteredMenuData.map((menu, idx) => {
-              // 원본 배열에서의 인덱스 찾기 (서브메뉴 열림 상태 관리용)
-              const originalIdx = translatedMenuData.findIndex(
-                (m) => m.path === menu.path
-              );
               return (
                 <div
                   key={menu.label + menu.path}
                   className="relative group"
-                  onMouseEnter={() => handleMouseEnter(originalIdx)}
+                  onMouseEnter={() => handleMouseEnter(idx)}
                   onMouseLeave={handleMouseLeave}
                 >
                   {/* 메인 메뉴 */}
@@ -272,7 +222,7 @@ export const NavBar = memo(function NavBar() {
                     href={menu.path}
                     className={`text-xs md:text-sm lg:text-base font-semibold px-2 md:px-3 lg:px-5 py-2 rounded transition-colors
                   ${
-                    openIndex === originalIdx
+                    openIndex === idx
                       ? "bg-blue-50 text-blue-700"
                       : "text-gray-700 hover:bg-blue-50"
                   }`}
@@ -283,13 +233,13 @@ export const NavBar = memo(function NavBar() {
                       display: "inline-block",
                     }}
                     aria-haspopup="true"
-                    aria-expanded={openIndex === originalIdx}
+                    aria-expanded={openIndex === idx}
                   >
-                    {menu.label}
+                    <AutoT text={menu.label} />
                   </Link>
 
                   {/* 서브메뉴 */}
-                  {openIndex === originalIdx && (
+                  {openIndex === idx && (
                     <div
                       className="absolute left-1/2 -translate-x-1/2 mt-1 bg-white border border-gray-200 rounded shadow-xl min-w-[176px]"
                       style={{
@@ -310,7 +260,7 @@ export const NavBar = memo(function NavBar() {
                               style={{ fontWeight: 500 }}
                               role="menuitem"
                             >
-                              {item.label}
+                              <AutoT text={item.label} />
                             </Link>
                           ))}
                       </div>
@@ -336,13 +286,13 @@ export const NavBar = memo(function NavBar() {
                 href="/mypage"
                 className="text-xs md:text-sm lg:text-base font-semibold px-3 md:px-4 py-2 text-gray-700 hover:text-blue-700 hover:bg-blue-50 rounded transition-colors"
               >
-                {t("mypage")}
+                <AutoT text="마이페이지" />
               </Link>
               <button
                 onClick={handleLogout}
                 className="text-xs md:text-sm lg:text-base font-semibold px-3 md:px-4 py-2 text-gray-700 hover:text-blue-700 hover:bg-blue-50 rounded transition-colors"
               >
-                {t("logout")}
+                <AutoT text="로그아웃" />
               </button>
             </>
           ) : (
@@ -350,7 +300,7 @@ export const NavBar = memo(function NavBar() {
               href="/login"
               className="text-xs md:text-sm lg:text-base font-semibold px-3 md:px-4 py-2 text-gray-700 hover:text-blue-700 hover:bg-blue-50 rounded transition-colors"
             >
-              {t("login")}
+              <AutoT text="로그인" />
             </Link>
           )}
         </div>
@@ -374,7 +324,7 @@ export const NavBar = memo(function NavBar() {
                         onClick={() => toggleMobileSubmenu(idx)}
                         className="w-full flex items-center justify-between px-4 py-3 text-left text-base font-semibold text-gray-700 hover:bg-gray-50"
                       >
-                        <span>{menu.label}</span>
+                        <span><AutoT text={menu.label} /></span>
                         <span
                           className={`transform transition-transform ${
                             mobileSubmenuOpen === idx ? "rotate-180" : ""
@@ -392,7 +342,7 @@ export const NavBar = memo(function NavBar() {
                               onClick={() => setMobileMenuOpen(false)}
                               className="block px-8 py-2 text-sm text-gray-600 hover:bg-blue-50 hover:text-blue-700"
                             >
-                              {item.label}
+                              <AutoT text={item.label} />
                             </Link>
                           ))}
                         </div>
@@ -404,7 +354,7 @@ export const NavBar = memo(function NavBar() {
                       onClick={() => setMobileMenuOpen(false)}
                       className="block px-4 py-3 text-base font-semibold text-gray-700 hover:bg-gray-50"
                     >
-                      {menu.label}
+                      <AutoT text={menu.label} />
                     </Link>
                   )}
                 </div>

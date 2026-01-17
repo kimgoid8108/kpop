@@ -2,8 +2,7 @@
 
 import React, { useState } from "react";
 import { PageLayout } from "../../../components/PageLayout";
-import { Sidebar } from "../../../components/Sidebar";
-import { submenuData } from "../../../components/NavBar";
+import { AutoT } from "../../../components/AutoT";
 
 // ---------- 타입 정의 ----------
 type CourseItem = {
@@ -170,8 +169,6 @@ const courseSections: CourseSection[] = [
 ];
 
 export default function StructurePage() {
-  const coursesMenu = submenuData.find((menu) => menu.label === "교육과정");
-
   // 탭 상태
   const [selectedCategory, setSelectedCategory] = useState<string>(
     courseSections[0].label
@@ -188,13 +185,10 @@ export default function StructurePage() {
 
   return (
     <PageLayout>
-      <div className="max-w-5xl mx-auto my-8 md:my-16 px-4 flex flex-col md:flex-row gap-4 md:gap-8">
-        {coursesMenu && (
-          <Sidebar title={coursesMenu.label} items={coursesMenu.submenu} />
-        )}
-        <div className="flex-1 min-w-0">
+      <div className="max-w-5xl mx-auto my-8 md:my-16 px-4">
+        <div className="w-full">
           <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 md:mb-6 text-gray-900">
-            과정구성
+            <AutoT text="과정구성" />
           </h1>
           <section className="mb-8">
             {/* ---------- 분야 탭 ---------- */}
@@ -214,7 +208,7 @@ export default function StructurePage() {
                   }}
                   type="button"
                 >
-                  {section.label}
+                  <AutoT text={section.label} />
                 </button>
               ))}
             </div>
@@ -231,7 +225,7 @@ export default function StructurePage() {
                   onClick={() => setSelectedLevel(level)}
                   type="button"
                 >
-                  {level}
+                  <AutoT text={level} />
                 </button>
               ))}
             </div>
@@ -246,7 +240,7 @@ export default function StructurePage() {
                   {currentLevel.title && (
                     <div className="bg-blue-400 rounded-t-lg p-4 border-b border-indigo-200 mb-0 my-10">
                       <h2 className="text-xl md:text-2xl font-bold mb-0 text-white">
-                        {currentLevel.title}
+                        {currentLevel.title && <AutoT text={currentLevel.title} />}
                       </h2>
                     </div>
                   )}
@@ -258,20 +252,20 @@ export default function StructurePage() {
                       {currentLevel.goal && (
                         <div className="mb-4">
                           <div className="font-semibold text-gray-800 mb-1">
-                            수업 목표 및 내용
+                            <AutoT text="수업 목표 및 내용" />
                           </div>
                           <p className="text-sm text-gray-700 whitespace-pre-line">
-                            {currentLevel.goal}
+                            {currentLevel.goal && <AutoT text={currentLevel.goal} />}
                           </p>
                         </div>
                       )}
                       {currentSection.intro && (
                         <div className="mb-4">
                           <div className="font-semibold text-gray-800 mb-1">
-                            파트 소개
+                            <AutoT text="파트 소개" />
                           </div>
                           <p className="text-sm text-gray-700 whitespace-pre-line">
-                            {currentSection.intro}
+                            {currentSection.intro && <AutoT text={currentSection.intro} />}
                           </p>
                         </div>
                       )}
@@ -280,7 +274,7 @@ export default function StructurePage() {
                     {currentLevel.curriculum && (
                       <div className="flex-1 min-w-0">
                         <div className="font-semibold text-gray-800 mb-2 my-3">
-                          커리큘럼
+                          <AutoT text="커리큘럼" />
                         </div>
                         <ul className="space-y-2 my-5">
                           {currentLevel.curriculum.map((item, i) => (
@@ -289,10 +283,10 @@ export default function StructurePage() {
                               className="pl-2 border-l-2 border-indigo-300 my-10"
                             >
                               <span className="font-semibold">
-                                {item.title}
+                                <AutoT text={item.title} />
                               </span>
                               <p className="text-sm text-gray-700 ml-2">
-                                {item.description}
+                                <AutoT text={item.description} />
                               </p>
                             </li>
                           ))}
