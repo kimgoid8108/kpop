@@ -14,7 +14,7 @@ import { LanguageSwitcher } from "../components/LanguageSwitcher";
  * 3. translate 함수 직접 사용
  */
 export function TranslationExample() {
-  const { language, translate, t } = useLanguage();
+  const { language, translate } = useLanguage();
   const [translatedText, setTranslatedText] = React.useState<string>("");
   const [isTranslating, setIsTranslating] = React.useState(false);
 
@@ -22,8 +22,7 @@ export function TranslationExample() {
   const handleTranslate = async () => {
     setIsTranslating(true);
     const result = await translate(
-      "안녕하세요. 글로벌케이팝진흥원에 오신 것을 환영합니다.",
-      { sourceLang: "ko" }
+      "안녕하세요. 글로벌케이팝진흥원에 오신 것을 환영합니다."
     );
     setTranslatedText(result);
     setIsTranslating(false);
@@ -33,7 +32,7 @@ export function TranslationExample() {
     <div className="p-8 space-y-8 max-w-4xl mx-auto">
       <div className="bg-white rounded-lg shadow p-6">
         <h1 className="text-2xl font-bold mb-4">
-          {t("intro")} - 번역 기능 예시
+          번역 기능 예시
         </h1>
         
         {/* 언어 전환 버튼 */}

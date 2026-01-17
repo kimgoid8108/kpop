@@ -46,7 +46,6 @@ export function TranslatedContent({
       try {
         const result = await translate(content, {
           isHtml,
-          sourceLang,
         });
         setTranslatedText(result);
       } catch (error) {
@@ -58,7 +57,7 @@ export function TranslatedContent({
     };
 
     performTranslation();
-  }, [content, language, isHtml, sourceLang, translate]);
+  }, [content, language, isHtml, translate]);
 
   if (isHtml) {
     return (
