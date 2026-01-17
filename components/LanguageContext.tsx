@@ -15,17 +15,29 @@ interface LanguageContextType {
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
-export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [language, setLanguageState] = useState<Language>("ko"); // ✅ 디폴트 한국어
+export function LanguageProvider({
+  children,
+  initialLanguage = "ko",
+}: {
+  children: React.ReactNode;
+  initialLanguage?: Language;
+}) {
+  const [language, setLanguageState] = useState<Language>(initialLanguage);
 
+  // 클라이언트에서 localStorage 동기화 (hydration 후)
   useEffect(() => {
     const saved = localStorage.getItem("language") as Language | null;
-    if (saved === "ko" || saved === "en" || saved === "vi") setLanguageState(saved);
+    if (saved === "ko" || saved === "en" || saved === "vi") {
+      setLanguageState(saved);
+    }
   }, []);
 
   const setLanguage = useCallback((lang: Language) => {
     setLanguageState(lang);
+    // localStorage 저장
     localStorage.setItem("language", lang);
+    // Cookie 저장 (서버에서 읽을 수 있도록)
+    document.cookie = `lang=${lang}; path=/; max-age=31536000; SameSite=Lax`;
   }, []);
 
   const translate = useCallback(
