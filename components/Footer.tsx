@@ -1,7 +1,7 @@
 "use client";
 
 import React, { memo } from "react";
-import logo from "../src/GKI.png";
+import logo from "../public/global_Logo_shot.png";
 import { AutoT } from "./AutoT";
 
 // ----- Footer 컴포넌트 -----
@@ -9,7 +9,7 @@ import { AutoT } from "./AutoT";
 export const Footer = memo(function Footer() {
   return (
     <footer
-      className="bg-gray-300 border-t border-gray-200 text-gray-700 leading-tight text-sm w-full"
+      className="bg-white border-t border-gray-200 text-gray-700 leading-tight text-sm w-full"
       style={{
         position: "static",
         left: "unset",

@@ -84,7 +84,7 @@ export default function MyPage() {
   const [examsT, setExamsT] = useState<Record<number, { title: string; course: string; deadline: string; status: string }>>({});
   const [uiT, setUiT] = useState({
     pageTitle: "마이페이지",
-    courseList: "내 강의 리스트",
+    courseList: "강의 리스트",
     progress: "진도관리",
     exams: "시험/과제",
     viewAll: "전체보기",
@@ -103,7 +103,7 @@ export default function MyPage() {
         if (!alive) return;
         setUiT({
           pageTitle: "마이페이지",
-          courseList: "내 강의 리스트",
+          courseList: "강의 리스트",
           progress: "진도관리",
           exams: "시험/과제",
           viewAll: "전체보기",
@@ -131,7 +131,7 @@ export default function MyPage() {
       // ✅ 다른 언어면 DeepL로 자동번역
       const uiKeys = {
         pageTitle: "마이페이지",
-        courseList: "내 강의 리스트",
+        courseList: "강의 리스트",
         progress: "진도관리",
         exams: "시험/과제",
         viewAll: "전체보기",

@@ -9,7 +9,6 @@ import { AutoT } from "../../components/AutoT";
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const { login } = useAuth();
   const router = useRouter();
@@ -17,7 +16,6 @@ export default function LoginPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
     setIsLoading(true);
 
     try {
@@ -26,11 +24,11 @@ export default function LoginPage() {
         router.push("/");
       } else {
         const errorMsg = await translate("이메일 또는 비밀번호가 올바르지 않습니다.");
-        setError(errorMsg);
+        alert(errorMsg);
       }
     } catch (err) {
       const errorMsg = await translate("로그인 중 오류가 발생했습니다.");
-      setError(errorMsg);
+      alert(errorMsg);
     } finally {
       setIsLoading(false);
     }
@@ -49,14 +47,14 @@ export default function LoginPage() {
           <div className="flex flex-col gap-y-2">
             <div>
               <label className="text-xs font-semibold text-gray-600 block mb-1">
-                <AutoT text="학번" />
+                <AutoT text="아이디" />
               </label>
               <input
                 id="email"
                 type="email"
                 required
                 className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-1 focus:ring-blue-500 outline-none"
-                placeholder="학번"
+                placeholder="아이디"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -78,13 +76,6 @@ export default function LoginPage() {
             </div>
           </div>
 
-          {/* 에러 메시지 */}
-          {error && (
-            <div className="text-red-600 text-[11px] leading-tight text-center bg-red-50 py-1 rounded">
-              {error}
-            </div>
-          )}
-
           {/* 버튼 영역: flex-col로 수직 정렬 고정, 삐져나감 방지 */}
           <div className="flex flex-col gap-2 pt-2">
             <button
@@ -100,6 +91,14 @@ export default function LoginPage() {
               className="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold rounded transition-all active:scale-[0.98]"
             >
               <AutoT text="통합로그인" />
+            </button>
+
+            <button
+              type="button"
+              onClick={() => router.push("/signup")}
+              className="w-full py-2.5 bg-gray-600 hover:bg-gray-700 text-white text-sm font-bold rounded transition-all active:scale-[0.98]"
+            >
+              <AutoT text="회원가입" />
             </button>
           </div>
         </form>

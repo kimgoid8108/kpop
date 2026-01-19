@@ -3,12 +3,11 @@
 import React from "react";
 import { Sidebar } from "./Sidebar";
 import { Footer } from "./Footer";
-import { SwiperSlider } from "./SwiperSlider";
+import HeroMain from "./home/HeroMain";
 
 // ----- Layout(Main) 컴포넌트 -----
 // 전체 페이지의 구조 담당 (사이드바, 본문, 푸터)
 export function Layout() {
-  // Sidebar, Footer, SwiperSlider 모두 memoized로 렌더 최적화됨
   return (
     <div
       className="min-h-screen flex bg-white"
@@ -24,12 +23,12 @@ export function Layout() {
           style={{
             width: "100%",
             maxWidth: "100%",
-            height: "100%",
+            height: "100vh",
             minHeight: 0,
             minWidth: 0,
           }}
         >
-          <SwiperSlider /> {/* 메인 상단 슬라이드 */}
+          <HeroMain /> {/* 메인 히어로 영역 */}
         </main>
         <Footer /> {/* 하단 푸터 */}
       </div>

@@ -24,8 +24,115 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
   overflow-x: hidden;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+body::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari and Opera */
 }
 
 html {
   overflow-x: hidden;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+html::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari and Opera */
+}
+
+/* 스크롤바 숨기기 유틸리티 클래스 */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari and Opera */
+}
+
+/* HeroMain 컴포넌트 전용 애니메이션 (home- prefix 사용) */
+@keyframes home-slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes home-slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes home-float {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(20px, -20px) scale(1.1);
+  }
+}
+
+@keyframes home-float-delayed {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(-20px, 20px) scale(1.1);
+  }
+}
+
+@keyframes home-float-slow {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(10px, 10px) scale(1.05);
+  }
+}
+
+@keyframes home-scale {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.home-animate-slideUp {
+  animation: home-slideUp 0.8s ease-out forwards;
+}
+
+.home-animate-slideInRight {
+  animation: home-slideInRight 0.6s ease-out forwards;
+}
+
+.home-animate-float {
+  animation: home-float 6s ease-in-out infinite;
+}
+
+.home-animate-float-delayed {
+  animation: home-float-delayed 8s ease-in-out infinite;
+  animation-delay: 1s;
+}
+
+.home-animate-float-slow {
+  animation: home-float-slow 10s ease-in-out infinite;
+  animation-delay: 2s;
+}
+
+.home-animate-scale {
+  animation: home-scale 3s ease-in-out infinite;
 }

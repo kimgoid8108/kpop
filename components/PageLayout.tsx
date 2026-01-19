@@ -23,7 +23,7 @@ export function PageLayout({ children }: PageLayoutProps) {
       <Sidebar />
       <div className="flex-1 flex flex-col min-w-0">
         <main
-          className="flex-1 flex flex-col justify-stretch w-full overflow-x-hidden"
+          className="flex-1 flex flex-col justify-stretch w-full overflow-x-hidden overflow-y-auto scrollbar-hide"
           style={{
             maxWidth: "100%",
             minHeight: 0,
@@ -37,4 +37,3 @@ export function PageLayout({ children }: PageLayoutProps) {
     </div>
   );
 }
-
