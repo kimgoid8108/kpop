@@ -8,6 +8,7 @@ import { useAuth } from "./AuthContext";
 import { useLanguage } from "./LanguageContext";
 import { AutoT } from "./AutoT";
 import { useAutoTranslate } from "./useAutoTranslate";
+import { SignupModal } from "./SignupModal";
 
 // ----- 메뉴 아이콘 컴포넌트 -----
 const MenuIcon = ({ name, className = "w-4 h-4" }: { name: string; className?: string }) => {
@@ -99,6 +100,7 @@ export const Sidebar = memo(function Sidebar() {
   const [studentId, setStudentId] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
   const { isAuthenticated, login, logout } = useAuth();
   const router = useRouter();
   const { language, setLanguage, translate } = useLanguage();
@@ -378,14 +380,16 @@ export const Sidebar = memo(function Sidebar() {
                 >
                   <AutoT text="통합로그인" />
                 </button>
-                <Link
-                  href="/signup"
-                  className="w-full block py-2 bg-gray-600 text-white text-xs font-bold rounded-md hover:bg-gray-700 transition-all duration-200 text-center shadow-sm hover:shadow"
+                <button
+                  type="button"
+                  onClick={() => setIsSignupModalOpen(true)}
+                  className="w-full block py-2 bg-gray-600 text-white text-xs font-bold rounded-md hover:bg-gray-700 transition-all duration-200 shadow-sm hover:shadow"
                 >
                   <AutoT text="회원가입" />
-                </Link>
+                </button>
               </div>
             </form>
+            <SignupModal isOpen={isSignupModalOpen} onClose={() => setIsSignupModalOpen(false)} />
           </div>
         ) : (
           <div className="bg-white border border-gray-200 rounded-md shadow-sm p-4 space-y-2">

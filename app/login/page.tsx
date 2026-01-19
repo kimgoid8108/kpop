@@ -5,11 +5,13 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "../../components/AuthContext";
 import { useLanguage } from "../../components/LanguageContext";
 import { AutoT } from "../../components/AutoT";
+import { SignupModal } from "../../components/SignupModal";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
   const { login } = useAuth();
   const router = useRouter();
   const { translate } = useLanguage();
@@ -95,7 +97,7 @@ export default function LoginPage() {
 
             <button
               type="button"
-              onClick={() => router.push("/signup")}
+              onClick={() => setIsSignupModalOpen(true)}
               className="w-full py-2.5 bg-gray-600 hover:bg-gray-700 text-white text-sm font-bold rounded transition-all active:scale-[0.98]"
             >
               <AutoT text="회원가입" />
@@ -103,6 +105,7 @@ export default function LoginPage() {
           </div>
         </form>
       </div>
+      <SignupModal isOpen={isSignupModalOpen} onClose={() => setIsSignupModalOpen(false)} />
     </div>
   );
 }

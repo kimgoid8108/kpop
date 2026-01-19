@@ -59,26 +59,6 @@ const slides: Slide[] = [
   },
 ];
 
-const quickInfoCards = [
-  {
-    icon: "🎓",
-    title: "교육과정",
-    value: "50+",
-    label: "다양한 프로그램",
-  },
-  {
-    icon: "👥",
-    title: "수강생",
-    value: "10,000+",
-    label: "전 세계 학습자",
-  },
-  {
-    icon: "🏆",
-    title: "자격증",
-    value: "3종",
-    label: "국가 인정 자격",
-  },
-];
 
 // 슬라이드 전환(Fade) CSS
 const fadeStyles = `
@@ -189,49 +169,49 @@ export default function HeroMain() {
         <div
           className={`absolute inset-0 bg-gradient-to-br ${slide.gradient} transition-all duration-1000 ease-in-out`}
         >
-          {/* 장식 블러 원들 */}
-          <div className="absolute top-20 left-20 w-96 h-96 bg-white/10 rounded-full blur-3xl home-animate-float"></div>
-          <div className="absolute bottom-20 right-20 w-80 h-80 bg-white/10 rounded-full blur-3xl home-animate-float-delayed"></div>
-          <div className="absolute top-1/2 left-1/2 w-72 h-72 bg-white/5 rounded-full blur-3xl home-animate-float-slow"></div>
+          {/* 장식 블러 원들 - 모바일에서 크기 축소 */}
+          <div className="absolute top-10 left-10 sm:top-20 sm:left-20 w-48 h-48 sm:w-96 sm:h-96 bg-white/10 rounded-full blur-3xl home-animate-float"></div>
+          <div className="absolute bottom-10 right-10 sm:bottom-20 sm:right-20 w-40 h-40 sm:w-80 sm:h-80 bg-white/10 rounded-full blur-3xl home-animate-float-delayed"></div>
+          <div className="absolute top-1/2 left-1/2 w-36 h-36 sm:w-72 sm:h-72 bg-white/5 rounded-full blur-3xl home-animate-float-slow"></div>
         </div>
         {/* 메인 콘텐츠 */}
-        <div className="relative z-10 flex items-center justify-center h-full px-8">
-          <div className="max-w-8xl w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center pl-30">
+        <div className="relative z-10 flex items-center justify-center h-full px-4 sm:px-6 md:px-8">
+          <div className="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-12 items-center">
             {/* 왼쪽: 히어로 콘텐츠 */}
-            <div className="space-y-6 home-animate-slideUp">
-              <div className="space-y-4">
-                <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight">
+            <div className="space-y-4 sm:space-y-6 home-animate-slideUp">
+              <div className="space-y-3 sm:space-y-4">
+                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white leading-tight break-words">
                   <AutoT text={slide.title} />
                 </h1>
-                <h2 className="text-2xl md:text-3xl text-white/90 font-medium">
+                <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-white/90 font-medium break-words">
                   <AutoT text={slide.subtitle} />
                 </h2>
-                <p className="text-lg md:text-xl text-white/80 leading-relaxed max-w-lg">
+                <p className="text-sm sm:text-base md:text-lg lg:text-xl text-white/80 leading-relaxed max-w-lg break-words">
                   <AutoT text={slide.detail} />
                 </p>
               </div>
 
-              {/* CTA 버튼들 */}
-              <div className="flex flex-wrap gap-4 pt-4">
+              {/* CTA 버튼들 - 모바일에서 세로 스택 */}
+              <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 pt-2 sm:pt-4">
                 <Link
                   href={slide.ctaPrimaryLink}
-                  className="px-8 py-4 bg-white text-gray-900 font-semibold rounded-lg hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 inline-block"
+                  className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-white text-gray-900 font-semibold rounded-lg hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 text-center text-sm sm:text-base"
                 >
                   <AutoT text={slide.ctaPrimary} />
                 </Link>
                 <Link
                   href={slide.ctaSecondaryLink}
-                  className="px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-lg border-2 border-white/30 hover:bg-white/20 transition-all duration-300 inline-block"
+                  className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-lg border-2 border-white/30 hover:bg-white/20 transition-all duration-300 text-center text-sm sm:text-base"
                 >
                   <AutoT text={slide.ctaSecondary} />
                 </Link>
               </div>
             </div>
 
-            {/* 오른쪽: 연도 워터마크 */}
+            {/* 오른쪽: 연도 워터마크 - 데스크탑에서만 표시 */}
             <div className="hidden lg:flex items-center justify-center">
               <div className="relative">
-                <div className="text-[200px] md:text-[300px] font-black text-white/10 select-none home-animate-scale">
+                <div className="text-[150px] xl:text-[200px] 2xl:text-[300px] font-black text-white/10 select-none home-animate-scale">
                   {slide.year}
                 </div>
               </div>
@@ -244,16 +224,17 @@ export default function HeroMain() {
 
   return (
     <div className="relative w-full h-screen overflow-hidden">
-      {/* 상단 네비게이션 */}
-      <nav className="relative z-20 flex items-center justify-between px-8 py-6">
-        <div className="flex items-center gap-8">
+      {/* 상단 네비게이션 - 모바일에서 간소화 */}
+      <nav className="relative z-20 flex items-center justify-between px-4 sm:px-6 md:px-8 py-4 sm:py-6">
+        {/* 데스크탑 네비게이션 버튼 */}
+        <div className="hidden sm:flex items-center gap-6 md:gap-8">
           <button
             onClick={prevSlide}
             disabled={isFading}
             className="text-white/80 hover:text-white transition-colors p-2 hover:bg-white/10 rounded-lg disabled:opacity-50"
             aria-label="이전 슬라이드"
           >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
           </button>
@@ -263,14 +244,14 @@ export default function HeroMain() {
             className="text-white/80 hover:text-white transition-colors p-2 hover:bg-white/10 rounded-lg disabled:opacity-50"
             aria-label="다음 슬라이드"
           >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>
           </button>
         </div>
 
-        {/* 인디케이터 dots */}
-        <div className="flex items-center gap-2">
+        {/* 인디케이터 dots - 모바일에서 크기/간격 축소 */}
+        <div className="flex items-center gap-1.5 sm:gap-2">
           {slides.map((_, index) => (
             <button
               key={index}
@@ -278,8 +259,8 @@ export default function HeroMain() {
               disabled={isFading}
               className={`transition-all duration-300 rounded-full ${
                 index === showSlideIdx
-                  ? "w-8 h-2 bg-white"
-                  : "w-2 h-2 bg-white/40 hover:bg-white/60"
+                  ? "w-6 h-1.5 sm:w-8 sm:h-2 bg-white"
+                  : "w-1.5 h-1.5 sm:w-2 sm:h-2 bg-white/40 hover:bg-white/60"
               } disabled:opacity-50`}
               aria-label={`슬라이드 ${index + 1}로 이동`}
             />
@@ -295,29 +276,6 @@ export default function HeroMain() {
         {isFading && nextSlideIdx !== null && renderSlide(nextSlideIdx, true)}
       </div>
 
-      {/* 오른쪽 하단 퀵 인포 카드들 */}
-      <div className="absolute bottom-8 right-8 z-20 space-y-4 hidden lg:block">
-        {quickInfoCards.map((card, index) => (
-          <div
-            key={index}
-            className="bg-white/10 backdrop-blur-md rounded-xl p-4 min-w-[200px] border border-white/20 hover:bg-white/20 transition-all duration-300 home-animate-slideInRight"
-            style={{ animationDelay: `${index * 0.1}s` }}
-          >
-            <div className="flex items-center gap-3">
-              <div className="text-3xl">{card.icon}</div>
-              <div>
-                <div className="text-white/80 text-sm font-medium">
-                  <AutoT text={card.title} />
-                </div>
-                <div className="text-white text-2xl font-bold">{card.value}</div>
-                <div className="text-white/60 text-xs">
-                  <AutoT text={card.label} />
-                </div>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
     </div>
   );
 }
