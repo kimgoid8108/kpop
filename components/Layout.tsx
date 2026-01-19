@@ -36,7 +36,7 @@ export function Layout() {
 
   return (
     <div
-      className="flex bg-white w-full max-w-full overflow-hidden h-screen"
+      className="bg-white w-full max-w-full overflow-hidden h-screen"
       style={{
         width: "100%",
         maxWidth: "100vw",
@@ -45,12 +45,12 @@ export function Layout() {
       }}
     >
       {/* 데스크탑 사이드바 (md 이상에서만 표시) */}
-      <div className="hidden md:block flex-shrink-0 relative">
+      <div className="hidden md:block">
         <Sidebar />
       </div>
 
       {/* 메인 콘텐츠 영역 */}
-      <div className="flex-1 flex flex-col min-w-0 w-full max-w-full overflow-hidden h-full">
+      <div className="flex flex-col min-w-0 w-full overflow-hidden h-full md:ml-64 md:w-[calc(100%-16rem)]">
         {/* 모바일 헤더 (md 미만에서만 표시) */}
         <header className="md:hidden fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-200 shadow-sm">
           <div className="flex items-center justify-between px-3 sm:px-4 py-2.5 sm:py-3">

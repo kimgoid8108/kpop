@@ -178,7 +178,7 @@ export const Sidebar = memo(function Sidebar() {
   };
 
   return (
-    <div className="w-64 bg-gray-50 border-r border-gray-300 h-screen sticky top-0 overflow-y-auto flex flex-col shadow-sm scrollbar-hide max-w-full">
+    <div className="w-64 bg-gray-50 border-r border-gray-300 h-screen fixed top-0 left-0 overflow-y-auto flex flex-col shadow-sm scrollbar-hide max-w-full z-30">
       <div className="p-3 sm:p-4 space-y-4 sm:space-y-5">
         {/* 로고 - 박스 없이 사진만, 클릭 시 메인 페이지(루트)로 이동 */}
         <Link href="/" passHref legacyBehavior>
