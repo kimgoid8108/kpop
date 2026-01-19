@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Sidebar } from "./Sidebar";
 import { Footer } from "./Footer";
 import HeroMain from "./home/HeroMain";
@@ -10,6 +10,7 @@ import { AutoT } from "./AutoT";
 // 전체 페이지의 구조 담당 (사이드바, 본문, 푸터)
 export function Layout() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const mainRef = useRef<HTMLElement>(null);
 
   // ESC 키로 모바일 메뉴 닫기
   useEffect(() => {
@@ -36,20 +37,21 @@ export function Layout() {
 
   return (
     <div
-      className="min-h-screen flex bg-white w-full max-w-full overflow-x-hidden"
+      className="flex bg-white w-full max-w-full overflow-hidden h-screen"
       style={{
         width: "100%",
         maxWidth: "100vw",
-        overflowX: "hidden",
+        height: "100vh",
+        overflow: "hidden",
       }}
     >
       {/* 데스크탑 사이드바 (md 이상에서만 표시) */}
-      <div className="hidden md:block flex-shrink-0">
+      <div className="hidden md:block flex-shrink-0 relative">
         <Sidebar />
       </div>
 
       {/* 메인 콘텐츠 영역 */}
-      <div className="flex-1 flex flex-col min-w-0 w-full max-w-full overflow-x-hidden">
+      <div className="flex-1 flex flex-col min-w-0 w-full max-w-full overflow-hidden h-full">
         {/* 모바일 헤더 (md 미만에서만 표시) */}
         <header className="md:hidden fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-200 shadow-sm">
           <div className="flex items-center justify-between px-3 sm:px-4 py-2.5 sm:py-3">
@@ -100,9 +102,10 @@ export function Layout() {
           </>
         )}
 
-        {/* 메인 콘텐츠 */}
+        {/* 메인 콘텐츠 - 섹션 스크롤 컨테이너 */}
         <main
-          className="flex-1 flex flex-col justify-stretch p-0 m-0 md:pt-0 pt-12 sm:pt-14 w-full max-w-full overflow-x-hidden"
+          ref={mainRef}
+          className="flex-1 h-screen overflow-hidden relative w-full max-w-full overflow-x-hidden md:pt-0 pt-12 sm:pt-14"
           style={{
             width: "100%",
             maxWidth: "100%",
@@ -111,7 +114,7 @@ export function Layout() {
             minWidth: 0,
           }}
         >
-          <HeroMain />
+          <HeroMain mainRef={mainRef} />
         </main>
         <Footer />
       </div>
