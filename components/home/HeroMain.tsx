@@ -176,7 +176,7 @@ export default function HeroMain() {
         </div>
         {/* 메인 콘텐츠 */}
         <div className="relative z-10 flex items-center justify-center h-full px-3 sm:px-4 md:px-6 lg:px-8 overflow-x-hidden">
-          <div className="px-20 max-w-20xl w-full grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 md:gap-8 lg:gap-12 items-center">
+          <div className="px-20 max-w-50xl w-full grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 md:gap-8 lg:gap-12 items-center">
             {/* 왼쪽: 히어로 콘텐츠 */}
               <div className="space-y-3 sm:space-y-4 md:space-y-6 home-animate-slideUp w-full">
               <div className="space-y-2 sm:space-y-3 md:space-y-4">
