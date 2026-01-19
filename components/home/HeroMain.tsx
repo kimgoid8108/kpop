@@ -176,11 +176,11 @@ export default function HeroMain() {
         </div>
         {/* 메인 콘텐츠 */}
         <div className="relative z-10 flex items-center justify-center h-full px-3 sm:px-4 md:px-6 lg:px-8 overflow-x-hidden">
-          <div className="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 md:gap-8 lg:gap-12 items-center">
+          <div className="px-20 max-w-8xl w-full grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 md:gap-8 lg:gap-12 items-center">
             {/* 왼쪽: 히어로 콘텐츠 */}
-            <div className="space-y-3 sm:space-y-4 md:space-y-6 home-animate-slideUp w-full">
+              <div className="space-y-3 sm:space-y-4 md:space-y-6 home-animate-slideUp w-full">
               <div className="space-y-2 sm:space-y-3 md:space-y-4">
-                <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold text-white leading-tight break-words">
+                <h1 className="w-full max-w-none whitespace-nowrap overflow-hidden text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold text-white leading-tight">
                   <AutoT text={slide.title} />
                 </h1>
                 <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl text-white/90 font-medium break-words">
