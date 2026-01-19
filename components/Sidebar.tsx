@@ -281,15 +281,20 @@ export const Sidebar = memo(function Sidebar() {
 
         {/* 로그인 폼 */}
         {!isAuthenticated ? (
-          <div className="bg-white border border-gray-300 rounded p-4 space-y-3">
-            <div className="text-xs font-semibold text-gray-600 uppercase tracking-wide mb-2">
+          <div className="bg-white border border-gray-300 rounded p-4">
+            <div className="text-xs font-semibold text-gray-600 uppercase tracking-wide mb-4">
               <AutoT text="로그인" />
             </div>
-            <form onSubmit={handleLogin} className="space-y-3" autoComplete="off">
-              <div>
+            <form
+              onSubmit={handleLogin}
+              className="flex flex-col gap-y-3"
+              autoComplete="off"
+            >
+              {/* 학번 입력 */}
+              <div className="w-full">
                 <label
                   htmlFor="studentId"
-                  className="block text-xs font-medium text-gray-700 mb-1"
+                  className="block text-[11px] font-bold text-gray-500 mb-1"
                 >
                   <AutoT text="학번" />
                 </label>
@@ -298,54 +303,53 @@ export const Sidebar = memo(function Sidebar() {
                   type="text"
                   value={studentId}
                   onChange={(e) => setStudentId(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full block px-3 py-2 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 box-border"
                   placeholder={studentIdPlaceholder}
                   autoComplete="username"
                 />
               </div>
-              <div>
+              {/* 비밀번호 입력 */}
+              <div className="w-full">
                 <label
                   htmlFor="password"
-                  className="block text-xs font-medium text-gray-700 mb-1"
+                  className="block text-[11px] font-bold text-gray-500 mb-1"
                 >
                   <AutoT text="비밀번호" />
                 </label>
-                <div className="flex gap-2">
-                  <input
-                    id="password"
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="flex-1 px-3 py-2 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                    placeholder={passwordPlaceholder}
-                    autoComplete="current-password"
-                  />
-                  <button
-                    type="submit"
-                    disabled={isLoading}
-                    className="px-4 py-2 bg-red-600 text-white text-xs font-semibold rounded hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-1 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
-                  >
-                    {isLoading ? (
-                      <AutoT text="로그인 중..." />
-                    ) : (
-                      <AutoT text="로그인" />
-                    )}
-                  </button>
-                </div>
+                <input
+                  id="password"
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full block px-3 py-2 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 box-border"
+                  placeholder={passwordPlaceholder}
+                  autoComplete="current-password"
+                />
               </div>
+              {/* 에러 메시지 */}
               {loginError && (
-                <div className="text-red-600 text-xs bg-red-50 p-2 rounded" aria-live="assertive">
+                <div className="text-red-600 text-[10px] bg-red-50 p-2 rounded leading-tight" aria-live="assertive">
                   {loginError}
                 </div>
               )}
-              <button
-                type="button"
-                onClick={handleIntegratedLogin}
-                disabled={isLoading}
-                className="w-full px-4 py-2.5 bg-blue-600 text-white text-sm font-semibold rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-              >
-                <AutoT text="통합로그인" />
-              </button>
+              {/* 버튼들: 모두 w-full로 세로 배치 */}
+              <div className="flex flex-col gap-2 mt-2">
+                <button
+                  type="submit"
+                  disabled={isLoading}
+                  className="w-full block py-2 bg-red-600 text-white text-xs font-bold rounded hover:bg-red-700 transition-colors disabled:bg-red-300"
+                >
+                  {isLoading ? <AutoT text="로그인 중..." /> : <AutoT text="로그인" />}
+                </button>
+                <button
+                  type="button"
+                  onClick={handleIntegratedLogin}
+                  disabled={isLoading}
+                  className="w-full block py-2 bg-blue-600 text-white text-xs font-bold rounded hover:bg-blue-700 transition-colors disabled:bg-blue-300"
+                >
+                  <AutoT text="통합로그인" />
+                </button>
+              </div>
             </form>
           </div>
         ) : (

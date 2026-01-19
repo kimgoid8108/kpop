@@ -37,42 +37,40 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
-        <div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            <AutoT text="로그인" />
-          </h2>
-        </div>
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-          <div className="rounded-md shadow-sm -space-y-px">
+    // 최상위 컨테이너: 너비가 삐져나가지 않게 px-4(여백)와 w-full을 적절히 사용
+    <div className="flex flex-col w-full bg-white p-4 shadow-sm border border-gray-100 rounded-lg">
+      <div className="w-full">
+        <h2 className="text-lg font-bold text-gray-800 mb-4">
+          <AutoT text="로그인" />
+        </h2>
+
+        <form className="flex flex-col gap-y-4" onSubmit={handleSubmit}>
+          {/* 입력 영역 */}
+          <div className="flex flex-col gap-y-2">
             <div>
-              <label htmlFor="email" className="sr-only">
-                <AutoT text="이메일" />
+              <label className="text-xs font-semibold text-gray-600 block mb-1">
+                <AutoT text="학번" />
               </label>
               <input
                 id="email"
-                name="email"
                 type="email"
-                autoComplete="email"
                 required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-                placeholder="이메일 주소"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-1 focus:ring-blue-500 outline-none"
+                placeholder="학번"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
+
             <div>
-              <label htmlFor="password" className="sr-only">
+              <label className="text-xs font-semibold text-gray-600 block mb-1">
                 <AutoT text="비밀번호" />
               </label>
               <input
                 id="password"
-                name="password"
                 type="password"
-                autoComplete="current-password"
                 required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-1 focus:ring-blue-500 outline-none"
                 placeholder="비밀번호"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -80,17 +78,28 @@ export default function LoginPage() {
             </div>
           </div>
 
+          {/* 에러 메시지 */}
           {error && (
-            <div className="text-red-600 text-sm text-center">{error}</div>
+            <div className="text-red-600 text-[11px] leading-tight text-center bg-red-50 py-1 rounded">
+              {error}
+            </div>
           )}
 
-          <div>
+          {/* 버튼 영역: flex-col로 수직 정렬 고정, 삐져나감 방지 */}
+          <div className="flex flex-col gap-2 pt-2">
             <button
               type="submit"
               disabled={isLoading}
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full py-2.5 bg-red-600 hover:bg-red-700 text-white text-sm font-bold rounded transition-all active:scale-[0.98] disabled:bg-red-300"
             >
               {isLoading ? <AutoT text="로그인 중..." /> : <AutoT text="로그인" />}
+            </button>
+
+            <button
+              type="button"
+              className="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold rounded transition-all active:scale-[0.98]"
+            >
+              <AutoT text="통합로그인" />
             </button>
           </div>
         </form>
