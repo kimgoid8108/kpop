@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { Sidebar } from "./Sidebar";
 import { Footer } from "./Footer";
 import HeroMain from "./home/HeroMain";
@@ -10,7 +10,6 @@ import { AutoT } from "./AutoT";
 // 전체 페이지의 구조 담당 (사이드바, 본문, 푸터)
 export function Layout() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const mainRef = useRef<HTMLElement>(null);
 
   // ESC 키로 모바일 메뉴 닫기
   useEffect(() => {
@@ -104,7 +103,6 @@ export function Layout() {
 
         {/* 메인 콘텐츠 - 섹션 스크롤 컨테이너 */}
         <main
-          ref={mainRef}
           className="flex-1 h-screen overflow-hidden relative w-full max-w-full overflow-x-hidden md:pt-0 pt-12 sm:pt-14"
           style={{
             width: "100%",
@@ -114,7 +112,7 @@ export function Layout() {
             minWidth: 0,
           }}
         >
-          <HeroMain mainRef={mainRef} />
+          <HeroMain />
         </main>
         <Footer />
       </div>
