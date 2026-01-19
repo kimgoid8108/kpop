@@ -30,7 +30,7 @@ const slides: Slide[] = [
     ctaPrimaryLink: "/courses/structure",
     ctaSecondary: "자격증 안내",
     ctaSecondaryLink: "/certificates/about",
-    year: "2025",
+    year: "2026",
     gradient: "from-purple-600 via-pink-500 to-red-500",
   },
   {
@@ -42,7 +42,7 @@ const slides: Slide[] = [
     ctaPrimaryLink: "/classroom/list",
     ctaSecondary: "강사진 소개",
     ctaSecondaryLink: "/courses/instructors",
-    year: "2025",
+    year: "2026",
     gradient: "from-blue-600 via-cyan-500 to-teal-500",
   },
   {
@@ -54,7 +54,7 @@ const slides: Slide[] = [
     ctaPrimaryLink: "/classroom/progress",
     ctaSecondary: "시험/과제",
     ctaSecondaryLink: "/classroom/exam",
-    year: "2025",
+    year: "2026",
     gradient: "from-indigo-600 via-purple-500 to-pink-500",
   },
 ];
@@ -176,7 +176,7 @@ export default function HeroMain() {
         </div>
         {/* 메인 콘텐츠 */}
         <div className="relative z-10 flex items-center justify-center h-full px-3 sm:px-4 md:px-6 lg:px-8 overflow-x-hidden">
-          <div className="px-20 max-w-8xl w-full grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 md:gap-8 lg:gap-12 items-center">
+          <div className="px-20 max-w-20xl w-full grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 md:gap-8 lg:gap-12 items-center">
             {/* 왼쪽: 히어로 콘텐츠 */}
               <div className="space-y-3 sm:space-y-4 md:space-y-6 home-animate-slideUp w-full">
               <div className="space-y-2 sm:space-y-3 md:space-y-4">
