@@ -175,33 +175,33 @@ export default function HeroMain() {
           <div className="absolute top-1/2 left-1/2 w-36 h-36 sm:w-72 sm:h-72 bg-white/5 rounded-full blur-3xl home-animate-float-slow"></div>
         </div>
         {/* 메인 콘텐츠 */}
-        <div className="relative z-10 flex items-center justify-center h-full px-4 sm:px-6 md:px-8">
-          <div className="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-12 items-center">
+        <div className="relative z-10 flex items-center justify-center h-full px-3 sm:px-4 md:px-6 lg:px-8 overflow-x-hidden">
+          <div className="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 md:gap-8 lg:gap-12 items-center">
             {/* 왼쪽: 히어로 콘텐츠 */}
-            <div className="space-y-4 sm:space-y-6 home-animate-slideUp">
-              <div className="space-y-3 sm:space-y-4">
-                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white leading-tight break-words">
+            <div className="space-y-3 sm:space-y-4 md:space-y-6 home-animate-slideUp w-full">
+              <div className="space-y-2 sm:space-y-3 md:space-y-4">
+                <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold text-white leading-tight break-words">
                   <AutoT text={slide.title} />
                 </h1>
-                <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-white/90 font-medium break-words">
+                <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl text-white/90 font-medium break-words">
                   <AutoT text={slide.subtitle} />
                 </h2>
-                <p className="text-sm sm:text-base md:text-lg lg:text-xl text-white/80 leading-relaxed max-w-lg break-words">
+                <p className="text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl text-white/80 leading-relaxed max-w-full lg:max-w-lg break-words">
                   <AutoT text={slide.detail} />
                 </p>
               </div>
 
               {/* CTA 버튼들 - 모바일에서 세로 스택 */}
-              <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 pt-2 sm:pt-4">
+              <div className="flex flex-col sm:flex-row flex-wrap gap-2 sm:gap-3 md:gap-4 pt-2 sm:pt-3 md:pt-4">
                 <Link
                   href={slide.ctaPrimaryLink}
-                  className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-white text-gray-900 font-semibold rounded-lg hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 text-center text-sm sm:text-base"
+                  className="w-full sm:w-auto px-4 sm:px-6 md:px-8 py-2.5 sm:py-3 md:py-4 bg-white text-gray-900 font-semibold rounded-lg hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 text-center text-xs sm:text-sm md:text-base whitespace-nowrap"
                 >
                   <AutoT text={slide.ctaPrimary} />
                 </Link>
                 <Link
                   href={slide.ctaSecondaryLink}
-                  className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-lg border-2 border-white/30 hover:bg-white/20 transition-all duration-300 text-center text-sm sm:text-base"
+                  className="w-full sm:w-auto px-4 sm:px-6 md:px-8 py-2.5 sm:py-3 md:py-4 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-lg border-2 border-white/30 hover:bg-white/20 transition-all duration-300 text-center text-xs sm:text-sm md:text-base whitespace-nowrap"
                 >
                   <AutoT text={slide.ctaSecondary} />
                 </Link>
@@ -223,11 +223,11 @@ export default function HeroMain() {
   };
 
   return (
-    <div className="relative w-full h-screen overflow-hidden">
+    <div className="relative w-full h-screen overflow-hidden max-w-full">
       {/* 상단 네비게이션 - 모바일에서 간소화 */}
-      <nav className="relative z-20 flex items-center justify-between px-4 sm:px-6 md:px-8 py-4 sm:py-6">
+      <nav className="relative z-20 flex items-center justify-between px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4 md:py-6">
         {/* 데스크탑 네비게이션 버튼 */}
-        <div className="hidden sm:flex items-center gap-6 md:gap-8">
+        <div className="hidden sm:flex items-center gap-4 sm:gap-6 md:gap-8">
           <button
             onClick={prevSlide}
             disabled={isFading}

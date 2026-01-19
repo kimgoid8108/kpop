@@ -178,32 +178,32 @@ export const Sidebar = memo(function Sidebar() {
   };
 
   return (
-    <div className="w-64 bg-gray-50 border-r border-gray-300 h-screen sticky top-0 overflow-y-auto flex flex-col shadow-sm scrollbar-hide">
-      <div className="p-4 space-y-5">
+    <div className="w-64 bg-gray-50 border-r border-gray-300 h-screen sticky top-0 overflow-y-auto flex flex-col shadow-sm scrollbar-hide max-w-full">
+      <div className="p-3 sm:p-4 space-y-4 sm:space-y-5">
         {/* 로고 - 박스 없이 사진만, 클릭 시 메인 페이지(루트)로 이동 */}
         <Link href="/" passHref legacyBehavior>
-          <a className="flex items-center justify-center hover:opacity-80 transition-opacity">
+          <a className="flex items-center justify-center hover:opacity-80 transition-opacity w-full">
             <Image
               src="/global_Logo.png"
               alt="글로벌케이팝 진흥원 로고"
               width={200}
               height={80}
-              className="object-contain"
+              className="object-contain w-full max-w-[180px] sm:max-w-[200px] h-auto"
               priority
             />
           </a>
         </Link>
 
         {/* 언어 선택 */}
-        <div className="bg-white border border-gray-200 rounded-md shadow-sm p-3">
-          <label htmlFor="language-select" className="block text-xs font-semibold text-gray-600 mb-2 uppercase tracking-wide">
+        <div className="bg-white border border-gray-200 rounded-md shadow-sm p-2.5 sm:p-3">
+          <label htmlFor="language-select" className="block text-xs font-semibold text-gray-600 mb-1.5 sm:mb-2 uppercase tracking-wide">
             <AutoT text="언어 선택" />
           </label>
           <select
             id="language-select"
             value={language}
             onChange={(e) => setLanguage(e.target.value as "ko" | "en" | "vi")}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-700 transition-all cursor-pointer"
+            className="w-full px-2.5 sm:px-3 py-1.5 sm:py-2 border border-gray-300 rounded-md text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-700 transition-all cursor-pointer"
           >
             <option value="ko">한국어</option>
             <option value="en">ENGLISH</option>
@@ -212,8 +212,8 @@ export const Sidebar = memo(function Sidebar() {
         </div>
 
         {/* 메뉴 항목들 */}
-        <nav className="space-y-2">
-          <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide px-3 py-2 mb-1">
+        <nav className="space-y-1.5 sm:space-y-2">
+          <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide px-2 sm:px-3 py-1.5 sm:py-2 mb-1">
             <AutoT text="전체 메뉴" />
           </div>
           {filteredMenuData.map((menu, idx) => {
@@ -231,13 +231,13 @@ export const Sidebar = memo(function Sidebar() {
                     <button
                       type="button"
                       onClick={() => toggleSubmenu(idx)}
-                      className="w-full flex items-center justify-between px-3 py-2.5 text-sm font-semibold text-gray-800 hover:bg-blue-50 hover:text-blue-700 transition-all duration-200 text-left"
+                      className="w-full flex items-center justify-between px-2.5 sm:px-3 py-2 sm:py-2.5 text-xs sm:text-sm font-semibold text-gray-800 hover:bg-blue-50 hover:text-blue-700 transition-all duration-200 text-left"
                     >
-                      <div className="flex items-center gap-2 flex-1 min-w-0">
+                      <div className="flex items-center gap-1.5 sm:gap-2 flex-1 min-w-0">
                         <span className="text-blue-600 flex-shrink-0">
-                          <MenuIcon name={menu.label} />
+                          <MenuIcon name={menu.label} className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                         </span>
-                        <span className="truncate"><AutoT text={menu.label} /></span>
+                        <span className="truncate text-xs sm:text-sm"><AutoT text={menu.label} /></span>
                       </div>
                       <span
                         className={`transform transition-transform duration-200 text-gray-400 flex-shrink-0 ml-2 ${
@@ -258,7 +258,7 @@ export const Sidebar = memo(function Sidebar() {
                           <Link
                             key={item.path + idx2}
                             href={item.path}
-                            className="block pl-6 pr-3 py-2 text-xs text-gray-700 hover:bg-blue-100 hover:text-blue-800 transition-colors border-b border-gray-100 last:border-b-0 leading-relaxed break-words"
+                            className="block pl-5 sm:pl-6 pr-2 sm:pr-3 py-1.5 sm:py-2 text-xs text-gray-700 hover:bg-blue-100 hover:text-blue-800 transition-colors border-b border-gray-100 last:border-b-0 leading-relaxed break-words"
                           >
                             <AutoT text={item.label} />
                           </Link>
@@ -269,13 +269,13 @@ export const Sidebar = memo(function Sidebar() {
                 ) : (
                   <Link
                     href={menu.path}
-                    className="block px-3 py-2.5 text-sm font-semibold text-gray-800 hover:bg-blue-50 hover:text-blue-700 transition-colors"
+                    className="block px-2.5 sm:px-3 py-2 sm:py-2.5 text-xs sm:text-sm font-semibold text-gray-800 hover:bg-blue-50 hover:text-blue-700 transition-colors"
                   >
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-1.5 sm:gap-2">
                       <span className="text-blue-600 flex-shrink-0">
-                        <MenuIcon name={menu.label} />
+                        <MenuIcon name={menu.label} className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                       </span>
-                      <span className="truncate"><AutoT text={menu.label} /></span>
+                      <span className="truncate text-xs sm:text-sm"><AutoT text={menu.label} /></span>
                     </div>
                   </Link>
                 )}
@@ -285,14 +285,14 @@ export const Sidebar = memo(function Sidebar() {
         </nav>
 
         {/* 검색 바 */}
-        <div className="bg-white border border-gray-300 rounded p-3">
+        <div className="bg-white border border-gray-200 rounded-md shadow-sm p-2.5 sm:p-3">
           <form onSubmit={handleSearch} className="relative" autoComplete="off">
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder={searchPlaceholder}
-              className="w-full px-3 py-2 pr-10 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full px-2.5 sm:px-3 py-1.5 sm:py-2 pr-8 sm:pr-10 border border-gray-300 rounded-md text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
             <button
               type="submit"
@@ -318,20 +318,20 @@ export const Sidebar = memo(function Sidebar() {
 
         {/* 로그인 폼 */}
         {!isAuthenticated ? (
-          <div className="bg-white border border-gray-200 rounded-md shadow-sm p-4">
-            <div className="text-xs font-semibold text-gray-600 uppercase tracking-wide mb-3">
+          <div className="bg-white border border-gray-200 rounded-md shadow-sm p-3 sm:p-4">
+            <div className="text-xs font-semibold text-gray-600 uppercase tracking-wide mb-2 sm:mb-3">
               <AutoT text="로그인" />
             </div>
             <form
               onSubmit={handleLogin}
-              className="flex flex-col gap-y-3"
+              className="flex flex-col gap-y-2 sm:gap-y-3"
               autoComplete="off"
             >
               {/* 아이디 입력 */}
               <div className="w-full">
                 <label
                   htmlFor="studentId"
-                  className="block text-[11px] font-semibold text-gray-600 mb-1.5"
+                  className="block text-[10px] sm:text-[11px] font-semibold text-gray-600 mb-1 sm:mb-1.5"
                 >
                   <AutoT text="아이디" />
                 </label>
@@ -340,7 +340,7 @@ export const Sidebar = memo(function Sidebar() {
                   type="text"
                   value={studentId}
                   onChange={(e) => setStudentId(e.target.value)}
-                  className="w-full block px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 box-border transition-all"
+                  className="w-full block px-2.5 sm:px-3 py-1.5 sm:py-2 border border-gray-300 rounded-md text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 box-border transition-all"
                   placeholder={studentIdPlaceholder}
                   autoComplete="username"
                 />
@@ -349,7 +349,7 @@ export const Sidebar = memo(function Sidebar() {
               <div className="w-full">
                 <label
                   htmlFor="password"
-                  className="block text-[11px] font-semibold text-gray-600 mb-1.5"
+                  className="block text-[10px] sm:text-[11px] font-semibold text-gray-600 mb-1 sm:mb-1.5"
                 >
                   <AutoT text="비밀번호" />
                 </label>
@@ -358,17 +358,17 @@ export const Sidebar = memo(function Sidebar() {
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full block px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 box-border transition-all"
+                  className="w-full block px-2.5 sm:px-3 py-1.5 sm:py-2 border border-gray-300 rounded-md text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 box-border transition-all"
                   placeholder={passwordPlaceholder}
                   autoComplete="current-password"
                 />
               </div>
               {/* 버튼들: 모두 w-full로 세로 배치 */}
-              <div className="flex flex-col gap-2 mt-1">
+              <div className="flex flex-col gap-1.5 sm:gap-2 mt-1">
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="w-full block py-2 bg-red-600 text-white text-xs font-bold rounded-md hover:bg-red-700 transition-all duration-200 disabled:bg-red-300 disabled:cursor-not-allowed shadow-sm hover:shadow"
+                  className="w-full block py-1.5 sm:py-2 bg-red-600 text-white text-xs font-bold rounded-md hover:bg-red-700 transition-all duration-200 disabled:bg-red-300 disabled:cursor-not-allowed shadow-sm hover:shadow"
                 >
                   {isLoading ? <AutoT text="로그인 중..." /> : <AutoT text="로그인" />}
                 </button>
@@ -376,14 +376,14 @@ export const Sidebar = memo(function Sidebar() {
                   type="button"
                   onClick={handleIntegratedLogin}
                   disabled={isLoading}
-                  className="w-full block py-2 bg-blue-600 text-white text-xs font-bold rounded-md hover:bg-blue-700 transition-all duration-200 disabled:bg-blue-300 disabled:cursor-not-allowed shadow-sm hover:shadow"
+                  className="w-full block py-1.5 sm:py-2 bg-blue-600 text-white text-xs font-bold rounded-md hover:bg-blue-700 transition-all duration-200 disabled:bg-blue-300 disabled:cursor-not-allowed shadow-sm hover:shadow"
                 >
                   <AutoT text="통합로그인" />
                 </button>
                 <button
                   type="button"
                   onClick={() => setIsSignupModalOpen(true)}
-                  className="w-full block py-2 bg-gray-600 text-white text-xs font-bold rounded-md hover:bg-gray-700 transition-all duration-200 shadow-sm hover:shadow"
+                  className="w-full block py-1.5 sm:py-2 bg-gray-600 text-white text-xs font-bold rounded-md hover:bg-gray-700 transition-all duration-200 shadow-sm hover:shadow"
                 >
                   <AutoT text="회원가입" />
                 </button>
