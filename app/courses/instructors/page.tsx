@@ -245,16 +245,31 @@ function InstructorDetailModal({
     };
 
     if (isOpen) {
-      const originalStyle = window.getComputedStyle(document.body).overflow;
+      // 스크롤바 너비 계산
+      const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+
+      // 원래 스타일 저장
+      const originalBodyOverflow = document.body.style.overflow;
+      const originalBodyPaddingRight = document.body.style.paddingRight;
+      const originalHtmlOverflow = document.documentElement.style.overflow;
+      const originalHtmlPaddingRight = document.documentElement.style.paddingRight;
+
+      // 스크롤 막기
       document.body.style.overflow = "hidden";
-      document.body.style.paddingRight = "0px";
+      document.body.style.paddingRight = `${scrollbarWidth}px`;
+      document.documentElement.style.overflow = "hidden";
+      document.documentElement.style.paddingRight = `${scrollbarWidth}px`;
 
       window.addEventListener("keydown", handleEscape);
 
       return () => {
         window.removeEventListener("keydown", handleEscape);
-        document.body.style.overflow = originalStyle;
-        document.body.style.paddingRight = "";
+
+        // 원래 스타일 복원
+        document.body.style.overflow = originalBodyOverflow;
+        document.body.style.paddingRight = originalBodyPaddingRight;
+        document.documentElement.style.overflow = originalHtmlOverflow;
+        document.documentElement.style.paddingRight = originalHtmlPaddingRight;
       };
     }
   }, [isOpen, onClose]);

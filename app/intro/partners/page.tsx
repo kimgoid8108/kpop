@@ -74,13 +74,31 @@ export default function PartnersPage() {
       <div className="max-w-5xl mx-auto my-8 md:my-16 px-4">
         <div className="w-full">
           <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 md:mb-6 text-gray-900">
-            <AutoT text="유관협력기관" />
+            <AutoT text="협약기관 & 파트너" />
           </h1>
           <section className="bg-white rounded-xl shadow p-4 md:p-6 lg:p-8">
             <p className="mb-4 text-lg text-gray-800 leading-relaxed">
               <AutoT text="글로벌케이팝진흥원과 함께 협력하고 있는 기관들을 소개합니다." />
             </p>
+            <div className="border-l-4 border-indigo-500 pl-4 my-20">
+              <h2 className="text-xl md:text-2xl font-semibold mb-2 text-gray-900">
+                <AutoT text="글로벌사이버대학교 방송연예학과" />
+              </h2>
+              <a
+                href="https://broaden.global.ac.kr/home/homeIndex.do"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block text-indigo-600 hover:underline mb-2 font-medium"
+              >
+                <AutoT text="글로벌 사이버대학교 방송연예학과 바로가기" />
+              </a>
 
+              <AutoSwipeImages />
+
+              <p className="text-gray-700">
+                <AutoT text="21세기 글로벌 스타양성기관인 글로벌사이버대학교 방송연예학과는 대한민국 문화산업의 기반이 될 문화인재를 발굴, 양성하고 그 저변을 확대하여 대한민국이 세계문화 교류의 구심점이 되는 목표를 수립하여, 문화 강국의 실현을 구현하고자 하며, 이의 기치아래 수백 명의 동문이 전세계를 무대로 케이팝, 드라마, 영화, 뮤지컬, 댄스, 코미디, 마술 등 전 분야에 걸쳐 한국의 대중문화를 이끌어 가고 있습니다." />
+              </p>
+            </div>
             <div className="space-y-4 md:space-y-6">
               <div className="border-l-4 border-indigo-500 pl-3 md:pl-4">
                 <h2 className="text-xl md:text-2xl font-semibold mb-2 text-gray-900">
@@ -107,25 +125,6 @@ export default function PartnersPage() {
                     title="일지 아트홀 위치"
                   ></iframe>
                 </div>
-              </div>
-              <div className="border-l-4 border-indigo-500 pl-4 my-20">
-                <h2 className="text-xl md:text-2xl font-semibold mb-2 text-gray-900">
-                  <AutoT text="글로벌사이버대학교 방송연예학과" />
-                </h2>
-                <a
-                  href="https://broaden.global.ac.kr/home/homeIndex.do"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-block text-indigo-600 hover:underline mb-2 font-medium"
-                >
-                  <AutoT text="글로벌 사이버대학교 방송연예학과 바로가기" />
-                </a>
-
-                <AutoSwipeImages />
-
-                <p className="text-gray-700">
-                  <AutoT text="21세기 글로벌 스타양성기관인 글로벌사이버대학교 방송연예학과는 대한민국 문화산업의 기반이 될 문화인재를 발굴, 양성하고 그 저변을 확대하여 대한민국이 세계문화 교류의 구심점이 되는 목표를 수립하여, 문화 강국의 실현을 구현하고자 하며, 이의 기치아래 수백 명의 동문이 전세계를 무대로 케이팝, 드라마, 영화, 뮤지컬, 댄스, 코미디, 마술 등 전 분야에 걸쳐 한국의 대중문화를 이끌어 가고 있습니다." />
-                </p>
               </div>
             </div>
           </section>

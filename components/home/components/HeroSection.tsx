@@ -116,6 +116,8 @@ export function HeroSection({
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>
           </button>
+
+          <link rel="stylesheet" href="" />
         </div>
         <div className="flex items-center gap-1.5 sm:gap-2">
           {slides.map((_, index) => (
