@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { PageLayout } from "../../../components/PageLayout";
 import { AutoT } from "../../../components/AutoT";
+import { PartnersCarouselSection } from "../../../components/partners/PartnersCarouselSection";
 
 const images = [
   "/kpop_global1.jpeg",
@@ -128,6 +129,9 @@ export default function PartnersPage() {
               </div>
             </div>
           </section>
+
+          {/* 추가 협약기관&파트너 섹션 */}
+          <PartnersCarouselSection />
         </div>
       </div>
     </PageLayout>

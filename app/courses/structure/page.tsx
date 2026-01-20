@@ -183,12 +183,17 @@ export default function StructurePage() {
     : levelKeys[0];
   const currentLevel = currentSection.levels[safeSelectedLevel];
 
+  // 박스가 좀 더 넓게 보이도록 min/max/width 조정
+  // 기존 min-w-[340px] md:min-w-[600px] -> min-w-[340px] md:min-w-[840px]
+  // 기존 width: 600 -> width: 840
+  // 컨테이너 max-w-5xl -> max-w-7xl
+
   return (
     <PageLayout>
-      <div className="max-w-5xl mx-auto my-8 md:my-16 px-4">
+      <div className="max-w-7xl mx-auto my-8 md:my-16 px-4">
         <div className="w-full">
           <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 md:mb-6 text-gray-900">
-            <AutoT text="과정구성" />
+            <AutoT text="커리큘럼" />
           </h1>
           <section className="mb-8">
             {/* ---------- 분야 탭 ---------- */}
@@ -238,7 +243,7 @@ export default function StructurePage() {
                 <div>
                   {/* 제목은 따로, 배경색 강조 */}
                   {currentLevel.title && (
-                    <div className="bg-blue-400 rounded-t-lg p-4 border-b border-indigo-200 mb-0 my-10">
+                    <div className="bg-blue-400 rounded-t-lg p-4 border-b border-indigo-200 mb-0 my-10 min-w-[340px] md:min-w-[840px] max-w-full mx-auto">
                       <h2 className="text-xl md:text-2xl font-bold mb-0 text-white">
                         {currentLevel.title && <AutoT text={currentLevel.title} />}
                       </h2>
@@ -246,7 +251,18 @@ export default function StructurePage() {
                   )}
 
                   {/* 내용은 좌/우 2단 레이아웃 */}
-                  <div className="bg-gray-50 rounded-b-lg p-4 border border-t-0 border-gray-200 flex flex-col md:flex-row gap-6 mt-0">
+                  {/* 고정박스 width body*/}
+                  <div
+                    className="bg-gray-50 rounded-b-lg p-4 border border-t-0 border-gray-200 flex flex-col md:flex-row gap-6 mt-0 mx-auto"
+                    style={{
+                      minWidth: 340,
+                      maxWidth: "100%",
+                      width: "100%",
+                      ...(typeof window !== "undefined" && window.innerWidth >= 768
+                        ? { width: 840 }
+                        : {}),
+                    }}
+                  >
                     {/* 왼쪽 : 수업 목표 및 내용 */}
                     <div className="flex-1 min-w-0 flex flex-col justify-center items-center">
                       {currentLevel.goal && (
