@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { AutoT } from "../../AutoT";
 import { Slide } from "../types";
@@ -32,6 +32,25 @@ export function HeroSection({
   prevSlide,
   children,
 }: HeroSectionProps) {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // 외부 클릭 시 드롭다운 닫기
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    if (isDropdownOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isDropdownOpen]);
   const renderSlide = (slideIdx: number, showing: boolean) => {
     const slide = slides[slideIdx];
     return (
@@ -45,9 +64,9 @@ export function HeroSection({
           <div className="absolute bottom-10 right-10 sm:bottom-20 sm:right-20 w-40 h-40 sm:w-80 sm:h-80 bg-white/10 rounded-full blur-3xl home-animate-float-delayed"></div>
           <div className="absolute top-1/2 left-1/2 w-36 h-36 sm:w-72 sm:h-72 bg-white/5 rounded-full blur-3xl home-animate-float-slow"></div>
         </div>
-        <div className="relative z-10 flex items-center justify-center h-full px-3 sm:px-4 md:px-6 lg:px-8 overflow-x-hidden">
-          <div className="px-10 max-w-2000xl w-full grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 md:gap-8 lg:gap-12 items-center">
-            <div className="space-y-3 sm:space-y-4 md:space-y-6 home-animate-slideUp w-full">
+        <div className="relative z-10 flex items-center justify-center h-full px-3 sm:px-4 md:px-6 lg:px-8 overflow-x-hidden pt-16 sm:pt-20 md:pt-24">
+          <div className="px-4 sm:px-6 md:px-10 max-w-full w-full grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 md:gap-8 lg:gap-12 items-center">
+            <div className="space-y-3 sm:space-y-4 md:space-y-6 home-animate-slideUp w-full max-w-full overflow-x-hidden">
               <div className="space-y-2 sm:space-y-3 md:space-y-4">
                 <h1 className="w-full max-w-full break-words text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold text-white leading-tight">
                   <AutoT text={slide.title} />
@@ -94,12 +113,12 @@ export function HeroSection({
         currentSectionIndex === 0 ? "opacity-100 pointer-events-auto z-10" : "opacity-0 pointer-events-none z-0"
       }`}
     >
-      <nav className="relative z-20 flex items-center justify-between px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4 md:py-6">
-        <div className="hidden sm:flex items-center gap-4 sm:gap-6 md:gap-8">
+      <nav className="relative z-20 flex items-center justify-between px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4 md:py-6 flex-wrap gap-2 sm:gap-0">
+        <div className="hidden sm:flex items-center gap-2 sm:gap-3 md:gap-4 lg:gap-6 flex-wrap max-w-full">
           <button
             onClick={prevSlide}
             disabled={isFading}
-            className="text-white/80 hover:text-white transition-colors p-2 hover:bg-white/10 rounded-lg disabled:opacity-50"
+            className="text-white/80 hover:text-white transition-colors p-2 hover:bg-white/10 rounded-lg disabled:opacity-50 flex-shrink-0"
             aria-label="이전 슬라이드"
           >
             <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -109,7 +128,7 @@ export function HeroSection({
           <button
             onClick={nextSlide}
             disabled={isFading}
-            className="text-white/80 hover:text-white transition-colors p-2 hover:bg-white/10 rounded-lg disabled:opacity-50"
+            className="text-white/80 hover:text-white transition-colors p-2 hover:bg-white/10 rounded-lg disabled:opacity-50 flex-shrink-0"
             aria-label="다음 슬라이드"
           >
             <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -117,23 +136,72 @@ export function HeroSection({
             </svg>
           </button>
 
-          {/* 바로가기 링크 추가 */}
-          <div className="flex items-center gap-3 sm:gap-4 ml-2">
+          {/* 데스크톱 바로가기 링크 (sm 이상, 줄바꿈 허용) */}
+          <div className="flex items-center gap-2 sm:gap-2 md:gap-3 flex-wrap max-w-full overflow-hidden">
             <Link
               href="https://broaden.global.ac.kr/home/homeIndex.do"
-              className="text-white/90 hover:text-white text-sm sm:text-base font-medium px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg hover:bg-white/10 transition-colors whitespace-nowrap"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white/90 hover:text-white text-xs sm:text-xs md:text-sm font-medium px-2 sm:px-3 md:px-4 py-1.5 sm:py-2 rounded-lg hover:bg-white/10 transition-colors whitespace-normal break-words max-w-full"
             >
               글로벌사이버대학교 방송연예학과 바로가기
             </Link>
             <Link
               href="http://ilchiarthall.com/"
-              className="text-white/90 hover:text-white text-sm sm:text-base font-medium px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg hover:bg-white/10 transition-colors whitespace-nowrap"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white/90 hover:text-white text-xs sm:text-xs md:text-sm font-medium px-2 sm:px-3 md:px-4 py-1.5 sm:py-2 rounded-lg hover:bg-white/10 transition-colors whitespace-normal break-words max-w-full"
             >
               일지 아트홀 바로가기
             </Link>
           </div>
         </div>
-        <div className="flex items-center gap-1.5 sm:gap-2">
+
+        {/* 모바일 바로가기 드롭다운 버튼 (sm 이하) */}
+        <div className="sm:hidden relative" ref={dropdownRef}>
+          <button
+            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+            className="text-white/90 hover:text-white text-xs font-medium px-3 py-2 rounded-lg hover:bg-white/10 transition-colors flex items-center gap-1.5 min-h-[44px]"
+            aria-label="바로가기"
+            aria-expanded={isDropdownOpen}
+          >
+            <span>바로가기</span>
+            <svg
+              className={`w-4 h-4 transition-transform ${isDropdownOpen ? "rotate-180" : ""}`}
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+
+          {/* 드롭다운 메뉴 */}
+          {isDropdownOpen && (
+            <div className="absolute top-full right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 overflow-hidden z-50">
+              <Link
+                href="https://broaden.global.ac.kr/home/homeIndex.do"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 transition-colors border-b border-gray-200 min-h-[44px] flex items-center break-words"
+                onClick={() => setIsDropdownOpen(false)}
+              >
+                글로벌사이버대학교 방송연예학과 바로가기
+              </Link>
+              <Link
+                href="http://ilchiarthall.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 transition-colors min-h-[44px] flex items-center break-words"
+                onClick={() => setIsDropdownOpen(false)}
+              >
+                일지 아트홀 바로가기
+              </Link>
+            </div>
+          )}
+        </div>
+
+        <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
           {slides.map((_, index) => (
             <button
               key={index}
