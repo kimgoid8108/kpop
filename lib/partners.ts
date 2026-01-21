@@ -10,13 +10,13 @@ export interface Partner {
 export const enterprisePartners: Partner[] = [
   {
     id: "enterprise-1",
-    name: "기업 파트너 1",
+    name: "기업 파트너",
     logo: "/Enter1.png",
     url: "#",
   },
   {
     id: "enterprise-2",
-    name: "기업 파트너 2",
+    name: "기업 파트너",
     logo: "/Enter2.png",
     url: "#",
   },
@@ -27,31 +27,31 @@ export const enterprisePartners: Partner[] = [
 export const publicPartners: Partner[] = [
   {
     id: "public-1",
-    name: "공공기관 1",
+    name: "천안시청소년 복합 커뮤니티 센터",
     logo: "/public1.png",
     url: "#",
   },
   {
     id: "public-2",
-    name: "청소년기관 1",
+    name: "천안시 성정 청소년 문화의 집",
     logo: "/public2.png",
     url: "#",
   },
   {
     id: "public-3",
-    name: "공공기관 2",
+    name: "천안시 청소년 수련관",
     logo: "/public3.png",
     url: "#",
   },
   {
     id: "public-4",
-    name: "청소년기관 2",
+    name: "천안시 태조산 청소년 수련관",
     logo: "/public4.png",
     url: "#",
   },
   {
     id: "public-5",
-    name: "공공기관 3",
+    name: "천안시 청소년 재단",
     logo: "/public5.png",
     url: "#",
   },

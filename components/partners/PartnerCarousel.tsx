@@ -5,6 +5,7 @@ import { createPortal } from "react-dom";
 import { useKeenSlider, KeenSliderPlugin } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
 import { Partner } from "../../lib/partners";
+import { AutoT } from "../AutoT";
 
 interface PartnerCarouselProps {
   partners: Partner[];
@@ -72,33 +73,33 @@ export function PartnerCarousel({
     slider.on("updated", nextTimeout);
   };
 
-  // 반응형 slidesPerView 설정
+  // 반응형 slidesPerView 설정 - 이전처럼 크게 보이도록 1개씩만 표시
   const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>(
     {
       loop: loop,
       rtl: false,
       slides: {
-        perView: 1, // 기본 모바일: 1개
+        perView: 1, // 모든 화면에서 1개씩만 표시
         spacing: 16, // gap
       },
       breakpoints: {
         "(min-width: 360px)": {
-          slides: { perView: 1, spacing: 16 },
+          slides: { perView: 1, spacing: 20 },
         },
         "(min-width: 640px)": {
-          slides: { perView: 2, spacing: 20 },
+          slides: { perView: 1, spacing: 24 },
         },
         "(min-width: 768px)": {
-          slides: { perView: 3, spacing: 24 },
+          slides: { perView: 1, spacing: 28 },
         },
         "(min-width: 1024px)": {
-          slides: { perView: 4, spacing: 28 },
+          slides: { perView: 1, spacing: 32 },
         },
         "(min-width: 1280px)": {
-          slides: { perView: 5, spacing: 32 },
+          slides: { perView: 1, spacing: 36 },
         },
         "(min-width: 1536px)": {
-          slides: { perView: 6, spacing: 36 },
+          slides: { perView: 1, spacing: 40 },
         },
       },
       slideChanged(slider) {
@@ -174,11 +175,10 @@ export function PartnerCarousel({
       >
         {partners.map((partner) => (
           <div key={partner.id} className="keen-slider__slide">
-            <div className="flex flex-col items-center justify-center h-full px-2 sm:px-3 md:px-4">
+            <div className="flex flex-col items-center justify-center h-full px-2 sm:px-4 md:px-6 lg:px-8">
               <div
-                className="relative w-full flex items-center justify-center bg-white rounded-lg border border-gray-200 p-3 sm:p-4 md:p-5 lg:p-6 shadow-sm cursor-pointer hover:shadow-md transition-shadow min-h-[120px] sm:min-h-[140px] md:min-h-[160px] lg:min-h-[180px]"
+                className="relative w-full max-w-[500px] sm:max-w-[600px] md:max-w-[700px] lg:max-w-[800px] flex items-center justify-center bg-white rounded-lg border border-gray-200 p-6 sm:p-8 md:p-10 lg:p-12 shadow-sm cursor-pointer hover:shadow-md transition-shadow min-h-[240px] sm:min-h-[280px] md:min-h-[320px] lg:min-h-[360px] mx-auto"
                 onClick={(e) => handleImageClick(e, partner)}
-                style={{ minHeight: "120px" }}
               >
                 <img
                   src={partner.logo}
@@ -202,7 +202,7 @@ export function PartnerCarousel({
                   className="mt-1 sm:mt-2 text-xs text-indigo-600 hover:text-indigo-700 hover:underline whitespace-nowrap min-h-[44px] flex items-center"
                   onClick={(e) => e.stopPropagation()}
                 >
-                  홈페이지 →
+                  <AutoT text="홈페이지 →" />
                 </a>
               )}
             </div>
@@ -305,7 +305,7 @@ export function PartnerCarousel({
                         rel="noopener noreferrer"
                         className="px-4 sm:px-6 py-2 sm:py-2.5 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors font-medium text-sm sm:text-base min-h-[44px] flex items-center justify-center"
                       >
-                        홈페이지 방문 →
+                        <AutoT text="홈페이지 방문 →" />
                       </a>
                     </div>
                   )}

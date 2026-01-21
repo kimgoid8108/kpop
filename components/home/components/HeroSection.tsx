@@ -144,7 +144,7 @@ export function HeroSection({
               rel="noopener noreferrer"
               className="text-white/90 hover:text-white text-xs sm:text-xs md:text-sm font-medium px-2 sm:px-3 md:px-4 py-1.5 sm:py-2 rounded-lg hover:bg-white/10 transition-colors whitespace-normal break-words max-w-full"
             >
-              글로벌사이버대학교 방송연예학과 바로가기
+              <AutoT text="글로벌사이버대학교 방송연예학과 바로가기" />
             </Link>
             <Link
               href="http://ilchiarthall.com/"
@@ -152,7 +152,7 @@ export function HeroSection({
               rel="noopener noreferrer"
               className="text-white/90 hover:text-white text-xs sm:text-xs md:text-sm font-medium px-2 sm:px-3 md:px-4 py-1.5 sm:py-2 rounded-lg hover:bg-white/10 transition-colors whitespace-normal break-words max-w-full"
             >
-              일지 아트홀 바로가기
+              <AutoT text="일지 아트홀 바로가기" />
             </Link>
           </div>
         </div>
@@ -165,7 +165,7 @@ export function HeroSection({
             aria-label="바로가기"
             aria-expanded={isDropdownOpen}
           >
-            <span>바로가기</span>
+            <span><AutoT text="바로가기" /></span>
             <svg
               className={`w-4 h-4 transition-transform ${isDropdownOpen ? "rotate-180" : ""}`}
               fill="none"
@@ -186,7 +186,7 @@ export function HeroSection({
                 className="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 transition-colors border-b border-gray-200 min-h-[44px] flex items-center break-words"
                 onClick={() => setIsDropdownOpen(false)}
               >
-                글로벌사이버대학교 방송연예학과 바로가기
+                <AutoT text="글로벌사이버대학교 방송연예학과 바로가기" />
               </Link>
               <Link
                 href="http://ilchiarthall.com/"
@@ -195,7 +195,7 @@ export function HeroSection({
                 className="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 transition-colors min-h-[44px] flex items-center break-words"
                 onClick={() => setIsDropdownOpen(false)}
               >
-                일지 아트홀 바로가기
+                <AutoT text="일지 아트홀 바로가기" />
               </Link>
             </div>
           )}

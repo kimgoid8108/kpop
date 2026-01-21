@@ -9,9 +9,7 @@ export function PartnersCarouselSection() {
   return (
     <div className="mt-8 sm:mt-12 md:mt-16 space-y-6 sm:space-y-8 md:space-y-10 lg:space-y-12 overflow-x-hidden">
       {/* H2: 추가 협약기관&파트너 */}
-      <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-4 sm:mb-6 md:mb-8 break-words">
-        <AutoT text="추가 협약기관&파트너" />
-      </h2>
+
 
       {/* 섹션 A: 엔터/기업 로고 캐러셀 */}
       <section className="bg-white rounded-lg sm:rounded-xl md:rounded-2xl shadow-md sm:shadow-lg p-4 sm:p-6 md:p-8 lg:p-10 xl:p-12 max-w-full mx-auto overflow-x-hidden">
