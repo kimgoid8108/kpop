@@ -131,7 +131,7 @@ const CERTIFICATE_INFO: {
         label: <AutoT text="기관명" />,
         value: <AutoT text="글로벌사이버대학교" />,
         label2: <AutoT text="대표자" />,
-        value2: <AutoT text="유병영" />,
+        value2: <AutoT text="공병영" />,
       },
       {
         label: <AutoT text="연락처" />,
