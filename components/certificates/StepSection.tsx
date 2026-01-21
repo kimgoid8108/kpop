@@ -22,7 +22,9 @@ export function StepSection({ step }: StepSectionProps) {
     <section className="mb-6 md:mb-8">
       <h3 className="text-base md:text-lg font-bold mb-3 md:mb-4 text-gray-900 flex items-center gap-2">
         <span className="text-blue-700">{step.title.split(".")[0]}.</span>
-        <span>{step.title.split(".").slice(1).join(".").trim()}</span>
+        <span>
+          <AutoT text={step.title.split(".").slice(1).join(".").trim()} />
+        </span>
       </h3>
 
       {step.type === "table" && step.table && (
