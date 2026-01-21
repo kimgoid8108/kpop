@@ -117,7 +117,21 @@ export function HeroSection({
             </svg>
           </button>
 
-          <link rel="stylesheet" href="" />
+          {/* 바로가기 링크 추가 */}
+          <div className="flex items-center gap-3 sm:gap-4 ml-2">
+            <Link
+              href="https://broaden.global.ac.kr/home/homeIndex.do"
+              className="text-white/90 hover:text-white text-sm sm:text-base font-medium px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg hover:bg-white/10 transition-colors whitespace-nowrap"
+            >
+              글로벌사이버대학교 방송연예학과 바로가기
+            </Link>
+            <Link
+              href="http://ilchiarthall.com/"
+              className="text-white/90 hover:text-white text-sm sm:text-base font-medium px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg hover:bg-white/10 transition-colors whitespace-nowrap"
+            >
+              일지 아트홀 바로가기
+            </Link>
+          </div>
         </div>
         <div className="flex items-center gap-1.5 sm:gap-2">
           {slides.map((_, index) => (
