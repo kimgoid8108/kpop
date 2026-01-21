@@ -57,10 +57,10 @@ export const submenuData = [
   },
   {
     label: "자격증 안내",
-    path: "/certificates/about",
+    path: "/certificates",
     submenu: [
-      { label: "종류 안내", path: "/certificates/about" },
-      { label: "관련자격증 및 활동", path: "/certificates/related" },
+      { label: "종류 안내", path: "/certificates" },
+      { label: "발급 조건", path: "/certificates/related" },
       { label: "샘플 이미지", path: "/certificates/samples" },
       { label: "FAQ", path: "/certificates/faq" },
     ],
