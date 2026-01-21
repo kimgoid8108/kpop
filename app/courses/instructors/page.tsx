@@ -11,9 +11,9 @@ const instructors = [
     id: "vocal1",
     name: "김온유",
     role: "Instructor / Dancer",
-    type: "강사 과정 담당",
+    type: "초등 과정 담당",
     image: "/김온유 강사님.jpg",
-    level: "강사",
+    level: "초등",
     field: "dance",
     spec: [
       "동서울대학교 공연예술학부 무용&스트릿 전공",

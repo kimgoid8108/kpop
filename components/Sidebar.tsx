@@ -113,10 +113,8 @@ export const Sidebar = memo(function Sidebar() {
 
   // 메뉴 데이터는 원문 그대로 사용 (AutoT로 감싸서 표시)
   const filteredMenuData = useMemo(() => {
-    return submenuData.filter(
-      (menu) => menu.path !== "/classroom/list" || isAuthenticated
-    );
-  }, [isAuthenticated]);
+    return submenuData;
+  }, []);
 
   const handleLogout = () => {
     logout();
@@ -252,15 +250,23 @@ export const Sidebar = memo(function Sidebar() {
                       }`}
                     >
                       <div className="border-t border-gray-200 bg-gray-50">
-                        {menu.submenu.map((item, idx2) => (
-                          <Link
-                            key={item.path + idx2}
-                            href={item.path}
-                            className="block pl-5 sm:pl-6 pr-2 sm:pr-3 py-1.5 sm:py-2 text-xs text-gray-700 hover:bg-blue-100 hover:text-blue-800 transition-colors border-b border-gray-100 last:border-b-0 leading-relaxed break-words"
-                          >
-                            <AutoT text={item.label} />
-                          </Link>
-                        ))}
+                        {menu.submenu
+                          .filter((item) => {
+                            // "온라인 교육(LMS)" 메뉴의 경우, 로그인하지 않았을 때는 "강의리스트"만 표시
+                            if (menu.label === "온라인 교육(LMS)" && !isAuthenticated) {
+                              return item.path === "/classroom/list";
+                            }
+                            return true;
+                          })
+                          .map((item, idx2) => (
+                            <Link
+                              key={item.path + idx2}
+                              href={item.path}
+                              className="block pl-5 sm:pl-6 pr-2 sm:pr-3 py-1.5 sm:py-2 text-xs text-gray-700 hover:bg-blue-100 hover:text-blue-800 transition-colors border-b border-gray-100 last:border-b-0 leading-relaxed break-words"
+                            >
+                              <AutoT text={item.label} />
+                            </Link>
+                          ))}
                       </div>
                     </div>
                   </>
