@@ -69,9 +69,9 @@ export const submenuData = [
     label: "교육과정 소개",
     path: "/courses/structure",
     submenu: [
+      { label: "교육특성", path: "/courses/features" },
       { label: "커리큘럼", path: "/courses/structure" },
       { label: "강사진", path: "/courses/instructors" },
-      { label: "신청 및 후기", path: "/courses/features" },
     ],
   },
   {

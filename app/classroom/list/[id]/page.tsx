@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { PageLayout } from "../../../../components/PageLayout";
 import { AutoT } from "../../../../components/AutoT";
+import { SyllabusSection } from "../../../../components/classroom/SyllabusSection";
 import { getCourseById } from "../../../../lib/courses";
 
 export default function CourseDetailPage() {
@@ -89,7 +90,7 @@ export default function CourseDetailPage() {
                 <div className="relative w-full aspect-video">
                   <Image
                     src={course.image}
-                    alt={course.title}
+                    alt={course.title || "강의 이미지"}
                     fill
                     className="object-cover w-full rounded-lg"
                     sizes="(max-width: 768px) 100vw, 50vw"
@@ -173,9 +174,13 @@ export default function CourseDetailPage() {
                             ))}
                           </div>
                         </div>
-                        <span className="text-sm text-gray-500">{review.date}</span>
+                        <span className="text-sm text-gray-500">
+                          <AutoT text={review.date} />
+                        </span>
                       </div>
-                      <p className="text-gray-700">{review.comment}</p>
+                      <p className="text-gray-700">
+                        <AutoT text={review.comment} />
+                      </p>
                     </div>
                   ))}
                 </div>
@@ -188,45 +193,11 @@ export default function CourseDetailPage() {
 
             {/* 강의 계획서 */}
             <section className="mb-8 max-w-4xl mx-auto">
-              <h3 className="text-xl font-bold text-gray-900 mb-4 pb-2 border-b-2 border-gray-300 text-center">
+              <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-4 sm:mb-6 pb-2 border-b-2 border-gray-300 text-center">
                 <AutoT text="강의 계획서" />
               </h3>
               {course.syllabus && course.syllabus.length > 0 ? (
-                <div className="space-y-6">
-                  {course.syllabus.map((part, partIndex) => (
-                    <div
-                      key={partIndex}
-                      className="border-l-4 border-blue-500 pl-4 py-3 bg-gray-50 rounded-r-lg"
-                    >
-                      <div className="flex items-center gap-3 mb-3">
-                        <span className="font-bold text-blue-600">
-                          Part {part.partNumber}
-                        </span>
-                        <h4 className="font-semibold text-gray-900 text-lg">
-                          <AutoT text={part.title} />
-                        </h4>
-                      </div>
-                      <div className="ml-4 space-y-2">
-                        {part.lessons.map((lesson, lessonIndex) => (
-                          <div
-                            key={lessonIndex}
-                            className="pl-4 py-2 border-l-2 border-gray-300 bg-white rounded"
-                          >
-                            <div className="flex items-center gap-2 mb-1">
-                              <span className="font-medium text-gray-600 text-sm">
-                                Lesson {lesson.lessonNumber}
-                              </span>
-                              <h5 className="font-medium text-gray-900">
-                                <AutoT text={lesson.title} />
-                              </h5>
-                            </div>
-                            {/* description이 없으니 아래 부분 삭제 */}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  ))}
-                </div>
+                <SyllabusSection syllabus={course.syllabus} />
               ) : (
                 <div className="text-gray-500 text-center py-8 bg-gray-50 rounded-lg">
                   <AutoT text="강의 계획서 정보가 없습니다." />
