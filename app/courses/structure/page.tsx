@@ -201,160 +201,76 @@ const courseSections: CourseSection[] = [
     label: "뮤직",
     intro: "뮤직 파트는 노래, 리듬, 화음, 음악적 소통을 기릅니다.",
     levels: {
-      강사: [
-        {
-          title: "<보컬트레이닝 기법> 강사과정",
-          goal: "최신 음악교육 트렌드와 실전 노하우로 차세대 보컬/음악 강사를 양성합니다. 발성/호흡/코칭 기법과 학생 주도 학습 설계를 익힙니다.",
-          curriculum: [
-            {
-              title: "1-4주차",
-              description: "보컬 기초: 해부학적 원리, 호흡",
-              subject: "이론",
-            },
-            {
-              title: "5-8주차",
-              description: "발성 심화: 장르별 발성 학습",
-              subject: "음악",
-            },
-            {
-              title: "9-12주차",
-              description: "현장 테크닉: 녹음 및 무대 실전",
-              subject: "실습",
-            },
-            {
-              title: "13-14주차",
-              description: "실전 가창: 가창기법 및 종합정리",
-              subject: "음악",
-            },
-          ],
-        },
-        {
-          title: "<보컬 마스터> 강사양성 과정",
-          goal: "보컬 교육 전문가를 양성하는 종합 강사 과정입니다. 발성 기법, 음악 이론, 교육 방법론을 체계적으로 학습하여 전문 보컬 강사로 성장할 수 있습니다.",
-          curriculum: [
-            {
-              title: "1-4주차",
-              description: "보컬 교육 기초 이론: 보컬 교육의 이해, 음악 교육 철학",
-              subject: "이론",
-            },
-            {
-              title: "5-8주차",
-              description: "발성 및 호흡 기법: 올바른 호흡법, 발성 원리와 실습",
-              subject: "음악",
-            },
-            {
-              title: "9-12주차",
-              description: "음악 이론 및 실기: 음정, 리듬, 화성 이해, 장르별 보컬 기법",
-              subject: "실습",
-            },
-          ],
-        },
-        {
-          title: "<K-POP 보컬 트레이닝> 전문가 과정",
-          goal: "K-POP 스타일의 보컬 트레이닝 전문가를 양성하는 과정입니다. K-POP 특유의 보컬 스타일과 표현 기법을 마스터하고, 이를 교육할 수 있는 전문 강사로 성장합니다.",
-          curriculum: [
-            {
-              title: "1-4주차",
-              description: "K-POP 보컬 기초: K-POP 보컬의 특징, 스타일 분석, 기본 보컬 테크닉",
-              subject: "이론",
-            },
-            {
-              title: "5-8주차",
-              description: "고급 보컬 기법: 믹스 보이스와 벨팅, 감정 표현과 퍼포먼스",
-              subject: "음악",
-            },
-            {
-              title: "9-12주차",
-              description: "무대 실전: 무대 매너와 스타일링, 실전 가창 연습",
-              subject: "실습",
-            },
-          ],
-        },
-      ],
-      중등: [
-        {
-          title: "<AI 음악 만들기> 중등과정",
-          goal: "AI를 처음 접하는 중학생도 쉽게 따라올 수 있도록 구성된 창작 체험형 음악 수업입니다. Suno, ChatGPT 등 AI 도구를 활용해 음악을 만드는 전 과정을 직접 경험하며 창의력과 디지털 표현력을 키웁니다.",
-          curriculum: [
-            {
-              title: "1주차",
-              description: "AI 작곡 시작: 전통적 vs AI 작곡",
-            },
-            {
-              title: "2-4주차",
-              description: "기초/작사: Suno 실습, 곡 구조",
-            },
-            {
-              title: "5-6주차",
-              description: "콘텐츠 음악: 영화, 게임 BGM",
-            },
-            {
-              title: "7-8주차",
-              description: "편곡/저작권: 스타일 변환, 생성 예술",
-            },
-          ],
-        },
-        {
-          title: "<K-POP 하모니 앙상블> 중등과정",
-          goal: "중학생을 위한 K-POP 하모니와 앙상블 수업입니다. 친구들과 함께 K-POP 곡을 하모니로 완성하며 협업 능력과 음악적 감성을 키웁니다.",
-          curriculum: [
-            {
-              title: "1-2주차",
-              description: "하모니 기초: 화음의 이해, 기본 하모니 연습",
-            },
-            {
-              title: "3-4주차",
-              description: "앙상블 실습: 파트 분담과 연습, 합창 연습",
-            },
-            {
-              title: "5-8주차",
-              description: "K-POP 하모니 완성: K-POP 곡 하모니 편곡, 무대 공연 준비",
-            },
-          ],
-        },
-      ],
-      초등: [
-        {
-          title: "<내가 바로 K-POP 스타> 초등과정",
-          goal: "음감·리듬을 놀이와 연계하여 음악을 자연스럽게 접하고 음악적 자신감을 키웁니다.",
-          curriculum: [
-            {
-              title: "1주차",
-              description: "호흡/자세: 기본 호흡법 및 놀이",
-            },
-            {
-              title: "2-3주차",
-              description: "발성/믹스보이스: 발성 마음가짐",
-            },
-            {
-              title: "4-5주차",
-              description: "리듬/공명: 바이브레이션, 공명점",
-            },
-            {
-              title: "6-8주차",
-              description: "무대 완성: 감정 표현 및 노래 완성",
-            },
-          ],
-        },
-        {
-          title: "<즐거운 리듬 놀이 음악> 초등과정",
-          goal: "초등학생을 위한 재미있는 리듬과 음악 놀이 수업입니다. 음악을 게임처럼 즐기며 자연스럽게 리듬감과 음감을 기릅니다.",
-          curriculum: [
-            {
-              title: "1-2주차",
-              description: "리듬 놀이: 리듬 게임하기, 박수로 리듬 표현하기",
-            },
-            {
-              title: "3-4주차",
-              description: "악기 체험: 간단한 악기 연주하기, 친구들과 함께 연주하기",
-            },
-            {
-              title: "5-8주차",
-              description: "음악 만들기: 우리만의 리듬 만들기, 음악 발표회",
-            },
-          ],
-        },
-      ],
+      강사: {
+        title: "<보컬트레이닝 기법> 강사과정",
+        goal: "최신 음악교육 트렌드와 실전 노하우로 차세대 보컬/음악 강사를 양성합니다. 발성/호흡/코칭 기법과 학생 주도 학습 설계를 익힙니다.",
+        curriculum: [
+          {
+            title: "1-4주차",
+            description: "보컬 기초: 해부학적 원리, 호흡",
+            subject: "이론",
+          },
+          {
+            title: "5-8주차",
+            description: "발성 심화: 장르별 발성 학습",
+            subject: "음악",
+          },
+          {
+            title: "9-12주차",
+            description: "현장 테크닉: 녹음 및 무대 실전",
+            subject: "실습",
+          },
+          {
+            title: "13-14주차",
+            description: "실전 가창: 가창기법 및 종합정리",
+            subject: "음악",
+          },
+        ],
+      },
+      중등: {
+        title: "<AI 음악 만들기> 중등과정",
+        goal: "AI를 처음 접하는 중학생도 쉽게 따라올 수 있도록 구성된 창작 체험형 음악 수업입니다. Suno, ChatGPT 등 AI 도구를 활용해 음악을 만드는 전 과정을 직접 경험하며 창의력과 디지털 표현력을 키웁니다.",
+        curriculum: [
+          {
+            title: "1주차",
+            description: "AI 작곡 시작: 전통적 vs AI 작곡",
+          },
+          {
+            title: "2-4주차",
+            description: "기초/작사: Suno 실습, 곡 구조",
+          },
+          {
+            title: "5-6주차",
+            description: "콘텐츠 음악: 영화, 게임 BGM",
+          },
+          {
+            title: "7-8주차",
+            description: "편곡/저작권: 스타일 변환, 생성 예술",
+          },
+        ],
+      },
+      초등: {
+        title: "<내가 바로 K-POP 스타> 초등과정",
+        goal: "음감·리듬을 놀이와 연계하여 음악을 자연스럽게 접하고 음악적 자신감을 키웁니다.",
+        curriculum: [
+          {
+            title: "1주차",
+            description: "호흡/자세: 기본 호흡법 및 놀이",
+          },
+          {
+            title: "2-3주차",
+            description: "발성/믹스보이스: 발성 마음가짐",
+          },
+          {
+            title: "4-5주차",
+            description: "리듬/공명: 바이브레이션, 공명점",
+          },
+          {
+            title: "6-8주차",
+            description: "무대 완성: 감정 표현 및 노래 완성",
+          },
+        ],
+      },
     },
   },
 ];
@@ -411,8 +327,8 @@ export default function StructurePage() {
 
   return (
     <PageLayout>
-      <div className="max-w-7xl mx-auto my-4 sm:my-6 md:my-8 lg:my-12 px-3 sm:px-4 md:px-6">
-        <div className="w-full">
+      <div className="w-full mx-auto my-4 sm:my-6 md:my-8 lg:my-12 px-3 sm:px-4 md:px-6 lg:px-8">
+        <div className="w-full max-w-[1400px] mx-auto">
           <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4 md:mb-6 text-gray-900 leading-tight">
             <AutoT text="커리큘럼" />
           </h1>
@@ -509,7 +425,7 @@ export default function StructurePage() {
                   {filteredCourses.map((course, index) => (
                     <div
                       key={index}
-                      className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200"
+                      className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 w-full"
                     >
                       {/* 제목 영역 */}
                       {course.title && (
