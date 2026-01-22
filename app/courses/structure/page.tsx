@@ -411,19 +411,19 @@ export default function StructurePage() {
 
   return (
     <PageLayout>
-      <div className="max-w-7xl mx-auto my-8 md:my-16 px-4">
+      <div className="max-w-7xl mx-auto my-4 sm:my-6 md:my-8 lg:my-12 px-3 sm:px-4 md:px-6">
         <div className="w-full">
-          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 md:mb-6 text-gray-900">
+          <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4 md:mb-6 text-gray-900 leading-tight">
             <AutoT text="커리큘럼" />
           </h1>
-          <section className="mb-8">
+          <section className="mb-6 sm:mb-8">
             {/* ---------- 분야 탭 및 검색창 ---------- */}
-            <div className="flex flex-wrap items-center gap-3 sm:gap-4 mb-3">
-              <div className="flex gap-2 sm:gap-4 flex-wrap">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3 mb-3">
+              <div className="flex gap-2 flex-wrap">
                 {courseSections.map((section) => (
                   <button
                     key={section.label}
-                    className={`px-4 py-2 rounded-full font-semibold border transition ${
+                    className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-full font-semibold border transition text-xs sm:text-sm whitespace-nowrap ${
                       selectedCategory === section.label
                         ? "bg-indigo-600 text-white border-indigo-600"
                         : "bg-white text-gray-700 border-gray-300 hover:border-indigo-400"
@@ -440,11 +440,11 @@ export default function StructurePage() {
                 ))}
               </div>
               {/* 검색창 */}
-              <div className="flex-1 min-w-[200px] sm:min-w-[250px]">
+              <div className="flex-1 min-w-0 sm:min-w-[200px] md:min-w-[250px]">
                 <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <div className="absolute inset-y-0 left-0 pl-2 sm:pl-3 flex items-center pointer-events-none">
                     <svg
-                      className="h-4 w-4 sm:h-5 sm:w-5 text-gray-400"
+                      className="h-3.5 w-3.5 sm:h-4 sm:w-4 md:h-5 md:w-5 text-gray-400"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -462,17 +462,17 @@ export default function StructurePage() {
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder={searchPlaceholder}
-                    className="block w-full pl-9 sm:pl-10 pr-3 py-2 sm:py-2.5 border border-gray-300 rounded-lg text-xs sm:text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition"
+                    className="block w-full pl-8 sm:pl-9 md:pl-10 pr-2 sm:pr-3 py-1.5 sm:py-2 md:py-2.5 border border-gray-300 rounded-lg text-xs sm:text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition"
                   />
                 </div>
               </div>
             </div>
             {/* ---------- 레벨 탭 ---------- */}
-            <div className="flex gap-2 mb-2">
+            <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-3 sm:mb-4">
               {levelKeys.map((level) => (
                 <button
                   key={level}
-                  className={`px-3 py-1.5 rounded-lg font-medium border transition text-sm ${
+                  className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg font-medium border transition text-xs sm:text-sm whitespace-nowrap ${
                     safeSelectedLevel === level
                       ? "bg-indigo-500 text-white border-indigo-500"
                       : "bg-gray-50 text-gray-600 border-gray-300 hover:border-indigo-400"
@@ -486,20 +486,20 @@ export default function StructurePage() {
             </div>
 
             {/* ---------- 과정 상세영역(각 과정별 박스) ---------- */}
-            <div className="space-y-6 md:space-y-8">
+            <div className="space-y-4 sm:space-y-5 md:space-y-6 lg:space-y-8">
               {filteredCourses.length === 0 ? (
-                <div className="text-gray-500 text-center py-8 bg-gray-50 rounded-lg">
+                <div className="text-gray-500 text-center py-6 sm:py-8 bg-gray-50 rounded-lg text-xs sm:text-sm">
                   <AutoT text="검색 결과가 없습니다." />
                 </div>
               ) : (
                 <>
                   {/* 파트 소개 */}
                   {currentSection.intro && (
-                    <div className="bg-indigo-50 border border-indigo-200 rounded-lg p-4 sm:p-6 mb-4">
-                      <div className="font-semibold text-indigo-800 mb-2 text-sm sm:text-base">
+                    <div className="bg-indigo-50 border border-indigo-200 rounded-lg p-3 sm:p-4 md:p-6 mb-3 sm:mb-4">
+                      <div className="font-semibold text-indigo-800 mb-1.5 sm:mb-2 text-xs sm:text-sm md:text-base">
                         <AutoT text="파트 소개" />
                       </div>
-                      <p className="text-xs sm:text-sm text-indigo-700">
+                      <p className="text-xs sm:text-sm text-indigo-700 leading-relaxed break-words">
                         <AutoT text={currentSection.intro} />
                       </p>
                     </div>
@@ -513,24 +513,24 @@ export default function StructurePage() {
                     >
                       {/* 제목 영역 */}
                       {course.title && (
-                        <div className="bg-blue-400 px-4 sm:px-6 py-3 sm:py-4">
-                          <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-white">
+                        <div className="bg-blue-400 px-3 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4">
+                          <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-white leading-tight break-words">
                             <AutoT text={course.title} />
                           </h2>
                         </div>
                       )}
 
                       {/* 내용 영역 */}
-                      <div className="p-4 sm:p-6">
-                        <div className="flex flex-col md:flex-row gap-4 sm:gap-6">
+                      <div className="p-3 sm:p-4 md:p-6">
+                        <div className="flex flex-col md:flex-row gap-3 sm:gap-4 md:gap-6">
                           {/* 왼쪽 : 수업 목표 */}
                           {course.goal && (
                             <div className="flex-1 min-w-0">
-                              <div className="mb-4">
-                                <div className="font-semibold text-gray-800 mb-2 text-sm sm:text-base">
+                              <div className="mb-3 sm:mb-4">
+                                <div className="font-semibold text-gray-800 mb-1.5 sm:mb-2 text-xs sm:text-sm md:text-base">
                                   <AutoT text="수업 목표" />
                                 </div>
-                                <p className="text-xs sm:text-sm text-gray-700 whitespace-pre-line">
+                                <p className="text-xs sm:text-sm text-gray-700 whitespace-pre-line leading-relaxed break-words">
                                   <AutoT text={course.goal} />
                                 </p>
                               </div>
@@ -540,26 +540,26 @@ export default function StructurePage() {
                           {/* 오른쪽 : 커리큘럼 */}
                           {course.curriculum && course.curriculum.length > 0 && (
                             <div className="flex-1 min-w-0">
-                              <div className="font-semibold text-gray-800 mb-3 text-sm sm:text-base">
+                              <div className="font-semibold text-gray-800 mb-2 sm:mb-3 text-xs sm:text-sm md:text-base">
                                 <AutoT text="커리큘럼" />
                               </div>
-                              <div className="space-y-3">
+                              <div className="space-y-2 sm:space-y-3">
                                 {course.curriculum.map((item, itemIndex) => (
                                   <div
                                     key={itemIndex}
-                                    className="border-l-4 border-indigo-500 pl-3 sm:pl-4 py-2 bg-gray-50 rounded-r-lg"
+                                    className="border-l-4 border-indigo-500 pl-2 sm:pl-3 md:pl-4 py-1.5 sm:py-2 bg-gray-50 rounded-r-lg"
                                   >
-                                    <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 mb-1">
-                                      <span className="font-bold text-indigo-600 text-xs sm:text-sm">
+                                    <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 mb-1 flex-wrap">
+                                      <span className="font-bold text-indigo-600 text-xs sm:text-sm break-words">
                                         <AutoT text={item.title} />
                                       </span>
                                       {item.subject && (
-                                        <span className="px-2 py-0.5 text-xs bg-indigo-100 text-indigo-700 rounded">
+                                        <span className="px-1.5 sm:px-2 py-0.5 text-xs bg-indigo-100 text-indigo-700 rounded whitespace-nowrap">
                                           <AutoT text={item.subject} />
                                         </span>
                                       )}
                                     </div>
-                                    <p className="text-xs sm:text-sm text-gray-700 ml-2">
+                                    <p className="text-xs sm:text-sm text-gray-700 ml-0 sm:ml-2 leading-relaxed break-words">
                                       <AutoT text={item.description} />
                                     </p>
                                   </div>

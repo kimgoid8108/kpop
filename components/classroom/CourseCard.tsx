@@ -36,25 +36,25 @@ export function CourseCard({ course }: CourseCardProps) {
         />
         <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-10 bg-black transition" />
       </div>
-      <div className="p-3 sm:p-4 flex-1 flex flex-col">
-        <div className="flex items-center gap-2 mb-2 flex-wrap">
+      <div className="p-3 sm:p-4 flex-1 flex flex-col min-w-0">
+        <div className="flex items-center gap-1.5 sm:gap-2 mb-2 flex-wrap">
           <span
-            className={`inline-block text-center px-2 sm:px-3 py-1 text-xs font-medium rounded ${categoryColor} transition group-hover:scale-105`}
+            className={`inline-block text-center px-2 sm:px-3 py-0.5 sm:py-1 text-xs font-medium rounded whitespace-nowrap ${categoryColor} transition group-hover:scale-105`}
           >
             {course.categoryEn}
           </span>
           {course.level && (
-            <span className="px-2 py-1 text-xs font-medium rounded bg-gray-100 text-gray-700">
+            <span className="px-2 py-0.5 sm:py-1 text-xs font-medium rounded bg-gray-100 text-gray-700 whitespace-nowrap">
               <AutoT text={course.level} />
             </span>
           )}
         </div>
-        <h2 className="text-base sm:text-lg font-semibold text-gray-900 group-hover:text-blue-700 transition mb-1 line-clamp-2">
+        <h2 className="text-sm sm:text-base md:text-lg font-semibold text-gray-900 group-hover:text-blue-700 transition mb-1 line-clamp-2 break-words leading-tight">
           <AutoT text={course.title} />
         </h2>
         {course.instructor && (
-          <p className="text-xs sm:text-sm text-gray-600 mt-1">
-            <AutoT text="강사" />: {course.instructor}
+          <p className="text-xs sm:text-sm text-gray-600 mt-1 break-words">
+            <AutoT text="강사" />: <span className="break-all">{course.instructor}</span>
           </p>
         )}
       </div>
