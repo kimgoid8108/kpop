@@ -61,82 +61,87 @@ export default function CourseDetailPage() {
         </Link>
 
         <div className="bg-white rounded-xl shadow overflow-hidden">
-          {/* 강의 이미지 및 기본 정보 */}
-          <div className="relative w-full aspect-video">
-            <Image
-              src={course.image}
-              alt={course.title}
-              fill
-              className="object-cover"
-              sizes="100vw"
-            />
-            <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center">
-              <div className="text-center px-4">
-                <p className="text-white text-sm mb-2">GLOBAL K-POP INSTITUTE</p>
-                <h1 className="text-white text-4xl md:text-5xl lg:text-6xl font-bold mb-2">
-                  {course.categoryEn}
-                </h1>
-                <p className="text-white text-lg md:text-xl">
-                  <AutoT text={course.title} />
-                </p>
+          {/* 상단 박스: 왼쪽 이미지, 오른쪽 강의 소개/내용 */}
+          <div className="p-6 md:p-8">
+            <div className="flex flex-col md:flex-row gap-6 md:gap-8">
+              {/* 왼쪽: 이미지 */}
+              <div className="w-full md:w-1/2">
+                {/* 제목 - 이미지 위에 배치 */}
+                <div className="mb-4">
+                  <div className="flex items-center gap-4 mb-2">
+                    <span
+                      className={`px-4 py-2 text-sm font-medium rounded ${
+                        course.categoryEn === "Dance"
+                          ? "bg-pink-100 text-pink-800"
+                          : course.categoryEn === "Music"
+                          ? "bg-blue-100 text-blue-800"
+                          : "bg-amber-100 text-amber-800"
+                      }`}
+                    >
+                      {course.categoryEn}
+                    </span>
+                  </div>
+                  <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-gray-900">
+                    <AutoT text={course.title} />
+                  </h2>
+                </div>
+                {/* 이미지 */}
+                <div className="relative w-full aspect-video">
+                  <Image
+                    src={course.image}
+                    alt={course.title}
+                    fill
+                    className="object-cover w-full rounded-lg"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
+                </div>
+              </div>
+
+              {/* 오른쪽: 강의 소개 및 내용 */}
+              <div className="w-full md:w-1/2 space-y-6">
+                {/* 강의 소개 */}
+                <section>
+                  <h3 className="text-xl font-bold text-gray-900 mb-4 pb-2 border-b-2 border-gray-300">
+                    <AutoT text="강의 소개" />
+                  </h3>
+                  <div className="text-gray-700 leading-relaxed">
+                    <p>
+                      <AutoT text={course.intro || ""} />
+                    </p>
+                  </div>
+                </section>
+
+                {/* 강의 내용 */}
+                <section>
+                  <h3 className="text-xl font-bold text-gray-900 mb-4 pb-2 border-b-2 border-gray-300">
+                    <AutoT text="강의 내용" />
+                  </h3>
+                  <div className="text-gray-700 leading-relaxed whitespace-pre-line">
+                    {course.content ? (
+                      <AutoT text={course.content} />
+                    ) : (
+                      <p>
+                        <AutoT text="체계적인 커리큘럼을 통해 단계별로 학습할 수 있습니다." />
+                      </p>
+                    )}
+                  </div>
+                </section>
               </div>
             </div>
           </div>
 
-          {/* 강의 정보 카드 */}
-          <div className="p-6 md:p-8">
-            <div className="flex items-center gap-4 mb-6">
-              <span
-                className={`px-4 py-2 text-sm font-medium rounded ${
-                  course.categoryEn === "Dance"
-                    ? "bg-pink-100 text-pink-800"
-                    : course.categoryEn === "Music"
-                    ? "bg-blue-100 text-blue-800"
-                    : "bg-amber-100 text-amber-800"
-                }`}
-              >
-                {course.categoryEn}
-              </span>
-              <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
-                <AutoT text={course.title} />
-              </h2>
+          {/* 하단: 강의 후기 및 계획서 (센터 정렬) */}
+          <div className="px-6 md:px-8 pb-6 md:pb-8">
+            {/* 수강 신청 버튼 */}
+            <div className="max-w-6xl mx-auto mb-8 text-left">
+              <button className="px-15 py-5 bg-blue-600 text-white text-lg font-semibold rounded-lg hover:bg-blue-700 transition-colors shadow-md hover:shadow-lg">
+                <AutoT text="수강 신청" />
+              </button>
             </div>
 
-            {/* 강의 소개 */}
-            <section className="mb-8">
-              <h3 className="text-xl font-bold text-gray-900 mb-4 pb-2 border-b-2 border-gray-300">
-                <AutoT text="강의 소개" />
-              </h3>
-              <div className="text-gray-700 leading-relaxed">
-                {course.description ? (
-                  <AutoT text={course.description} />
-                ) : (
-                  <p>
-                    <AutoT text="이 강의는 K-POP의 모든 것을 배울 수 있는 종합 프로그램입니다." />
-                  </p>
-                )}
-              </div>
-            </section>
-
-            {/* 강의 내용 */}
-            <section className="mb-8">
-              <h3 className="text-xl font-bold text-gray-900 mb-4 pb-2 border-b-2 border-gray-300">
-                <AutoT text="강의 내용" />
-              </h3>
-              <div className="text-gray-700 leading-relaxed whitespace-pre-line">
-                {course.content ? (
-                  <AutoT text={course.content} />
-                ) : (
-                  <p>
-                    <AutoT text="체계적인 커리큘럼을 통해 단계별로 학습할 수 있습니다." />
-                  </p>
-                )}
-              </div>
-            </section>
-
             {/* 강의 후기 */}
-            <section className="mb-8">
-              <h3 className="text-xl font-bold text-gray-900 mb-4 pb-2 border-b-2 border-gray-300">
+            <section className="mb-8 max-w-4xl mx-auto">
+              <h3 className="text-xl font-bold text-gray-900 mb-4 pb-2 border-b-2 border-gray-300 text-center">
                 <AutoT text="강의 후기" />
               </h3>
               {course.reviews && course.reviews.length > 0 ? (
@@ -182,8 +187,8 @@ export default function CourseDetailPage() {
             </section>
 
             {/* 강의 계획서 */}
-            <section className="mb-8">
-              <h3 className="text-xl font-bold text-gray-900 mb-4 pb-2 border-b-2 border-gray-300">
+            <section className="mb-8 max-w-4xl mx-auto">
+              <h3 className="text-xl font-bold text-gray-900 mb-4 pb-2 border-b-2 border-gray-300 text-center">
                 <AutoT text="강의 계획서" />
               </h3>
               {course.syllabus && course.syllabus.length > 0 ? (
@@ -215,9 +220,7 @@ export default function CourseDetailPage() {
                                 <AutoT text={lesson.title} />
                               </h5>
                             </div>
-                            <p className="text-gray-700 text-sm ml-16">
-                              <AutoT text={lesson.description} />
-                            </p>
+                            {/* description이 없으니 아래 부분 삭제 */}
                           </div>
                         ))}
                       </div>
