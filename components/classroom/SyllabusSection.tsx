@@ -1,14 +1,40 @@
 "use client";
 
 import React, { useMemo } from "react";
+import Link from "next/link";
 import { AutoT } from "../../components/AutoT";
 import type { SyllabusPart } from "../../lib/courses";
 
 interface SyllabusSectionProps {
   syllabus: SyllabusPart[];
+  courseId?: string;
 }
 
-export function SyllabusSection({ syllabus }: SyllabusSectionProps) {
+const lessonBoxClass =
+  "max-w-full pl-2 sm:pl-3 md:pl-4 py-1 sm:py-1.5 md:py-2 border-l-2 border-gray-300 bg-white rounded";
+
+function LessonContent({
+  lessonNumber,
+  title,
+  as: Tag = "h6",
+}: {
+  lessonNumber: number;
+  title: string;
+  as?: "h5" | "h6";
+}) {
+  return (
+    <>
+      <span className="font-medium text-gray-600 text-xs sm:text-sm whitespace-nowrap shrink-0">
+        <AutoT text="레슨" /> {lessonNumber}
+      </span>
+      <Tag className="font-medium text-gray-900 text-xs sm:text-sm md:text-base break-words min-w-0">
+        <AutoT text={title} />
+      </Tag>
+    </>
+  );
+}
+
+export function SyllabusSection({ syllabus, courseId }: SyllabusSectionProps) {
   // 과목별로 그룹화
   const groupedBySubject = useMemo(() => {
     const grouped: Record<string, SyllabusPart[]> = {};
@@ -43,9 +69,8 @@ export function SyllabusSection({ syllabus }: SyllabusSectionProps) {
               {parts.map((part, partIndex) => (
                 <div
                   key={partIndex}
-                  className="border-l-4 border-blue-500 pl-2 sm:pl-3 md:pl-4 py-1.5 sm:py-2 md:py-3 bg-gray-50 rounded-r-lg"
-                >
-                  <div className="flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-2 md:gap-3 mb-1.5 sm:mb-2 md:mb-3">
+                  className="min-w-0 border-l-4 border-blue-500 pl-2 sm:pl-3 md:pl-4 py-1.5 sm:py-2 md:py-3 bg-gray-50 rounded-r-lg">
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-2 md:gap-3 mb-1.5 sm:mb-2 md:mb-3 min-w-0">
                     <span className="font-bold text-blue-600 text-xs sm:text-sm md:text-base whitespace-nowrap">
                       <AutoT text="파트" /> {part.partNumber}
                     </span>
@@ -53,22 +78,33 @@ export function SyllabusSection({ syllabus }: SyllabusSectionProps) {
                       <AutoT text={part.title} />
                     </h5>
                   </div>
-                  <div className="ml-1 sm:ml-2 md:ml-4 space-y-1.5 sm:space-y-2">
-                    {part.lessons.map((lesson, lessonIndex) => (
-                      <div
-                        key={lessonIndex}
-                        className="pl-2 sm:pl-3 md:pl-4 py-1 sm:py-1.5 md:py-2 border-l-2 border-gray-300 bg-white rounded"
-                      >
-                        <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
-                          <span className="font-medium text-gray-600 text-xs sm:text-sm whitespace-nowrap">
-                            <AutoT text="레슨" /> {lesson.lessonNumber}
-                          </span>
-                          <h6 className="font-medium text-gray-900 text-xs sm:text-sm md:text-base break-words">
-                            <AutoT text={lesson.title} />
-                          </h6>
+                  <div className="min-w-0 ml-1 sm:ml-2 md:ml-4 space-y-1.5 sm:space-y-2">
+                    {part.lessons.map((lesson, lessonIndex) =>
+                      courseId ? (
+                        <Link
+                          key={lessonIndex}
+                          href={`/classroom/player/${courseId}/${part.partNumber}/${lesson.lessonNumber}`}
+                          className={`${lessonBoxClass} block hover:bg-gray-50 cursor-pointer`}>
+                          <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 min-w-0">
+                            <LessonContent
+                              lessonNumber={lesson.lessonNumber}
+                              title={lesson.title}
+                              as="h6"
+                            />
+                          </div>
+                        </Link>
+                      ) : (
+                        <div key={lessonIndex} className={lessonBoxClass}>
+                          <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 min-w-0">
+                            <LessonContent
+                              lessonNumber={lesson.lessonNumber}
+                              title={lesson.title}
+                              as="h6"
+                            />
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                      )
+                    )}
                   </div>
                 </div>
               ))}
@@ -85,9 +121,8 @@ export function SyllabusSection({ syllabus }: SyllabusSectionProps) {
               {groupedBySubject.noSubject.map((part, partIndex) => (
                 <div
                   key={partIndex}
-                  className="border-l-4 border-blue-500 pl-2 sm:pl-3 md:pl-4 py-1.5 sm:py-2 md:py-3 bg-gray-50 rounded-r-lg"
-                >
-                  <div className="flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-2 md:gap-3 mb-1.5 sm:mb-2 md:mb-3">
+                  className="min-w-0 border-l-4 border-blue-500 pl-2 sm:pl-3 md:pl-4 py-1.5 sm:py-2 md:py-3 bg-gray-50 rounded-r-lg">
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-2 md:gap-3 mb-1.5 sm:mb-2 md:mb-3 min-w-0">
                     <span className="font-bold text-blue-600 text-xs sm:text-sm md:text-base whitespace-nowrap">
                       <AutoT text="파트" /> {part.partNumber}
                     </span>
@@ -95,22 +130,33 @@ export function SyllabusSection({ syllabus }: SyllabusSectionProps) {
                       <AutoT text={part.title} />
                     </h5>
                   </div>
-                  <div className="ml-1 sm:ml-2 md:ml-4 space-y-1.5 sm:space-y-2">
-                    {part.lessons.map((lesson, lessonIndex) => (
-                      <div
-                        key={lessonIndex}
-                        className="pl-2 sm:pl-3 md:pl-4 py-1 sm:py-1.5 md:py-2 border-l-2 border-gray-300 bg-white rounded"
-                      >
-                        <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
-                          <span className="font-medium text-gray-600 text-xs sm:text-sm whitespace-nowrap">
-                            <AutoT text="레슨" /> {lesson.lessonNumber}
-                          </span>
-                          <h6 className="font-medium text-gray-900 text-xs sm:text-sm md:text-base break-words">
-                            <AutoT text={lesson.title} />
-                          </h6>
+                  <div className="min-w-0 ml-1 sm:ml-2 md:ml-4 space-y-1.5 sm:space-y-2">
+                    {part.lessons.map((lesson, lessonIndex) =>
+                      courseId ? (
+                        <Link
+                          key={lessonIndex}
+                          href={`/classroom/player/${courseId}/${part.partNumber}/${lesson.lessonNumber}`}
+                          className={`${lessonBoxClass} block hover:bg-gray-50 cursor-pointer`}>
+                          <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 min-w-0">
+                            <LessonContent
+                              lessonNumber={lesson.lessonNumber}
+                              title={lesson.title}
+                              as="h6"
+                            />
+                          </div>
+                        </Link>
+                      ) : (
+                        <div key={lessonIndex} className={lessonBoxClass}>
+                          <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 min-w-0">
+                            <LessonContent
+                              lessonNumber={lesson.lessonNumber}
+                              title={lesson.title}
+                              as="h6"
+                            />
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                      )
+                    )}
                   </div>
                 </div>
               ))}
@@ -127,9 +173,8 @@ export function SyllabusSection({ syllabus }: SyllabusSectionProps) {
       {syllabus.map((part, partIndex) => (
         <div
           key={partIndex}
-          className="border-l-4 border-blue-500 pl-2 sm:pl-3 md:pl-4 py-1.5 sm:py-2 md:py-3 bg-gray-50 rounded-r-lg"
-        >
-          <div className="flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-2 md:gap-3 mb-1.5 sm:mb-2 md:mb-3">
+          className="min-w-0 border-l-4 border-blue-500 pl-2 sm:pl-3 md:pl-4 py-1.5 sm:py-2 md:py-3 bg-gray-50 rounded-r-lg">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-2 md:gap-3 mb-1.5 sm:mb-2 md:mb-3 min-w-0">
             <span className="font-bold text-blue-600 text-xs sm:text-sm md:text-base whitespace-nowrap">
               <AutoT text="파트" /> {part.partNumber}
             </span>
@@ -137,22 +182,33 @@ export function SyllabusSection({ syllabus }: SyllabusSectionProps) {
               <AutoT text={part.title} />
             </h4>
           </div>
-          <div className="ml-1 sm:ml-2 md:ml-4 space-y-1.5 sm:space-y-2">
-            {part.lessons.map((lesson, lessonIndex) => (
-              <div
-                key={lessonIndex}
-                className="pl-2 sm:pl-3 md:pl-4 py-1 sm:py-1.5 md:py-2 border-l-2 border-gray-300 bg-white rounded"
-              >
-                <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
-                  <span className="font-medium text-gray-600 text-xs sm:text-sm whitespace-nowrap">
-                    <AutoT text="레슨" /> {lesson.lessonNumber}
-                  </span>
-                  <h5 className="font-medium text-gray-900 text-xs sm:text-sm md:text-base break-words">
-                    <AutoT text={lesson.title} />
-                  </h5>
+          <div className="min-w-0 ml-1 sm:ml-2 md:ml-4 space-y-1.5 sm:space-y-2">
+            {part.lessons.map((lesson, lessonIndex) =>
+              courseId ? (
+                <Link
+                  key={lessonIndex}
+                  href={`/classroom/player/${courseId}/${part.partNumber}/${lesson.lessonNumber}`}
+                  className={`${lessonBoxClass} block hover:bg-gray-50 cursor-pointer`}>
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 min-w-0">
+                    <LessonContent
+                      lessonNumber={lesson.lessonNumber}
+                      title={lesson.title}
+                      as="h5"
+                    />
+                  </div>
+                </Link>
+              ) : (
+                <div key={lessonIndex} className={lessonBoxClass}>
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 min-w-0">
+                    <LessonContent
+                      lessonNumber={lesson.lessonNumber}
+                      title={lesson.title}
+                      as="h5"
+                    />
+                  </div>
                 </div>
-              </div>
-            ))}
+              )
+            )}
           </div>
         </div>
       ))}
