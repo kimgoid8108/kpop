@@ -9,8 +9,8 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.994.0",
-    "@aws-sdk/s3-request-presigner": "^3.994.0",
+    "@aws-sdk/client-s3": "^3.999.0",
+    "@aws-sdk/s3-request-presigner": "^3.999.0",
     "framer-motion": "^12.26.1",
     "keen-slider": "^6.8.6",
     "next": "16.1.1",

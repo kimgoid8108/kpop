@@ -185,7 +185,7 @@ export default function CourseDetailPage() {
               )}
             </section>
 
-            {/* 강의 계획서 */}
+            {/* 강의 계획서: 기존 데이터(노래의 호흡과 자세를 배워요 등) 파트 그대로 표시 */}
             <section className="mb-4 sm:mb-6 md:mb-8 max-w-4xl mx-auto">
               <h3 className="text-base sm:text-lg md:text-xl font-bold text-gray-900 mb-3 sm:mb-4 md:mb-6 pb-1.5 sm:pb-2 border-b-2 border-gray-300 text-center break-words">
                 <AutoT text="강의 계획서" />
