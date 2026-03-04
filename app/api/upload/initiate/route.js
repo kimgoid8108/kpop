@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { CreateMultipartUploadCommand, UploadPartCommand } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
-import { r2Client, R2_BUCKET, buildVideoKey } from "@/lib/r2";
+import { getR2Client, R2_BUCKET, buildVideoKey } from '@/lib/r2';
 
 const PART_SIZE = 15 * 1024 * 1024; // 15MB
 const PRESIGN_EXPIRES_IN = 6 * 60 * 60; // 6 hours
@@ -37,7 +37,7 @@ export async function POST(req) {
       ContentType: contentType || 'video/mp4',
     });
 
-    const createResult = await r2Client.send(createCommand);
+    const createResult = await getR2Client().send(createCommand);
 
     const uploadId = createResult.UploadId;
     if (!uploadId) {
@@ -57,7 +57,7 @@ export async function POST(req) {
         PartNumber: partNumber,
       });
 
-      const url = await getSignedUrl(r2Client, uploadPartCommand, {
+      const url = await getSignedUrl(getR2Client(), uploadPartCommand, {
         expiresIn: PRESIGN_EXPIRES_IN,
       });
 

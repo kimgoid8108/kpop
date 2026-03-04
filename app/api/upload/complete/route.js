@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { CompleteMultipartUploadCommand } from '@aws-sdk/client-s3';
-import { r2Client, R2_BUCKET } from '@/lib/r2';
+import { getR2Client, R2_BUCKET } from '@/lib/r2';
 
 function validateAdminToken(req) {
   const token = req.headers.get('x-admin-token');
@@ -46,7 +46,7 @@ export async function POST(req) {
       MultipartUpload: { Parts: sortedParts },
     });
 
-    const result = await r2Client.send(command);
+    const result = await getR2Client().send(command);
 
     return NextResponse.json({
       bucket: result.Bucket,

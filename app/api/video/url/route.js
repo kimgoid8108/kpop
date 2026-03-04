@@ -3,7 +3,7 @@ export const runtime = 'nodejs';
 import { NextResponse } from 'next/server';
 import { GetObjectCommand } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
-import { r2Client, R2_BUCKET } from '@/lib/r2';
+import { getR2Client, R2_BUCKET } from '@/lib/r2';
 import { getCourseMeta, findLesson } from '@/lib/courseMeta';
 
 const PRESIGN_EXPIRES_IN = 60 * 60; // 1시간
@@ -112,7 +112,7 @@ export async function POST(req) {
       Key: videoKey,
     });
 
-    const url = await getSignedUrl(r2Client, command, {
+    const url = await getSignedUrl(getR2Client(), command, {
       expiresIn: PRESIGN_EXPIRES_IN,
     });
 

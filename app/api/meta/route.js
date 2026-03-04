@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { GetObjectCommand, NoSuchKey } from '@aws-sdk/client-s3';
 import {
-  r2Client,
+  getR2Client,
   R2_BUCKET,
   COURSE_TITLES,
   PART_TITLES,
@@ -73,7 +73,7 @@ export async function GET(req) {
       Key: key,
     });
 
-    const res = await r2Client.send(command);
+    const res = await getR2Client().send(command);
     const text =
       typeof res.Body?.transformToString === 'function'
         ? await res.Body.transformToString()

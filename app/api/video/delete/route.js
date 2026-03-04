@@ -3,7 +3,7 @@ export const runtime = 'nodejs';
 import { NextResponse } from 'next/server';
 import { DeleteObjectCommand } from '@aws-sdk/client-s3';
 import { PutObjectCommand } from '@aws-sdk/client-s3';
-import { r2Client, R2_BUCKET } from '@/lib/r2';
+import { getR2Client, R2_BUCKET } from '@/lib/r2';
 import { getCourseMeta, findLesson } from '@/lib/courseMeta';
 
 function validateAdminToken(req) {
@@ -53,7 +53,7 @@ export async function POST(req) {
         Bucket: R2_BUCKET,
         Key: videoKey,
       });
-      await r2Client.send(deleteCommand);
+      await getR2Client().send(deleteCommand);
     }
 
     const levels = Array.isArray(meta.levels) ? [...meta.levels] : [];
@@ -74,7 +74,7 @@ export async function POST(req) {
       Body: JSON.stringify(updatedMeta, null, 2),
       ContentType: 'application/json; charset=utf-8',
     });
-    await r2Client.send(putCommand);
+    await getR2Client().send(putCommand);
 
     return NextResponse.json({ success: true, deletedKey: videoKey || null });
   } catch (err) {
