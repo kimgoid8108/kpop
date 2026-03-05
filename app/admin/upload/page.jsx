@@ -384,6 +384,10 @@ export default function AdminUploadPage() {
       if (!initRes.ok) {
         const text = await initRes.text();
         appendLog(`initiate 실패: ${text}`);
+        if (initRes.status === 401) {
+          appendLog('→ ADMIN 토큰을 입력했는지 확인하세요. Vercel 등 배포 환경에서는 프로젝트 설정에 ADMIN_UPLOAD_TOKEN 환경 변수를 추가해야 합니다.');
+          throw new Error('인증 실패(401). 토큰을 확인하거나 서버 환경 변수 ADMIN_UPLOAD_TOKEN을 설정하세요.');
+        }
         throw new Error('Failed to initiate multipart upload');
       }
 
@@ -567,7 +571,7 @@ export default function AdminUploadPage() {
           }}
         />
         <p style={{ fontSize: '12px', color: '#6b7280', marginTop: '4px' }}>
-          토큰을 입력하면 자동으로 meta.json 을 불러옵니다.
+          토큰을 입력하면 자동으로 meta.json 을 불러옵니다. <strong>Vercel 배포 시</strong> 프로젝트 설정 → Environment Variables에 <code>ADMIN_UPLOAD_TOKEN</code>을 추가하고, 여기 입력하는 값과 동일하게 설정하세요.
         </p>
       </section>
 
