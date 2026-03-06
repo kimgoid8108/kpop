@@ -174,25 +174,28 @@ export default function AdminUploadPage() {
     const upTo = Math.max(20, maxExisting + 5);
     for (let n = 1; n <= upTo; n++) {
       const existing = byNumber[n];
+      // 선택한 강사 레슨만 제목 표시, 다른 강사 레슨은 번호만 표시(헷갈림 방지)
+      const isCurrentInstructor = existing && instructorId && existing.instructorId === instructorId;
       const lid = `l${String(n).padStart(3, '0')}`;
       options.push({
         value: String(n),
-        label: existing ? `${n}번 (${lid}) - ${(existing.title || '').trim() || '제목 없음'}` : `${n}번 (${lid})`,
-        hasVideo: !!existing?.videoKey,
+        label: isCurrentInstructor ? `${n}번 (${lid}) - ${(existing.title || '').trim() || '제목 없음'}` : `${n}번 (${lid})`,
+        hasVideo: isCurrentInstructor && !!existing?.videoKey,
       });
     }
     return options;
-  }, [meta, partId, nextLessonId]);
+  }, [meta, partId, nextLessonId, instructorId]);
 
   const selectedSlotOption = lessonSlotOptions.find((o) => o.value === lessonSlot);
+  const hasVideoInSlot = !!selectedSlotOption?.hasVideo;
   const canDeleteVideo = !!(
     adminToken &&
     courseId &&
     partId &&
     instructorId &&
-    lessonSlot !== 'auto'
+    lessonSlot !== 'auto' &&
+    hasVideoInSlot
   );
-  const hasVideoInSlot = !!selectedSlotOption?.hasVideo;
 
   const handleDeleteVideo = async () => {
     if (!canDeleteVideo) return;
