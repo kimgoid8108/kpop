@@ -34,7 +34,18 @@ function toMetaIds(courseId, partId, lessonId) {
     return { metaCourseId, metaPartId, metaLessonId };
   }
 
-  // 특수 케이스 2: 음악 코스 중 "내가 바로 K-POP 스타" (id: 10)
+  // 특수 케이스 2: 슈퍼스타 K-POP 댄서 (courseId: 8) - 최성룡, 중등
+  // - meta 상에서는 dance / lv-m 하나로 관리
+  // - 파트 1~8, 각 파트에 레슨 1~2 → l001~l016
+  if (courseId === '8' && metaCourseId === 'dance' && !Number.isNaN(partNum) && !Number.isNaN(lessonNum)) {
+    const lessonsPerPart = 2;
+    const lessonIndexInLevel = (partNum - 1) * lessonsPerPart + (lessonNum - 1);
+    const metaPartId = 'lv-m';
+    const metaLessonId = 'l' + String(lessonIndexInLevel + 1).padStart(3, '0');
+    return { metaCourseId, metaPartId, metaLessonId };
+  }
+
+  // 특수 케이스 3: 음악 코스 중 "내가 바로 K-POP 스타" (id: 10)
   // - 초등(lv-e) 김온유 강사
   // - 파트 1~8, 각 파트에 레슨 1~2
   // → 전체를 lv-e 하나의 레벨로 보고,
