@@ -368,6 +368,97 @@ export const courses: Course[] = [
           { lessonNumber: 3, title: "기본 리듬의 응용" },
         ],
       },
+      {
+        partNumber: 5,
+        title: "방향 바꾸기 & 바디 웨이브 만들기",
+        lessons: [
+          { lessonNumber: 1, title: "웨이브 이해" },
+          { lessonNumber: 2, title: "웨이브를 이용한 방향전환" },
+          { lessonNumber: 3, title: "웨이브를 활용한 음악표현" },
+        ],
+      },
+      {
+        partNumber: 6,
+        title: "기본기를 활용한 동작 만들기",
+        lessons: [
+          { lessonNumber: 1, title: "기본 턴 배우기" },
+          { lessonNumber: 2, title: "지금까지 배운 기술을 연결해 루틴 구성 1" },
+          { lessonNumber: 3, title: "지금까지 배운 기술을 연결해 루틴 구성 2" },
+        ],
+      },
+      {
+        partNumber: 7,
+        title: "기본 콤비네이션을 활용한 안무 실습",
+        lessons: [
+          { lessonNumber: 1, title: "기본기가 들어간 안무 1" },
+          { lessonNumber: 2, title: "기본기가 들어간 안무 2" },
+          { lessonNumber: 3, title: "기본기가 들어간 안무 3" },
+        ],
+      },
+      {
+        partNumber: 8,
+        title: "중간고사",
+        lessons: [],
+      },
+      {
+        partNumber: 9,
+        title: "K-POP 음악으로 간단한 안무 만들기 1",
+        lessons: [
+          { lessonNumber: 1, title: "K-POP 창작 댄스 (1)" },
+          { lessonNumber: 2, title: "K-POP 창작 댄스 (2)" },
+          { lessonNumber: 3, title: "K-POP 창작 댄스 (3)" },
+        ],
+      },
+      {
+        partNumber: 10,
+        title: "K-POP 음악으로 간단한 안무 만들기 2",
+        lessons: [
+          { lessonNumber: 1, title: "K-POP 창작 댄스 (1)" },
+          { lessonNumber: 2, title: "K-POP 창작 댄스 (2)" },
+          { lessonNumber: 3, title: "K-POP 창작 댄스 (3)" },
+        ],
+      },
+      {
+        partNumber: 11,
+        title: "K-POP 음악으로 간단한 안무 만들기 3",
+        lessons: [
+          { lessonNumber: 1, title: "K-POP 창작 댄스 (1)" },
+          { lessonNumber: 2, title: "K-POP 창작 댄스 (2)" },
+          { lessonNumber: 3, title: "K-POP 창작 댄스 (3)" },
+        ],
+      },
+      {
+        partNumber: 12,
+        title: "K-POP 음악으로 간단한 안무 만들기 4",
+        lessons: [
+          { lessonNumber: 1, title: "K-POP 창작 댄스 (1)" },
+          { lessonNumber: 2, title: "K-POP 창작 댄스 (2)" },
+          { lessonNumber: 3, title: "K-POP 창작 댄스 (3)" },
+        ],
+      },
+      {
+        partNumber: 13,
+        title: "우리만의 무대 만들기",
+        lessons: [
+          { lessonNumber: 1, title: "K-POP 댄스 전체 리허설" },
+          { lessonNumber: 2, title: "댄스 포지션 리허설" },
+          { lessonNumber: 3, title: "우리만의 무대 완성" },
+        ],
+      },
+      {
+        partNumber: 14,
+        title: "K-POP & 코레오 무대 퍼포먼스 만들기",
+        lessons: [
+          { lessonNumber: 1, title: "무대 구성 및 발표" },
+          { lessonNumber: 2, title: "안무와 포지션 발표" },
+          { lessonNumber: 3, title: "무대 완성" },
+        ],
+      },
+      {
+        partNumber: 15,
+        title: "기말고사",
+        lessons: [],
+      },
     ],
     instructor: "이현종",
     level: "강사",

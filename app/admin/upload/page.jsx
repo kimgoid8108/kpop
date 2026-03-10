@@ -578,10 +578,11 @@ export default function AdminUploadPage() {
         </p>
       </section>
 
+      {/* 코스 / 수준 / 선생님 선택 - 모바일에서도 보기 좋게 세로 정렬 */}
       <section
         style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(3, minmax(0, 1fr))',
+          display: 'flex',
+          flexDirection: 'column',
           gap: '16px',
           marginBottom: '24px',
         }}
