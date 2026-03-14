@@ -24,6 +24,7 @@ const INSTRUCTORS = {
   'kim-on-yu': { instructorId: 'kim-on-yu', name: '김온유' },
   'park-rae-jun': { instructorId: 'park-rae-jun', name: '박래준' },
   'park-ji-eun': { instructorId: 'park-ji-eun', name: '박지은' },
+  'kim-woon-jin': { instructorId: 'kim-woon-jin', name: '김운진' },
 };
 
 const COURSE_LEVEL_INSTRUCTORS = {
@@ -33,7 +34,7 @@ const COURSE_LEVEL_INSTRUCTORS = {
     'lv-e': ['kim-hyun-ah', 'kim-on-yu'],
   },
   music: {
-    'lv-t': ['park-rae-jun'],
+    'lv-t': ['park-rae-jun', 'kim-woon-jin'],
     'lv-m': ['park-ji-eun'],
     'lv-e': ['kim-on-yu'],
   },
@@ -86,19 +87,23 @@ export default function AdminUploadPage() {
   const [logs, setLogs] = useState([]);
 
   const availableInstructorOptions = useMemo(() => {
-    if (meta && Array.isArray(meta.levels) && Array.isArray(meta.instructors)) {
-      const level = meta.levels.find((l) => l.partId === partId);
-      const instructorIds = level?.instructorIds || [];
-      return instructorIds
-        .map((id) => meta.instructors.find((i) => i.instructorId === id))
-        .filter(Boolean)
-        .map((i) => ({ id: i.instructorId, label: i.name }));
-    }
-    const ids = COURSE_LEVEL_INSTRUCTORS[courseId]?.[partId] || [];
-    return ids
-      .map((id) => INSTRUCTORS[id])
-      .filter(Boolean)
-      .map((i) => ({ id: i.instructorId, label: i.name }));
+    const codeIds = COURSE_LEVEL_INSTRUCTORS[courseId]?.[partId] || [];
+    const metaIds =
+      meta && Array.isArray(meta.levels)
+        ? (meta.levels.find((l) => l.partId === partId)?.instructorIds || [])
+        : [];
+    const mergedIds = [...new Set([...codeIds, ...metaIds])];
+    return mergedIds
+      .map((id) => {
+        const fromMeta =
+          meta?.instructors && Array.isArray(meta.instructors)
+            ? meta.instructors.find((i) => i.instructorId === id)
+            : null;
+        const fromCode = INSTRUCTORS[id];
+        const name = fromMeta?.name ?? fromCode?.name ?? id;
+        return fromCode || fromMeta ? { id, label: name } : null;
+      })
+      .filter(Boolean);
   }, [courseId, partId, meta]);
 
   const appendLog = (message) => {

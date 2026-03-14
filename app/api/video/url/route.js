@@ -13,7 +13,7 @@ const PRESIGN_EXPIRES_IN = 60 * 60; // 1시간
 const LEGACY_COURSE_TO_META = {
   '1': 'dance', '2': 'dance', '3': 'dance', '4': 'dance', '5': 'dance',
   '7': 'dance', '8': 'dance',
-  '6': 'music', '9': 'music', '10': 'music',
+  '6': 'music', '9': 'music', '10': 'music', '11': 'music',
 };
 
 const PART_ORDER = ['lv-e', 'lv-m', 'lv-t'];
