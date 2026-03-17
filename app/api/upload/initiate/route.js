@@ -2,15 +2,10 @@ import { NextResponse } from 'next/server';
 import { CreateMultipartUploadCommand, UploadPartCommand } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { getR2Client, R2_BUCKET, buildVideoKey } from '@/lib/r2';
+import { validateAdminToken } from '@/lib/adminAuth';
 
 const PART_SIZE = 15 * 1024 * 1024; // 15MB
 const PRESIGN_EXPIRES_IN = 6 * 60 * 60; // 6 hours
-
-function validateAdminToken(req) {
-  const token = req.headers.get('x-admin-token');
-  const expected = process.env.ADMIN_UPLOAD_TOKEN;
-  return expected && token === expected;
-}
 
 export async function POST(req) {
   if (!validateAdminToken(req)) {

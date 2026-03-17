@@ -1,12 +1,7 @@
 import { NextResponse } from 'next/server';
 import { AbortMultipartUploadCommand } from '@aws-sdk/client-s3';
 import { getR2Client, R2_BUCKET } from '@/lib/r2';
-
-function validateAdminToken(req) {
-  const token = req.headers.get('x-admin-token');
-  const expected = process.env.ADMIN_UPLOAD_TOKEN;
-  return expected && token === expected;
-}
+import { validateAdminToken } from '@/lib/adminAuth';
 
 export async function POST(req) {
   if (!validateAdminToken(req)) {

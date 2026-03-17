@@ -41,13 +41,14 @@ export default function LessonPlayerPage() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ courseId: cid, partId: pid, lessonId: lid }),
     })
-      .then((res) => {
+      .then(async (res) => {
+        const data = await res.json().catch(() => ({}));
         if (!res.ok) {
-          return res.json().then((d) => {
-            throw new Error(d?.error ?? '영상 URL을 가져오지 못했습니다.');
-          });
+          const err = new Error(data?.error ?? '영상 URL을 가져오지 못했습니다.');
+          err.debug = data?.debug;
+          throw err;
         }
-        return res.json();
+        return data;
       })
       .then((data) => {
         setUrl(data.url ?? null);
@@ -55,7 +56,10 @@ export default function LessonPlayerPage() {
         setError(null);
       })
       .catch((err) => {
-        setError(err instanceof Error ? err.message : '영상 로드 실패');
+        let msg = err instanceof Error ? err.message : '영상 로드 실패';
+        if (err?.debug?.hint) msg += ' — ' + err.debug.hint;
+        if (err?.debug?.lookedFor) msg += ' (조회: ' + [err.debug.lookedFor?.metaLessonId, err.debug.lookedFor?.metaPartId].filter(Boolean).join(', ') + ')';
+        setError(msg);
         setUrl(null);
       })
       .finally(() => setLoading(false));

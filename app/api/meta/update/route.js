@@ -1,12 +1,14 @@
 import { NextResponse } from 'next/server';
 import { PutObjectCommand } from '@aws-sdk/client-s3';
 import { getR2Client, R2_BUCKET } from '@/lib/r2';
-import { getCourseMeta } from '@/lib/courseMeta';
+import { getCourseMeta, getMetaKey } from '@/lib/courseMeta';
+import { validateAdminToken } from '@/lib/adminAuth';
 
-function validateAdminToken(req) {
-  const token = req.headers.get('x-admin-token');
-  const expected = process.env.ADMIN_UPLOAD_TOKEN;
-  return expected && token === expected;
+/** lessonId를 l001 형식 문자열로 통일 (merge 시 26 / 'l026' 동일 키로 묶기 위함) */
+function normalizeLessonIdForKey(id) {
+  if (id == null || id === '') return '';
+  const num = parseInt(String(id).replace(/^l/i, ''), 10);
+  return Number.isNaN(num) ? String(id) : 'l' + String(num).padStart(3, '0');
 }
 
 /** 기존 R2 meta와 클라이언트가 보낸 meta를 병합. 기존 레슨을 유지하고 새 레슨만 추가/갱신 */
@@ -31,9 +33,9 @@ function mergeMeta(existing, incoming) {
   });
 
   (incoming.levels || []).forEach((incomingLevel) => {
-    const partId = incomingLevel?.partId;
+    const partId = incomingLevel?.partId != null ? String(incomingLevel.partId).trim() : '';
     if (!partId) return;
-    let level = merged.levels.find((l) => l.partId === partId);
+    let level = merged.levels.find((l) => l && String(l.partId).trim() === partId);
     if (!level) {
       level = {
         partId,
@@ -44,16 +46,19 @@ function mergeMeta(existing, incoming) {
       merged.levels.push(level);
     } else {
       level = { ...level };
-      const idx = merged.levels.findIndex((l) => l.partId === partId);
+      const idx = merged.levels.findIndex((l) => l && String(l.partId).trim() === partId);
       merged.levels[idx] = level;
       const existingIds = new Set((level.instructorIds || []));
       (incomingLevel.instructorIds || []).forEach((id) => existingIds.add(id));
       level.instructorIds = [...existingIds];
     }
-    const lessonKey = (l) => `${l.lessonId}:${l.instructorId || ''}`;
+    const lessonKey = (l) => `${normalizeLessonIdForKey(l.lessonId)}:${String(l.instructorId || '').trim()}`;
     const byKey = new Map((level.lessons || []).map((l) => [lessonKey(l), l]));
     (incomingLevel.lessons || []).forEach((l) => {
-      if (l?.lessonId != null) byKey.set(lessonKey(l), { ...l });
+      if (l?.lessonId == null) return;
+      const key = lessonKey(l);
+      const entry = { ...l, lessonId: normalizeLessonIdForKey(l.lessonId) || l.lessonId };
+      byKey.set(key, entry);
     });
     level.lessons = [...byKey.values()];
   });
@@ -77,7 +82,7 @@ export async function POST(req) {
       );
     }
 
-    const key = `courses/${courseId}/meta.json`;
+    const key = getMetaKey(courseId);
     const existing = await getCourseMeta(courseId);
     const toWrite = mergeMeta(existing, meta);
 

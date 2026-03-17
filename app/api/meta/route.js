@@ -7,14 +7,9 @@ import {
   PART_TITLES,
   INSTRUCTORS,
   COURSE_LEVEL_INSTRUCTORS,
+  LEGACY_COURSE_TO_META,
 } from '@/lib/r2';
-
-// 목록/강의상세에서 쓰는 숫자 ID → R2 meta courseId (읽기 시 매핑)
-const LEGACY_COURSE_TO_META = {
-  '1': 'dance', '2': 'dance', '3': 'dance', '4': 'dance', '5': 'dance',
-  '7': 'dance', '8': 'dance',
-  '6': 'music', '9': 'music', '10': 'music', '11': 'music',
-};
+import { getMetaKey } from '@/lib/courseMeta';
 
 function buildDefaultMeta(courseId) {
   const courseTitle = COURSE_TITLES[courseId] || courseId;
@@ -65,7 +60,7 @@ export async function GET(req) {
 
   // 레거시 숫자 ID(예: 10) → meta용 courseId(예: music)
   const courseId = LEGACY_COURSE_TO_META[String(rawCourseId).trim()] ?? String(rawCourseId).trim();
-  const key = `courses/${courseId}/meta.json`;
+  const key = getMetaKey(courseId);
 
   try {
     const command = new GetObjectCommand({

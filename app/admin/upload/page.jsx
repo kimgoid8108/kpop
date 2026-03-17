@@ -1,44 +1,13 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
-
-const COURSE_OPTIONS = [
-  { id: 'dance', label: '댄스' },
-  { id: 'music', label: '음악' },
-];
-
-const PART_OPTIONS = [
-  { id: 'lv-e', label: '초등' },
-  { id: 'lv-m', label: '중등' },
-  { id: 'lv-t', label: '강사' },
-];
-
-// 클라이언트 전용 강사/레벨 매핑 (서버 lib/r2.js 와 동일한 소스 오브 트루스)
-const INSTRUCTORS = {
-  'kim-do-kyung': { instructorId: 'kim-do-kyung', name: '김도경' },
-  'lee-hyun-jong': { instructorId: 'lee-hyun-jong', name: '이현종' },
-  'yoo-min-kyung': { instructorId: 'yoo-min-kyung', name: '유민경' },
-  'kim-su-yeon': { instructorId: 'kim-su-yeon', name: '김수연' },
-  'choi-seong-ryong': { instructorId: 'choi-seong-ryong', name: '최성룡' },
-  'kim-hyun-ah': { instructorId: 'kim-hyun-ah', name: '김현아' },
-  'kim-on-yu': { instructorId: 'kim-on-yu', name: '김온유' },
-  'park-rae-jun': { instructorId: 'park-rae-jun', name: '박래준' },
-  'park-ji-eun': { instructorId: 'park-ji-eun', name: '박지은' },
-  'kim-woon-jin': { instructorId: 'kim-woon-jin', name: '김운진' },
-};
-
-const COURSE_LEVEL_INSTRUCTORS = {
-  dance: {
-    'lv-t': ['kim-do-kyung', 'lee-hyun-jong', 'yoo-min-kyung'],
-    'lv-m': ['kim-su-yeon', 'choi-seong-ryong'],
-    'lv-e': ['kim-hyun-ah', 'kim-on-yu'],
-  },
-  music: {
-    'lv-t': ['park-rae-jun', 'kim-woon-jin'],
-    'lv-m': ['park-ji-eun'],
-    'lv-e': ['kim-on-yu'],
-  },
-};
+import {
+  INSTRUCTORS,
+  COURSE_LEVEL_INSTRUCTORS,
+  COURSE_OPTIONS,
+  PART_OPTIONS,
+  buildVideoKey,
+} from '@/lib/r2';
 
 function computeNextLessonId(meta, partId, instructorId) {
   if (!meta || !Array.isArray(meta.levels) || !instructorId) return 'l001';
@@ -65,10 +34,6 @@ function computeNextLessonId(meta, partId, instructorId) {
   return `l${String(next).padStart(3, '0')}`;
 }
 
-function buildVideoKeyPreview(courseId, instructorId, partId, lessonId) {
-  if (!courseId || !instructorId || !partId || !lessonId) return '';
-  return `courses/${courseId}/instructors/${instructorId}/parts/${partId}/lessons/${lessonId}/video/source.mp4`;
-}
 
 export default function AdminUploadPage() {
   const [adminToken, setAdminToken] = useState('');
@@ -217,8 +182,9 @@ export default function AdminUploadPage() {
         },
         body: JSON.stringify({
           courseId,
-          partId: partId,
+          partId,
           lessonId: effectiveLessonId,
+          instructorId,
         }),
       });
       const data = await res.json().catch(() => ({}));
@@ -290,8 +256,10 @@ export default function AdminUploadPage() {
 
     // 레벨/강사 레슨 추가
     const levelIndex = levels.findIndex((lvl) => lvl.partId === partId);
+    const normalizedLessonId =
+      /^l\d+$/i.test(lessonId) ? lessonId : 'l' + String(parseInt(lessonId, 10) || 0).padStart(3, '0');
     const newLesson = {
-      lessonId,
+      lessonId: normalizedLessonId,
       title: lessonTitle,
       instructorId,
       videoKey,
@@ -304,6 +272,13 @@ export default function AdminUploadPage() {
         const nb = parseInt((b.lessonId || '').replace(/^l/i, ''), 10) || 0;
         return na - nb;
       });
+    };
+
+    const sameLessonId = (a, b) => {
+      const na = parseInt(String(a || '').replace(/^l/i, ''), 10);
+      const nb = parseInt(String(b || '').replace(/^l/i, ''), 10);
+      if (!Number.isNaN(na) && !Number.isNaN(nb)) return na === nb;
+      return String(a).trim() === String(b).trim();
     };
 
     if (levelIndex === -1) {
@@ -322,7 +297,7 @@ export default function AdminUploadPage() {
         instructorIds.push(instructorId);
       }
 
-      const existingIndex = lessons.findIndex((l) => l.lessonId === lessonId);
+      const existingIndex = lessons.findIndex((l) => sameLessonId(l.lessonId, lessonId));
       if (existingIndex >= 0) {
         lessons = lessons.map((l, i) => (i === existingIndex ? { ...newLesson, createdAt: l.createdAt || newLesson.createdAt } : l));
       } else {
@@ -521,7 +496,7 @@ export default function AdminUploadPage() {
     }
   };
 
-  const videoKeyPreview = buildVideoKeyPreview(
+  const videoKeyPreview = buildVideoKey(
     courseId,
     instructorId,
     partId,

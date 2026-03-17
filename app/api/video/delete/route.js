@@ -1,16 +1,10 @@
 export const runtime = 'nodejs';
 
 import { NextResponse } from 'next/server';
-import { DeleteObjectCommand } from '@aws-sdk/client-s3';
-import { PutObjectCommand } from '@aws-sdk/client-s3';
-import { getR2Client, R2_BUCKET } from '@/lib/r2';
-import { getCourseMeta, findLesson } from '@/lib/courseMeta';
-
-function validateAdminToken(req) {
-  const token = req.headers.get('x-admin-token');
-  const expected = process.env.ADMIN_UPLOAD_TOKEN;
-  return expected && token === expected;
-}
+import { DeleteObjectCommand, PutObjectCommand } from '@aws-sdk/client-s3';
+import { getR2Client, R2_BUCKET, LEGACY_COURSE_TO_META } from '@/lib/r2';
+import { getCourseMeta, findLesson, getMetaKey } from '@/lib/courseMeta';
+import { validateAdminToken } from '@/lib/adminAuth';
 
 export async function POST(req) {
   if (!validateAdminToken(req)) {
@@ -20,9 +14,10 @@ export async function POST(req) {
   try {
     const body = await req.json().catch(() => ({}));
     const raw = body || {};
-    const courseId = raw.courseId != null ? String(raw.courseId).trim() : '';
-    const partId = raw.partId != null ? String(raw.partId).trim() : '';
-    const lessonId = raw.lessonId != null ? String(raw.lessonId).trim() : '';
+    const courseId = (raw.courseId != null ? String(raw.courseId).trim() : '') || '';
+    const partId = (raw.partId != null ? String(raw.partId).trim() : '') || '';
+    const lessonId = (raw.lessonId != null ? String(raw.lessonId).trim() : '') || '';
+    const instructorId = (raw.instructorId != null ? String(raw.instructorId).trim() : '') || null;
 
     if (!courseId || !partId || !lessonId) {
       return NextResponse.json(
@@ -31,7 +26,8 @@ export async function POST(req) {
       );
     }
 
-    const meta = await getCourseMeta(courseId);
+    const metaCourseId = LEGACY_COURSE_TO_META[courseId] ?? courseId;
+    const meta = await getCourseMeta(metaCourseId);
     if (!meta) {
       return NextResponse.json(
         { error: '코스 메타를 찾을 수 없습니다.' },
@@ -39,7 +35,7 @@ export async function POST(req) {
       );
     }
 
-    const lesson = findLesson(meta, partId, lessonId);
+    const lesson = findLesson(meta, partId, lessonId, instructorId || undefined);
     if (!lesson) {
       return NextResponse.json(
         { error: '해당 레슨을 찾을 수 없습니다.' },
@@ -49,25 +45,24 @@ export async function POST(req) {
 
     const videoKey = lesson.videoKey;
     if (videoKey && typeof videoKey === 'string') {
-      const deleteCommand = new DeleteObjectCommand({
-        Bucket: R2_BUCKET,
-        Key: videoKey,
-      });
-      await getR2Client().send(deleteCommand);
+      await getR2Client().send(
+        new DeleteObjectCommand({ Bucket: R2_BUCKET, Key: videoKey })
+      );
     }
 
     const levels = Array.isArray(meta.levels) ? [...meta.levels] : [];
     const levelIndex = levels.findIndex((l) => l.partId === partId);
     if (levelIndex >= 0) {
       const level = { ...levels[levelIndex] };
+      const removeKey = (l) => l.lessonId === lessonId && (!instructorId || l.instructorId === instructorId);
       level.lessons = Array.isArray(level.lessons)
-        ? level.lessons.filter((l) => l.lessonId !== lessonId)
+        ? level.lessons.filter((l) => !removeKey(l))
         : [];
       levels[levelIndex] = level;
     }
 
     const updatedMeta = { ...meta, levels };
-    const metaKey = `courses/${courseId}/meta.json`;
+    const metaKey = getMetaKey(metaCourseId);
     const putCommand = new PutObjectCommand({
       Bucket: R2_BUCKET,
       Key: metaKey,
