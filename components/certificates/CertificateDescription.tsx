@@ -32,10 +32,10 @@ export function CertificateDescription({ certificate }: CertificateDescriptionPr
             {certificate.description.levels.map((levelInfo, index) => (
               <div key={index} className="pl-4 border-l-4 border-blue-500">
                 <p className="font-semibold text-gray-900 mb-1">
-                  <AutoT text={`·${certificate.name} ${levelInfo.level}`} />
+                  <AutoT text={`${certificate.name} ${levelInfo.level}`} />
                 </p>
                 <p className="text-gray-700 break-words">
-                  <AutoT text={`: ${levelInfo.courses}을 이수하여, ${levelInfo.target}`} />
+                  <AutoT text={`${levelInfo.courses}을 이수하여, ${levelInfo.target}`} />
                 </p>
               </div>
             ))}

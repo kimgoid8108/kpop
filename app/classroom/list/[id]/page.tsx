@@ -130,14 +130,31 @@ export default function CourseDetailPage() {
           {/* 하단: 강의 후기 및 계획서 (센터 정렬) */}
           <div className="px-3 sm:px-4 md:px-6 lg:px-8 pb-4 sm:pb-6 md:pb-8">
             {/* 수강 신청 버튼 */}
-            <div className="max-w-6xl mx-auto mb-4 sm:mb-6 md:mb-8 text-left">
+            {/* <div className="max-w-6xl mx-auto mb-4 sm:mb-6 md:mb-8 text-left">
               <button className="px-4 sm:px-6 md:px-8 lg:px-15 py-2.5 sm:py-3 md:py-4 lg:py-5 bg-blue-600 text-white text-sm sm:text-base md:text-lg font-semibold rounded-lg hover:bg-blue-700 transition-colors shadow-md hover:shadow-lg w-full sm:w-auto">
                 <AutoT text="수강 신청" />
               </button>
-            </div>
+            </div> */}
 
-            {/* 강의 후기 */}
+
+            {/* 강의 계획서: 기존 데이터(노래의 호흡과 자세를 배워요 등) 파트 그대로 표시 */}
             <section className="mb-4 sm:mb-6 md:mb-8 max-w-4xl mx-auto">
+              <h3 className="text-base sm:text-lg md:text-xl font-bold text-gray-900 mb-3 sm:mb-4 md:mb-6 pb-1.5 sm:pb-2 border-b-2 border-gray-300 text-center break-words">
+                <AutoT text="강의 영상 리스트" />
+              </h3>
+              <h3 className="text-sm sm:text-base text-gray-500 text-center mb-4">각 영상 제목을 클릭하면 해당 영상으로 이동합니다.</h3>
+              {course.syllabus && course.syllabus.length > 0 ? (
+                <SyllabusSection syllabus={course.syllabus} courseId={course.id} />
+              ) : (
+                <div className="text-gray-500 text-center py-6 sm:py-8 bg-gray-50 rounded-lg text-xs sm:text-sm">
+                  <AutoT text="강의 계획서 정보가 없습니다." />
+                </div>
+              )}
+            </section>
+            
+
+          {/* 강의 후기 */}
+          <section className="mb-4 sm:mb-6 md:mb-8 max-w-4xl mx-auto">
               <h3 className="text-base sm:text-lg md:text-xl font-bold text-gray-900 mb-3 sm:mb-4 pb-1.5 sm:pb-2 border-b-2 border-gray-300 text-center break-words">
                 <AutoT text="강의 후기" />
               </h3>
@@ -183,21 +200,7 @@ export default function CourseDetailPage() {
                   <AutoT text="아직 후기가 없습니다. 첫 후기를 남겨주세요!" />
                 </div>
               )}
-            </section>
-
-            {/* 강의 계획서: 기존 데이터(노래의 호흡과 자세를 배워요 등) 파트 그대로 표시 */}
-            <section className="mb-4 sm:mb-6 md:mb-8 max-w-4xl mx-auto">
-              <h3 className="text-base sm:text-lg md:text-xl font-bold text-gray-900 mb-3 sm:mb-4 md:mb-6 pb-1.5 sm:pb-2 border-b-2 border-gray-300 text-center break-words">
-                <AutoT text="강의 계획서" />
-              </h3>
-              {course.syllabus && course.syllabus.length > 0 ? (
-                <SyllabusSection syllabus={course.syllabus} courseId={course.id} />
-              ) : (
-                <div className="text-gray-500 text-center py-6 sm:py-8 bg-gray-50 rounded-lg text-xs sm:text-sm">
-                  <AutoT text="강의 계획서 정보가 없습니다." />
-                </div>
-              )}
-            </section>
+            </section>  
           </div>
         </div>
       </div>
