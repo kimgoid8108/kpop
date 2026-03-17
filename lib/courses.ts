@@ -219,7 +219,7 @@ export const courses: Course[] = [
         lessons: [
           {
             lessonNumber: 1,
-            title: "연령, 체력, 운동 목적별 지도 포인ㅌ트",
+            title: "연령, 체력, 운동 목적별 지도 포인트",
           },
           {
             lessonNumber: 2,
@@ -277,11 +277,11 @@ export const courses: Course[] = [
           },
           {
             lessonNumber: 2,
-            title: "강의 시연",
+            title: "수업 발표 및 개선 방향 제시",
           },
           {
             lessonNumber: 3,
-            title: "수업 발표 및 개선 방향 제시",
+            title: "강의 시연",
           },
         ],
       },
