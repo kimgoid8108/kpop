@@ -5,6 +5,12 @@ import { useRouter } from "next/navigation";
 import { PageLayout } from "../../components/PageLayout";
 import { AutoT } from "../../components/AutoT";
 import { useLanguage } from "../../components/LanguageContext";
+import { useAutoTranslate } from "../../components/useAutoTranslate";
+
+function SignupUserTypeOption({ value, label }: { value: string; label: string }) {
+  const t = useAutoTranslate(label);
+  return <option value={value}>{t}</option>;
+}
 
 export default function SignupPage() {
   const [formData, setFormData] = useState({
@@ -19,6 +25,13 @@ export default function SignupPage() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const { translate } = useLanguage();
+  const phName = useAutoTranslate("이름을 입력하세요");
+  const phEmail = useAutoTranslate("이메일 주소를 입력하세요");
+  const phSchool = useAutoTranslate("학교명 또는 기관명을 입력하세요");
+  const phDept = useAutoTranslate("학과를 입력하세요");
+  const phStudentId = useAutoTranslate("학번을 입력하세요");
+  const phPhone = useAutoTranslate("전화번호를 입력하세요 (예: 010-1234-5678)");
+  const selectUserType = useAutoTranslate("사용자 유형을 선택하세요");
 
   const userTypes = [
     { value: "student", label: "학생" },
@@ -72,7 +85,7 @@ export default function SignupPage() {
                   type="text"
                   required
                   className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-1 focus:ring-blue-500 outline-none"
-                  placeholder="이름을 입력하세요"
+                  placeholder={phName}
                   value={formData.name}
                   onChange={handleChange}
                 />
@@ -89,7 +102,7 @@ export default function SignupPage() {
                   type="email"
                   required
                   className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-1 focus:ring-blue-500 outline-none"
-                  placeholder="이메일 주소를 입력하세요"
+                  placeholder={phEmail}
                   value={formData.email}
                   onChange={handleChange}
                 />
@@ -106,7 +119,7 @@ export default function SignupPage() {
                   type="text"
                   required
                   className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-1 focus:ring-blue-500 outline-none"
-                  placeholder="학교명 또는 기관명을 입력하세요"
+                  placeholder={phSchool}
                   value={formData.schoolName}
                   onChange={handleChange}
                 />
@@ -122,7 +135,7 @@ export default function SignupPage() {
                   name="department"
                   type="text"
                   className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-1 focus:ring-blue-500 outline-none"
-                  placeholder="학과를 입력하세요"
+                  placeholder={phDept}
                   value={formData.department}
                   onChange={handleChange}
                 />
@@ -138,7 +151,7 @@ export default function SignupPage() {
                   name="studentId"
                   type="text"
                   className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-1 focus:ring-blue-500 outline-none"
-                  placeholder="학번을 입력하세요"
+                  placeholder={phStudentId}
                   value={formData.studentId}
                   onChange={handleChange}
                 />
@@ -155,7 +168,7 @@ export default function SignupPage() {
                   type="tel"
                   required
                   className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-1 focus:ring-blue-500 outline-none"
-                  placeholder="전화번호를 입력하세요 (예: 010-1234-5678)"
+                  placeholder={phPhone}
                   value={formData.phone}
                   onChange={handleChange}
                 />
@@ -174,11 +187,13 @@ export default function SignupPage() {
                   value={formData.userType}
                   onChange={handleChange}
                 >
-                  <option value="">사용자 유형을 선택하세요</option>
-                  {userTypes.map((type) => (
-                    <option key={type.value} value={type.value}>
-                      {type.label}
-                    </option>
+                  <option value="">{selectUserType}</option>
+                  {userTypes.map((type, i) => (
+                    <SignupUserTypeOption
+                      key={`${type.value}-${i}`}
+                      value={type.value}
+                      label={type.label}
+                    />
                   ))}
                 </select>
               </div>

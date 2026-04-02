@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { PageLayout } from "../../../components/PageLayout";
 import { AutoT } from "../../../components/AutoT";
+import { useAutoTranslate } from "../../../components/useAutoTranslate";
 import { PartnersCarouselSection } from "../../../components/partners/PartnersCarouselSection";
 
 const images = [
@@ -15,6 +16,34 @@ const images = [
   "/kpop_global7.jpeg",
   "/kpop_global8.jpeg",
 ];
+
+function PartnerSwipeImage({
+  img,
+  idx,
+  current,
+}: {
+  img: string;
+  idx: number;
+  current: number;
+}) {
+  const alt = useAutoTranslate(`파트너 이미지 ${idx + 1}`);
+  return (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src={img}
+      alt={alt}
+      className="mx-auto absolute top-0 left-0 w-full h-full"
+      style={{
+        objectFit: "contain",
+        borderRadius: "0.5rem",
+        background: "#f9f9f9",
+        transition: "opacity 0.7s cubic-bezier(0.23, 1, 0.32, 1)",
+        opacity: current === idx ? 1 : 0,
+        zIndex: current === idx ? 2 : 1,
+      }}
+    />
+  );
+}
 
 function AutoSwipeImages() {
   const [current, setCurrent] = useState(0);
@@ -37,20 +66,11 @@ function AutoSwipeImages() {
       >
         <div className="absolute inset-0 w-full h-full" style={{ overflow: "hidden" }}>
           {images.map((img, idx) => (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={img}
-              alt={`파트너 이미지 ${idx + 1}`}
+            <PartnerSwipeImage
               key={img}
-              className="mx-auto absolute top-0 left-0 w-full h-full"
-              style={{
-                objectFit: "contain",
-                borderRadius: "0.5rem",
-                background: "#f9f9f9",
-                transition: "opacity 0.7s cubic-bezier(0.23, 1, 0.32, 1)",
-                opacity: current === idx ? 1 : 0,
-                zIndex: current === idx ? 2 : 1,
-              }}
+              img={img}
+              idx={idx}
+              current={current}
             />
           ))}
         </div>

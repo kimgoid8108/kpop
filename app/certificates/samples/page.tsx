@@ -3,6 +3,24 @@
 import React from "react";
 import { PageLayout } from "../../../components/PageLayout";
 import { AutoT } from "../../../components/AutoT";
+import { useAutoTranslate } from "../../../components/useAutoTranslate";
+
+function SampleCertificateImage({
+  src,
+  altKo,
+}: {
+  src: string;
+  altKo: string;
+}) {
+  const alt = useAutoTranslate(altKo);
+  return (
+    <img
+      src={src}
+      alt={alt}
+      className="object-contain max-h-full max-w-full rounded"
+    />
+  );
+}
 
 export default function CertificatesSamplesPage() {
   return (
@@ -16,30 +34,27 @@ export default function CertificatesSamplesPage() {
             <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-rows-1 gap-4 mt-6">
               <div className="border rounded-lg p-4 bg-gray-50">
                 <div className="aspect-video rounded flex items-center justify-center flex-col">
-                  <img
+                  <SampleCertificateImage
                     src="/dancefit.png"
-                    alt="자격증 샘플 이미지 1"
-                    className="object-contain max-h-full max-w-full rounded"
+                    altKo="자격증 샘플 이미지 (댄스핏)"
                   />
                   <span><AutoT text="댄스핏 자격증 샘플 이미지"/></span>
                 </div>
               </div>
               <div className="border rounded-lg p-4 bg-gray-50">
                 <div className="aspect-video rounded flex items-center justify-center flex-col">
-                <img
+                <SampleCertificateImage
                     src="/dance.png"
-                    alt="자격증 샘플 이미지 1"
-                    className="object-contain max-h-full max-w-full rounded"
+                    altKo="자격증 샘플 이미지 (댄스)"
                   />
                   <span><AutoT text="댄스 자격증 샘플 이미지"/></span>
                 </div>
               </div>
               <div className="border rounded-lg p-4 bg-gray-50">
                 <div className="aspect-video rounded flex items-center justify-center flex-col">
-                <img
+                <SampleCertificateImage
                     src="/vocal.png"
-                    alt="자격증 샘플 이미지 1"
-                    className="object-contain max-h-full max-w-full rounded"
+                    altKo="자격증 샘플 이미지 (보컬)"
                   />
                   <span><AutoT text="보컬 자격증 샘플 이미지"/></span>
                 </div>

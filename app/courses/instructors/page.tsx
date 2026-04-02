@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { PageLayout } from "../../../components/PageLayout";
 import { AutoT } from "../../../components/AutoT";
+import { useAutoTranslate } from "../../../components/useAutoTranslate";
 
 // 예시 강사진 데이터 (각 강사의 'level' 추가: '강사', '중등', '초등'), 'field' 추가 ('dance' 또는 'vocal')
 const instructors = [
@@ -257,6 +258,7 @@ function InstructorDetailModal({
   instructor: InstructorType | null;
 }) {
   const [mounted, setMounted] = useState(false);
+  const ariaCloseModal = useAutoTranslate("닫기");
 
   useEffect(() => {
     setMounted(true);
@@ -346,7 +348,7 @@ function InstructorDetailModal({
             <button
               onClick={onClose}
               className="text-gray-400 hover:text-gray-600 transition-colors p-1"
-              aria-label="닫기"
+              aria-label={ariaCloseModal}
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />

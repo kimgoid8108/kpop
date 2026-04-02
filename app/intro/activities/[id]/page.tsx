@@ -5,11 +5,52 @@ import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { PageLayout } from "../../../../components/PageLayout";
 import { AutoT } from "../../../../components/AutoT";
+import { useLanguage } from "../../../../components/LanguageContext";
+import { useAutoTranslate } from "../../../../components/useAutoTranslate";
 import { dummyActivities } from "../../../../lib/activities";
+
+function ActivityContentImage({
+  activityId,
+  image,
+  index,
+  activityTitle,
+}: {
+  activityId: string;
+  image: string;
+  index: number;
+  activityTitle: string;
+}) {
+  const altText = useAutoTranslate(`${activityTitle} - 이미지 ${index + 1}`);
+  const imageSrc = image.startsWith("/") ? encodeURI(image) : encodeURI(image);
+  return (
+    <div
+      className="relative w-full aspect-video rounded-lg overflow-hidden bg-gray-100 border border-gray-200 cursor-pointer hover:shadow-lg transition-shadow duration-300"
+      onClick={() => {
+        window.open(imageSrc, "_blank");
+      }}
+    >
+      <img
+        src={imageSrc}
+        alt={altText}
+        className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+        onError={(e) => {
+          const target = e.target as HTMLImageElement;
+          if (!target.src.includes(image)) {
+            target.src = image;
+          }
+        }}
+        onLoad={() => {
+          console.log("Image loaded:", imageSrc);
+        }}
+      />
+    </div>
+  );
+}
 
 export default function ActivityDetailPage() {
   const params = useParams();
   const router = useRouter();
+  const { translate } = useLanguage();
   const id = params?.id as string;
 
   // 해당 ID의 활동 찾기
@@ -107,40 +148,15 @@ export default function ActivityDetailPage() {
                 <AutoT text="활동 사진" />
               </h3>
               <div className="flex flex-col gap-4">
-                {activity.images.map((image, index) => {
-                  // 한글 파일명 처리: 전체 경로를 인코딩
-                  const imageSrc = image.startsWith('/')
-                    ? encodeURI(image)
-                    : encodeURI(image);
-
-                  return (
-                    <div
-                      key={`${activity.id}-${index}-${image}`}
-                      className="relative w-full aspect-video rounded-lg overflow-hidden bg-gray-100 border border-gray-200 cursor-pointer hover:shadow-lg transition-shadow duration-300"
-                      onClick={() => {
-                        // 이미지 클릭 시 새 탭에서 열기
-                        window.open(imageSrc, "_blank");
-                      }}
-                    >
-                      <img
-                        src={imageSrc}
-                        alt={`${activity.title} - 이미지 ${index + 1}`}
-                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                        onError={(e) => {
-                          // 인코딩된 경로가 실패하면 원본 경로 시도
-                          const target = e.target as HTMLImageElement;
-                          if (!target.src.includes(image)) {
-                            target.src = image;
-                          }
-                        }}
-                        onLoad={() => {
-                          // 이미지 로드 성공 시 콘솔 로그 (디버깅용)
-                          console.log('Image loaded:', imageSrc);
-                        }}
-                      />
-                    </div>
-                  );
-                })}
+                {activity.images.map((image, index) => (
+                  <ActivityContentImage
+                    key={`${activity.id}-${index}-${image}`}
+                    activityId={activity.id}
+                    image={image}
+                    index={index}
+                    activityTitle={activity.title}
+                  />
+                ))}
               </div>
             </div>
           )}
@@ -166,13 +182,17 @@ export default function ActivityDetailPage() {
                   />
                 </svg>
                 <span className="text-sm text-gray-700">
-                  첨부파일_활동현황_{activity.id}.pdf
+                  <AutoT
+                    text={`첨부파일_활동현황_${activity.id}.pdf`}
+                  />
                 </span>
                 <button
                   className="ml-auto px-3 py-1 text-sm bg-indigo-600 text-white rounded hover:bg-indigo-700 transition-colors"
-                  onClick={() => {
-                    // 파일 다운로드 로직 (실제 구현 시)
-                    alert("파일 다운로드 기능은 구현 예정입니다.");
+                  onClick={async () => {
+                    const msg = await translate(
+                      "파일 다운로드 기능은 구현 예정입니다.",
+                    );
+                    alert(msg);
                   }}
                 >
                   <AutoT text="다운로드" />

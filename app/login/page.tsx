@@ -6,6 +6,7 @@ import { useAuth } from "../../components/AuthContext";
 import { useLanguage } from "../../components/LanguageContext";
 import { AutoT } from "../../components/AutoT";
 import { SignupModal } from "../../components/SignupModal";
+import { useAutoTranslate } from "../../components/useAutoTranslate";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -15,6 +16,8 @@ export default function LoginPage() {
   const { login } = useAuth();
   const router = useRouter();
   const { translate } = useLanguage();
+  const phId = useAutoTranslate("아이디");
+  const phPassword = useAutoTranslate("비밀번호");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -56,7 +59,7 @@ export default function LoginPage() {
                 type="email"
                 required
                 className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-1 focus:ring-blue-500 outline-none"
-                placeholder="아이디"
+                placeholder={phId}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -71,7 +74,7 @@ export default function LoginPage() {
                 type="password"
                 required
                 className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-1 focus:ring-blue-500 outline-none"
-                placeholder="비밀번호"
+                placeholder={phPassword}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />

@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import { AutoT } from "../../components/AutoT";
 
 export default function TestVideoPage() {
   const [url, setUrl] = useState<string | null>(null);
@@ -28,7 +29,9 @@ export default function TestVideoPage() {
   if (err)
     return (
       <div style={{ padding: 16, color: "red", whiteSpace: "pre-wrap" }}>
-        <b>에러 발생</b>
+        <b>
+          <AutoT text="에러 발생" />
+        </b>
         <div>{err}</div>
         <button
           style={{
@@ -42,18 +45,23 @@ export default function TestVideoPage() {
             setErr(null);
             setUrl(null);
           }}>
-          다시 시도
+          <AutoT text="다시 시도" />
         </button>
       </div>
     );
 
-  if (!url) return <div>Loading...</div>;
+  if (!url)
+    return (
+      <div>
+        <AutoT text="로딩 중..." />
+      </div>
+    );
 
   return (
     <div style={{ padding: 16 }}>
       <div style={{ marginBottom: 12, wordBreak: "break-all" }}>
         <a href={url} target="_blank" rel="noreferrer">
-          signedUrl 열기
+          <AutoT text="signedUrl 열기" />
         </a>
       </div>
       <video controls src={url} style={{ width: "100%", maxWidth: 900 }} />

@@ -5,6 +5,17 @@ import { createPortal } from "react-dom";
 import { useRouter } from "next/navigation";
 import { AutoT } from "./AutoT";
 import { useLanguage } from "./LanguageContext";
+import { useAutoTranslate } from "./useAutoTranslate";
+
+function TranslatedOption({ value, label }: { value: string; label: string }) {
+  const t = useAutoTranslate(label);
+  return <option value={value}>{t}</option>;
+}
+
+function NationalityOption({ nation }: { nation: string }) {
+  const t = useAutoTranslate(nation);
+  return <option value={nation}>{t}</option>;
+}
 
 interface SignupModalProps {
   isOpen: boolean;
@@ -91,6 +102,16 @@ export function SignupModal({ isOpen, onClose }: SignupModalProps) {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const { translate } = useLanguage();
+  const ariaClose = useAutoTranslate("닫기");
+  const phEmail = useAutoTranslate("이메일 주소를 입력하세요");
+  const phPassword = useAutoTranslate("비밀번호를 입력하세요");
+  const phSchool = useAutoTranslate("학교명 또는 기관명을 입력하세요");
+  const phPhone = useAutoTranslate("전화번호를 입력하세요 (예: 010-1234-5678)");
+  const phBirth = useAutoTranslate("생년월일을 입력하세요");
+  const phReferralOther = useAutoTranslate("기타 유입경로를 입력하세요");
+  const selectUserType = useAutoTranslate("사용자 유형을 선택하세요");
+  const selectNationality = useAutoTranslate("국적을 선택하세요");
+  const selectReferral = useAutoTranslate("유입경로를 선택하세요");
 
   // 사용자 유형(학생, 일반)
   const userTypes = [
@@ -217,7 +238,7 @@ export function SignupModal({ isOpen, onClose }: SignupModalProps) {
             <button
               onClick={handleClose}
               className="text-gray-400 hover:text-gray-600 transition-colors p-1"
-              aria-label="닫기"
+              aria-label={ariaClose}
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -239,7 +260,7 @@ export function SignupModal({ isOpen, onClose }: SignupModalProps) {
                   type="email"
                   required
                   className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-1 focus:ring-blue-500 outline-none"
-                  placeholder="이메일 주소를 입력하세요"
+                  placeholder={phEmail}
                   value={formData.email}
                   onChange={handleChange}
                 />
@@ -256,7 +277,7 @@ export function SignupModal({ isOpen, onClose }: SignupModalProps) {
                   type="password"
                   required
                   className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-1 focus:ring-blue-500 outline-none"
-                  placeholder="비밀번호를 입력하세요"
+                  placeholder={phPassword}
                   value={formData.password}
                   onChange={handleChange}
                 />
@@ -275,11 +296,13 @@ export function SignupModal({ isOpen, onClose }: SignupModalProps) {
                   value={formData.userType}
                   onChange={handleChange}
                 >
-                  <option value="">사용자 유형을 선택하세요</option>
-                  {userTypes.map((type) => (
-                    <option key={type.value} value={type.value}>
-                      {type.label}
-                    </option>
+                  <option value="">{selectUserType}</option>
+                  {userTypes.map((type, i) => (
+                    <TranslatedOption
+                      key={`${type.value}-${i}`}
+                      value={type.value}
+                      label={type.label}
+                    />
                   ))}
                 </select>
               </div>
@@ -294,7 +317,7 @@ export function SignupModal({ isOpen, onClose }: SignupModalProps) {
                   name="schoolName"
                   type="text"
                   className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-1 focus:ring-blue-500 outline-none"
-                  placeholder="학교명 또는 기관명을 입력하세요"
+                  placeholder={phSchool}
                   value={formData.schoolName}
                   onChange={handleChange}
                 />
@@ -310,7 +333,7 @@ export function SignupModal({ isOpen, onClose }: SignupModalProps) {
                   name="phone"
                   type="tel"
                   className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-1 focus:ring-blue-500 outline-none"
-                  placeholder="전화번호를 입력하세요 (예: 010-1234-5678)"
+                  placeholder={phPhone}
                   value={formData.phone}
                   onChange={handleChange}
                 />
@@ -326,7 +349,7 @@ export function SignupModal({ isOpen, onClose }: SignupModalProps) {
                   name="birth"
                   type="date"
                   className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-1 focus:ring-blue-500 outline-none"
-                  placeholder="생년월일을 입력하세요"
+                  placeholder={phBirth}
                   value={formData.birth}
                   onChange={handleChange}
                 />
@@ -335,7 +358,10 @@ export function SignupModal({ isOpen, onClose }: SignupModalProps) {
               {/* 국적 */}
               <div>
                 <label className="text-xs font-semibold text-gray-600 block mb-1">
-                  <AutoT text="국적" /> <span className="text-xs text-gray-500">(예: 대한민국)</span>
+                  <AutoT text="국적" />{" "}
+                  <span className="text-xs text-gray-500">
+                    (<AutoT text="예: 대한민국" />)
+                  </span>
                 </label>
                 <select
                   id="nationality"
@@ -345,11 +371,9 @@ export function SignupModal({ isOpen, onClose }: SignupModalProps) {
                   value={formData.nationality}
                   onChange={handleChange}
                 >
-                  <option value="">국적을 선택하세요</option>
+                  <option value="">{selectNationality}</option>
                   {NATIONALITIES.map((nation) => (
-                    <option key={nation} value={nation}>
-                      {nation}
-                    </option>
+                    <NationalityOption key={nation} nation={nation} />
                   ))}
                 </select>
               </div>
@@ -366,11 +390,13 @@ export function SignupModal({ isOpen, onClose }: SignupModalProps) {
                   value={formData.referral}
                   onChange={handleChange}
                 >
-                  <option value="">유입경로를 선택하세요</option>
+                  <option value="">{selectReferral}</option>
                   {referralOptions.map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
+                    <TranslatedOption
+                      key={option.value}
+                      value={option.value}
+                      label={option.label}
+                    />
                   ))}
                 </select>
                 {formData.referral === "other" && (
@@ -379,7 +405,7 @@ export function SignupModal({ isOpen, onClose }: SignupModalProps) {
                     name="referralOther"
                     type="text"
                     className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm mt-2 focus:ring-1 focus:ring-blue-500 outline-none"
-                    placeholder="기타 유입경로를 입력하세요"
+                    placeholder={phReferralOther}
                     value={formData.referralOther}
                     onChange={handleChange}
                   />

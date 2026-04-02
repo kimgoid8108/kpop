@@ -2,10 +2,12 @@
 
 import React from "react";
 import { AutoT } from "../AutoT";
+import { useAutoTranslate } from "../useAutoTranslate";
 import { PartnerCarousel } from "./PartnerCarousel";
 import { enterprisePartners, publicPartners, mapInfo } from "../../lib/partners";
 
 export function PartnersCarouselSection() {
+  const mapIframeTitle = useAutoTranslate("글로벌케이팝진흥원 위치");
   return (
     <div className="mt-8 sm:mt-12 md:mt-16 space-y-6 sm:space-y-8 md:space-y-10 lg:space-y-12 overflow-x-hidden">
       {/* H2: 추가 협약기관&파트너 */}
@@ -60,7 +62,7 @@ export function PartnersCarouselSection() {
             loading="lazy"
             allowFullScreen
             referrerPolicy="no-referrer-when-downgrade"
-            title="글로벌케이팝진흥원 위치"
+            title={mapIframeTitle}
             style={{ maxWidth: "100%", height: "100%" }}
           />
         </div>

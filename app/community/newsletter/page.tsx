@@ -4,15 +4,17 @@ import React, { useState } from "react";
 import { PageLayout } from "../../../components/PageLayout";
 import { AutoT } from "../../../components/AutoT";
 import { useAutoTranslate } from "../../../components/useAutoTranslate";
+import { useLanguage } from "../../../components/LanguageContext";
 
 export default function CommunityNewsletterPage() {
   const [email, setEmail] = useState("");
   const emailPlaceholder = useAutoTranslate("이메일 주소를 입력하세요");
+  const { translate } = useLanguage();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // 뉴스레터 구독 로직
-    alert("뉴스레터 구독이 완료되었습니다.");
+    const msg = await translate("뉴스레터 구독이 완료되었습니다.");
+    alert(msg);
     setEmail("");
   };
 

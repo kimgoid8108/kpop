@@ -85,7 +85,7 @@ export function ActivityCard({ expandedCard, isSectionVisible, onToggle }: Activ
                       {activity.date}
                     </span>
                     <span className="text-xs text-indigo-600">
-                      조회 {activity.views}
+                      <AutoT text="조회" /> {activity.views}
                     </span>
                   </div>
                 </div>
@@ -130,7 +130,7 @@ export function ActivityCard({ expandedCard, isSectionVisible, onToggle }: Activ
                     {activity.title}
                   </h3>
                   <span className="text-xs sm:text-sm text-indigo-600 bg-indigo-50 px-2 py-1 rounded whitespace-nowrap">
-                    조회 {activity.views}
+                    <AutoT text="조회" /> {activity.views}
                   </span>
                 </div>
                 <p className="text-sm text-gray-600 mb-2">

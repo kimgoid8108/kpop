@@ -1,7 +1,35 @@
 import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { AutoT } from "../../AutoT";
+import { useAutoTranslate } from "../../useAutoTranslate";
 import { Slide } from "../types";
+
+function HeroSlideNavDot({
+  index,
+  showSlideIdx,
+  isFading,
+  goToSlide,
+}: {
+  index: number;
+  showSlideIdx: number;
+  isFading: boolean;
+  goToSlide: (index: number) => void;
+}) {
+  const aria = useAutoTranslate(`슬라이드 ${index + 1}로 이동`);
+  return (
+    <button
+      type="button"
+      onClick={() => goToSlide(index)}
+      disabled={isFading}
+      className={`transition-all duration-300 rounded-full ${
+        index === showSlideIdx
+          ? "w-6 h-1.5 sm:w-8 sm:h-2 bg-white"
+          : "w-1.5 h-1.5 sm:w-2 sm:h-2 bg-white/40 hover:bg-white/60"
+      } disabled:opacity-50`}
+      aria-label={aria}
+    />
+  );
+}
 
 interface HeroSectionProps {
   sectionRef: React.RefObject<HTMLElement | null>;
@@ -34,6 +62,9 @@ export function HeroSection({
 }: HeroSectionProps) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const ariaPrevSlide = useAutoTranslate("이전 슬라이드");
+  const ariaNextSlide = useAutoTranslate("다음 슬라이드");
+  const ariaShortcutMenu = useAutoTranslate("바로가기");
 
   // 외부 클릭 시 드롭다운 닫기
   useEffect(() => {
@@ -119,7 +150,7 @@ export function HeroSection({
             onClick={prevSlide}
             disabled={isFading}
             className="text-white/80 hover:text-white transition-colors p-2 hover:bg-white/10 rounded-lg disabled:opacity-50 flex-shrink-0"
-            aria-label="이전 슬라이드"
+            aria-label={ariaPrevSlide}
           >
             <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -129,7 +160,7 @@ export function HeroSection({
             onClick={nextSlide}
             disabled={isFading}
             className="text-white/80 hover:text-white transition-colors p-2 hover:bg-white/10 rounded-lg disabled:opacity-50 flex-shrink-0"
-            aria-label="다음 슬라이드"
+            aria-label={ariaNextSlide}
           >
             <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -162,7 +193,7 @@ export function HeroSection({
           <button
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
             className="text-white/90 hover:text-white text-xs font-medium px-3 py-2 rounded-lg hover:bg-white/10 transition-colors flex items-center gap-1.5 min-h-[44px]"
-            aria-label="바로가기"
+            aria-label={ariaShortcutMenu}
             aria-expanded={isDropdownOpen}
           >
             <span><AutoT text="바로가기" /></span>
@@ -203,16 +234,12 @@ export function HeroSection({
 
         <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
           {slides.map((_, index) => (
-            <button
+            <HeroSlideNavDot
               key={index}
-              onClick={() => goToSlide(index)}
-              disabled={isFading}
-              className={`transition-all duration-300 rounded-full ${
-                index === showSlideIdx
-                  ? "w-6 h-1.5 sm:w-8 sm:h-2 bg-white"
-                  : "w-1.5 h-1.5 sm:w-2 sm:h-2 bg-white/40 hover:bg-white/60"
-              } disabled:opacity-50`}
-              aria-label={`슬라이드 ${index + 1}로 이동`}
+              index={index}
+              showSlideIdx={showSlideIdx}
+              isFading={isFading}
+              goToSlide={goToSlide}
             />
           ))}
         </div>

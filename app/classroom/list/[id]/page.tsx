@@ -8,6 +8,22 @@ import { PageLayout } from "../../../../components/PageLayout";
 import { AutoT } from "../../../../components/AutoT";
 import { SyllabusSection } from "../../../../components/classroom/SyllabusSection";
 import { getCourseById } from "../../../../lib/courses";
+import { useAutoTranslate } from "../../../../components/useAutoTranslate";
+
+function CourseCoverImage({ src, title }: { src: string; title: string }) {
+  const alt = useAutoTranslate(title.trim() ? title : "강의 이미지");
+  return (
+    <div className="relative w-full aspect-video">
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        className="object-cover w-full rounded-lg"
+        sizes="(max-width: 768px) 100vw, 50vw"
+      />
+    </div>
+  );
+}
 
 export default function CourseDetailPage() {
   const params = useParams();
@@ -83,15 +99,7 @@ export default function CourseDetailPage() {
                   </h2>
                 </div>
                 {/* 이미지 */}
-                <div className="relative w-full aspect-video">
-                  <Image
-                    src={course.image}
-                    alt={course.title || "강의 이미지"}
-                    fill
-                    className="object-cover w-full rounded-lg"
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                  />
-                </div>
+                <CourseCoverImage src={course.image} title={course.title} />
               </div>
 
               {/* 오른쪽: 강의 소개 및 내용 */}
@@ -142,7 +150,9 @@ export default function CourseDetailPage() {
               <h3 className="text-base sm:text-lg md:text-xl font-bold text-gray-900 mb-3 sm:mb-4 md:mb-6 pb-1.5 sm:pb-2 border-b-2 border-gray-300 text-center break-words">
                 <AutoT text="강의 영상 리스트" />
               </h3>
-              <h3 className="text-sm sm:text-base text-gray-500 text-center mb-4">각 영상 제목을 클릭하면 해당 영상으로 이동합니다.</h3>
+              <h3 className="text-sm sm:text-base text-gray-500 text-center mb-4">
+                <AutoT text="각 영상 제목을 클릭하면 해당 영상으로 이동합니다." />
+              </h3>
               {course.syllabus && course.syllabus.length > 0 ? (
                 <SyllabusSection syllabus={course.syllabus} courseId={course.id} />
               ) : (

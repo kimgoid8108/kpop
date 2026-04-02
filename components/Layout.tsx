@@ -5,11 +5,14 @@ import { Sidebar } from "./Sidebar";
 import { Footer } from "./Footer";
 import HeroMain from "./home/HeroMain";
 import { AutoT } from "./AutoT";
+import { useAutoTranslate } from "./useAutoTranslate";
 
 // ----- Layout(Main) 컴포넌트 -----
 // 전체 페이지의 구조 담당 (사이드바, 본문, 푸터)
 export function Layout() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const ariaOpenMenu = useAutoTranslate("메뉴 열기");
+  const ariaCloseMenu = useAutoTranslate("메뉴 닫기");
 
   // ESC 키로 모바일 메뉴 닫기
   useEffect(() => {
@@ -57,7 +60,7 @@ export function Layout() {
             <button
               onClick={() => setIsMobileMenuOpen(true)}
               className="p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors flex-shrink-0"
-              aria-label="메뉴 열기"
+              aria-label={ariaOpenMenu}
             >
               <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
@@ -87,7 +90,7 @@ export function Layout() {
                   <button
                     onClick={() => setIsMobileMenuOpen(false)}
                     className="p-2 text-gray-700 hover:bg-gray-200 rounded-lg transition-colors"
-                    aria-label="메뉴 닫기"
+                    aria-label={ariaCloseMenu}
                   >
                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />

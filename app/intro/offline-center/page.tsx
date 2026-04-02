@@ -3,6 +3,31 @@
 import React from "react";
 import { PageLayout } from "../../../components/PageLayout";
 import { AutoT } from "../../../components/AutoT";
+import { useAutoTranslate } from "../../../components/useAutoTranslate";
+
+function OfflineGalleryTile({
+  src,
+  alt,
+  caption,
+}: {
+  src: string;
+  alt: string;
+  caption: string;
+}) {
+  const altT = useAutoTranslate(alt);
+  return (
+    <div className="flex flex-col items-center">
+      <img
+        src={src}
+        alt={altT}
+        className="w-full rounded-lg object-cover h-40 mb-2 shadow"
+      />
+      <div className="text-center text-sm text-gray-700 mt-1">
+        <AutoT text={caption} />
+      </div>
+    </div>
+  );
+}
 
 export default function OfflineCenterPage() {
   return (
@@ -59,17 +84,12 @@ K-POP 홍보관 POPKON은 ‘팬의 놀이터’라는 취지답게 팬들이 �
                     caption: "내부전경"
                   }
                 ].map((item, idx) => (
-                  <div key={idx} className="flex flex-col items-center">
-                    {/* 실제 실 서비스에서는 next/image의 Image 컴포넌트 사용 권장 */}
-                    <img
-                      src={item.src}
-                      alt={item.alt}
-                      className="w-full rounded-lg object-cover h-40 mb-2 shadow"
-                    />
-                    <div className="text-center text-sm text-gray-700 mt-1">
-                      <AutoT text={item.caption} />
-                    </div>
-                  </div>
+                  <OfflineGalleryTile
+                    key={idx}
+                    src={item.src}
+                    alt={item.alt}
+                    caption={item.caption}
+                  />
                 ))}
               </div>
               </div>

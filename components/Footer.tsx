@@ -3,10 +3,12 @@
 import React, { memo } from "react";
 import logo from "../public/global_Logo_shot.png";
 import { AutoT } from "./AutoT";
+import { useAutoTranslate } from "./useAutoTranslate";
 
 // ----- Footer 컴포넌트 -----
 // 페이지 하단의 연락처, 주소, 사업자 정보 등 표시
 export const Footer = memo(function Footer() {
+  const footerLogoAlt = useAutoTranslate("글로벌케이팝진흥원");
   return (
     <footer
       className="bg-white border-t border-gray-200 text-gray-700 leading-tight text-sm w-full"
@@ -25,7 +27,7 @@ export const Footer = memo(function Footer() {
             {/* 하단 로고 */}
             <img
               src={logo?.src || "/fallback.png"}
-              alt="글로벌케이팝진흥원"
+              alt={footerLogoAlt}
               className="w-16 h-10 sm:w-20 sm:h-12 md:w-24 md:h-14 lg:w-28 lg:h-16 flex-shrink-0"
               style={{ objectFit: "contain" }}
               loading="lazy"
@@ -63,7 +65,7 @@ export const Footer = memo(function Footer() {
                   <b className="text-gray-800" style={{ marginRight: 2 }}>
                     <AutoT text="대표" />
                   </b>{" "}
-                  천범주
+                  <AutoT text="천범주" />
                 </span>
                 <span className="break-all sm:break-normal">
                   <b className="text-gray-800" style={{ marginRight: 2 }}>

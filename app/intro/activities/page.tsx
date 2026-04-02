@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { PageLayout } from "../../../components/PageLayout";
 import { AutoT } from "../../../components/AutoT";
+import { useAutoTranslate } from "../../../components/useAutoTranslate";
 import { dummyActivities, Activity } from "../../../lib/activities";
 
 // NEW 배지 표시 기간 (일)
@@ -18,6 +19,10 @@ const PAGE_SIZE_OPTIONS = [10, 15, 20, 30];
 
 export default function ActivitiesPage() {
   const router = useRouter();
+  const searchPlaceholder = useAutoTranslate("검색어 입력");
+  const searchScopeTitle = useAutoTranslate("제목");
+  const searchScopeContent = useAutoTranslate("내용");
+  const searchScopeAll = useAutoTranslate("제목+내용");
 
   // 상태 관리
   const [currentPage, setCurrentPage] = useState(1);
@@ -124,7 +129,7 @@ export default function ActivitiesPage() {
         disabled={currentPage === 1}
         className="px-3 py-1 border border-gray-300 rounded bg-white text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed text-sm"
       >
-        이전
+        <AutoT text="이전" />
       </button>
     );
 
@@ -193,7 +198,7 @@ export default function ActivitiesPage() {
         disabled={currentPage === totalPages}
         className="px-3 py-1 border border-gray-300 rounded bg-white text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed text-sm"
       >
-        다음
+        <AutoT text="다음" />
       </button>
     );
 
@@ -226,7 +231,9 @@ export default function ActivitiesPage() {
             <div className="flex flex-col lg:flex-row lg:items-center gap-4">
               {/* 좌측: 총건수/페이지 정보 */}
               <div className="text-sm text-gray-700 flex-shrink-0">
-                Total : {totalCount} / Page : {currentPage} / {totalPages || 1}
+                <AutoT text="총" /> {totalCount}
+                <AutoT text="건" /> · <AutoT text="페이지" /> {currentPage} /{" "}
+                {totalPages || 1}
               </div>
 
               {/* 가운데: 페이지 사이즈 select + 이동 버튼 */}
@@ -246,7 +253,7 @@ export default function ActivitiesPage() {
                   onClick={handlePageSizeChange}
                   className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors text-sm font-medium"
                 >
-                  이동
+                  <AutoT text="이동" />
                 </button>
               </div>
 
@@ -257,22 +264,22 @@ export default function ActivitiesPage() {
                   onChange={(e) => setSearchType(e.target.value as SearchType)}
                   className="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                 >
-                  <option value="title">제목</option>
-                  <option value="content">내용</option>
-                  <option value="all">제목+내용</option>
+                  <option value="title">{searchScopeTitle}</option>
+                  <option value="content">{searchScopeContent}</option>
+                  <option value="all">{searchScopeAll}</option>
                 </select>
                 <input
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="검색어 입력"
+                  placeholder={searchPlaceholder}
                   className="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 min-w-[150px]"
                 />
                 <button
                   type="submit"
                   className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition-colors text-sm font-medium whitespace-nowrap"
                 >
-                  검색
+                  <AutoT text="검색" />
                 </button>
               </form>
             </div>
@@ -284,19 +291,19 @@ export default function ActivitiesPage() {
               <thead>
                 <tr className="bg-gray-50 border-b-2 border-gray-300">
                   <th className="px-3 md:px-4 py-3 text-left text-sm font-semibold text-gray-700 border-b border-gray-200">
-                    번호
+                    <AutoT text="번호" />
                   </th>
                   <th className="px-3 md:px-4 py-3 text-left text-sm font-semibold text-gray-700 border-b border-gray-200">
-                    제목
+                    <AutoT text="제목" />
                   </th>
                   <th className="px-3 md:px-4 py-3 text-center text-sm font-semibold text-gray-700 border-b border-gray-200 hidden md:table-cell">
-                    작성일
+                    <AutoT text="작성일" />
                   </th>
                   <th className="px-3 md:px-4 py-3 text-center text-sm font-semibold text-gray-700 border-b border-gray-200 hidden lg:table-cell">
-                    첨부파일
+                    <AutoT text="첨부파일" />
                   </th>
                   <th className="px-3 md:px-4 py-3 text-center text-sm font-semibold text-gray-700 border-b border-gray-200 hidden lg:table-cell">
-                    조회수
+                    <AutoT text="조회수" />
                   </th>
                 </tr>
               </thead>
@@ -347,10 +354,12 @@ export default function ActivitiesPage() {
                                   d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"
                                 />
                               </svg>
-                              첨부
+                              <AutoT text="첨부" />
                             </span>
                           )}
-                          <span>조회 {activity.views}</span>
+                          <span>
+                            <AutoT text="조회" /> {activity.views}
+                          </span>
                         </div>
                       </td>
                       {/* 작성일 (데스크탑) */}

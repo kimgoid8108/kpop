@@ -2,9 +2,11 @@
 
 import React from "react";
 import { AutoT } from "./AutoT";
+import { useAutoTranslate } from "./useAutoTranslate";
 
 // ----- 인사말(Intro Greeting) 컴포넌트 -----
 export default function IntroductionGreeting() {
+  const portraitAlt = useAutoTranslate("원장님 인사말");
 
   return (
     <div className="w-full max-w-5xl mx-auto my-8 md:my-16 px-4 box-border">
@@ -19,7 +21,7 @@ export default function IntroductionGreeting() {
               <div className="relative w-full aspect-[3/4] rounded-lg overflow-hidden bg-gray-100 border border-gray-200 shadow-md">
                 <img
                   src="/천범주 원장님.png"
-                  alt="원장님 인사말"
+                  alt={portraitAlt}
                   className="w-100 h-140 object-cover"
                 />
               </div>

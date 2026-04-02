@@ -6,6 +6,31 @@ import { useKeenSlider, KeenSliderPlugin } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
 import { Partner } from "../../lib/partners";
 import { AutoT } from "../AutoT";
+import { useAutoTranslate } from "../useAutoTranslate";
+
+function PartnerCarouselNavDot({
+  idx,
+  currentSlide,
+  moveToIdx,
+}: {
+  idx: number;
+  currentSlide: number;
+  moveToIdx: (idx: number) => void;
+}) {
+  const aria = useAutoTranslate(`슬라이드 ${idx + 1}로 이동`);
+  return (
+    <button
+      type="button"
+      onClick={() => {
+        moveToIdx(idx);
+      }}
+      className={`h-2 sm:h-2.5 rounded-full transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center ${
+        currentSlide === idx ? "w-6 sm:w-8 bg-indigo-600" : "w-2 sm:w-2.5 bg-gray-300 hover:bg-gray-400"
+      }`}
+      aria-label={aria}
+    />
+  );
+}
 
 interface PartnerCarouselProps {
   partners: Partner[];
@@ -22,6 +47,9 @@ export function PartnerCarousel({
   showName = false,
   pauseOnHover = false,
 }: PartnerCarouselProps) {
+  const ariaPrev = useAutoTranslate("이전 슬라이드");
+  const ariaNext = useAutoTranslate("다음 슬라이드");
+  const ariaClose = useAutoTranslate("닫기");
   const [currentSlide, setCurrentSlide] = useState(0);
   const [loaded, setLoaded] = useState(false);
   const [selectedPartner, setSelectedPartner] = useState<Partner | null>(null);
@@ -220,7 +248,7 @@ export function PartnerCarousel({
             }}
             disabled={!loop && currentSlide === 0}
             className="p-2 sm:p-3 text-gray-600 hover:text-indigo-600 hover:bg-gray-100 rounded-full transition-colors disabled:opacity-50 disabled:cursor-not-allowed min-h-[44px] min-w-[44px] flex items-center justify-center"
-            aria-label="이전 슬라이드"
+            aria-label={ariaPrev}
           >
             <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -228,13 +256,11 @@ export function PartnerCarousel({
           </button>
           <div className="flex gap-1.5 sm:gap-2">
             {partners.map((_, idx) => (
-              <button
+              <PartnerCarouselNavDot
                 key={idx}
-                onClick={() => instanceRef.current?.moveToIdx(idx)}
-                className={`h-2 sm:h-2.5 rounded-full transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center ${
-                  currentSlide === idx ? "w-6 sm:w-8 bg-indigo-600" : "w-2 sm:w-2.5 bg-gray-300 hover:bg-gray-400"
-                }`}
-                aria-label={`슬라이드 ${idx + 1}로 이동`}
+                idx={idx}
+                currentSlide={currentSlide}
+                moveToIdx={(i) => instanceRef.current?.moveToIdx(i)}
               />
             ))}
           </div>
@@ -245,7 +271,7 @@ export function PartnerCarousel({
             }}
             disabled={!loop && instanceRef.current && currentSlide === instanceRef.current.track.details.length - 1}
             className="p-2 sm:p-3 text-gray-600 hover:text-indigo-600 hover:bg-gray-100 rounded-full transition-colors disabled:opacity-50 disabled:cursor-not-allowed min-h-[44px] min-w-[44px] flex items-center justify-center"
-            aria-label="다음 슬라이드"
+            aria-label={ariaNext}
           >
             <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -274,7 +300,7 @@ export function PartnerCarousel({
                     <button
                       onClick={handleCloseModal}
                       className="text-gray-400 hover:text-gray-600 transition-colors p-2 min-h-[44px] min-w-[44px] flex items-center justify-center"
-                      aria-label="닫기"
+                      aria-label={ariaClose}
                     >
                       <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path
