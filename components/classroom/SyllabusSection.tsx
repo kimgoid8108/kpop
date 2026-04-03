@@ -25,7 +25,7 @@ function LessonContent({
   return (
     <>
       <span className="font-medium text-gray-600 text-xs sm:text-sm whitespace-nowrap shrink-0">
-        <AutoT text="레슨" /> {lessonNumber}
+        <AutoT text="lesson" /> {lessonNumber}
       </span>
       <Tag className="font-medium text-gray-900 text-xs sm:text-sm md:text-base break-words min-w-0">
         <AutoT text={title} />
@@ -69,7 +69,8 @@ export function SyllabusSection({ syllabus, courseId }: SyllabusSectionProps) {
               {parts.map((part, partIndex) => (
                 <div
                   key={partIndex}
-                  className="min-w-0 border-l-4 border-blue-500 pl-2 sm:pl-3 md:pl-4 py-1.5 sm:py-2 md:py-3 bg-gray-50 rounded-r-lg">
+                  className="min-w-0 border-l-4 border-blue-500 pl-2 sm:pl-3 md:pl-4 py-1.5 sm:py-2 md:py-3 bg-gray-50 rounded-r-lg"
+                >
                   <div className="flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-2 md:gap-3 mb-1.5 sm:mb-2 md:mb-3 min-w-0">
                     <span className="font-bold text-blue-600 text-xs sm:text-sm md:text-base whitespace-nowrap">
                       <AutoT text="파트" /> {part.partNumber}
@@ -84,7 +85,8 @@ export function SyllabusSection({ syllabus, courseId }: SyllabusSectionProps) {
                         <Link
                           key={lessonIndex}
                           href={`/classroom/player/${courseId}/${part.partNumber}/${lesson.lessonNumber}`}
-                          className={`${lessonBoxClass} block hover:bg-gray-50 cursor-pointer`}>
+                          className={`${lessonBoxClass} block hover:bg-gray-50 cursor-pointer`}
+                        >
                           <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 min-w-0">
                             <LessonContent
                               lessonNumber={lesson.lessonNumber}
@@ -103,7 +105,7 @@ export function SyllabusSection({ syllabus, courseId }: SyllabusSectionProps) {
                             />
                           </div>
                         </div>
-                      )
+                      ),
                     )}
                   </div>
                 </div>
@@ -121,7 +123,8 @@ export function SyllabusSection({ syllabus, courseId }: SyllabusSectionProps) {
               {groupedBySubject.noSubject.map((part, partIndex) => (
                 <div
                   key={partIndex}
-                  className="min-w-0 border-l-4 border-blue-500 pl-2 sm:pl-3 md:pl-4 py-1.5 sm:py-2 md:py-3 bg-gray-50 rounded-r-lg">
+                  className="min-w-0 border-l-4 border-blue-500 pl-2 sm:pl-3 md:pl-4 py-1.5 sm:py-2 md:py-3 bg-gray-50 rounded-r-lg"
+                >
                   <div className="flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-2 md:gap-3 mb-1.5 sm:mb-2 md:mb-3 min-w-0">
                     <span className="font-bold text-blue-600 text-xs sm:text-sm md:text-base whitespace-nowrap">
                       <AutoT text="파트" /> {part.partNumber}
@@ -136,7 +139,8 @@ export function SyllabusSection({ syllabus, courseId }: SyllabusSectionProps) {
                         <Link
                           key={lessonIndex}
                           href={`/classroom/player/${courseId}/${part.partNumber}/${lesson.lessonNumber}`}
-                          className={`${lessonBoxClass} block hover:bg-gray-50 cursor-pointer`}>
+                          className={`${lessonBoxClass} block hover:bg-gray-50 cursor-pointer`}
+                        >
                           <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 min-w-0">
                             <LessonContent
                               lessonNumber={lesson.lessonNumber}
@@ -155,7 +159,7 @@ export function SyllabusSection({ syllabus, courseId }: SyllabusSectionProps) {
                             />
                           </div>
                         </div>
-                      )
+                      ),
                     )}
                   </div>
                 </div>
@@ -173,7 +177,8 @@ export function SyllabusSection({ syllabus, courseId }: SyllabusSectionProps) {
       {syllabus.map((part, partIndex) => (
         <div
           key={partIndex}
-          className="min-w-0 border-l-4 border-blue-500 pl-2 sm:pl-3 md:pl-4 py-1.5 sm:py-2 md:py-3 bg-gray-50 rounded-r-lg">
+          className="min-w-0 border-l-4 border-blue-500 pl-2 sm:pl-3 md:pl-4 py-1.5 sm:py-2 md:py-3 bg-gray-50 rounded-r-lg"
+        >
           <div className="flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-2 md:gap-3 mb-1.5 sm:mb-2 md:mb-3 min-w-0">
             <span className="font-bold text-blue-600 text-xs sm:text-sm md:text-base whitespace-nowrap">
               <AutoT text="파트" /> {part.partNumber}
@@ -188,7 +193,8 @@ export function SyllabusSection({ syllabus, courseId }: SyllabusSectionProps) {
                 <Link
                   key={lessonIndex}
                   href={`/classroom/player/${courseId}/${part.partNumber}/${lesson.lessonNumber}`}
-                  className={`${lessonBoxClass} block hover:bg-gray-50 cursor-pointer`}>
+                  className={`${lessonBoxClass} block hover:bg-gray-50 cursor-pointer`}
+                >
                   <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 min-w-0">
                     <LessonContent
                       lessonNumber={lesson.lessonNumber}
@@ -207,7 +213,7 @@ export function SyllabusSection({ syllabus, courseId }: SyllabusSectionProps) {
                     />
                   </div>
                 </div>
-              )
+              ),
             )}
           </div>
         </div>

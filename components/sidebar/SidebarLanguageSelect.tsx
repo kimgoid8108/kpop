@@ -7,7 +7,7 @@ import { useAutoTranslate } from "../useAutoTranslate";
 
 export function SidebarLanguageSelect() {
   const { language, setLanguage } = useLanguage();
-  const labelKo = useAutoTranslate("한국어");
+  const labelKo = useAutoTranslate("Korean");
 
   return (
     <div className="bg-white border border-gray-200 rounded-md shadow-sm p-2.5 sm:p-3">
