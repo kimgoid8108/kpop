@@ -38,8 +38,12 @@ const CERTIFICATE_INFO: {
         label: <AutoT text="자격명" />,
         value: (
           <div className="space-y-1">
-            <div><AutoT text="[종목] 댄스트레이너"/></div>
-            <div><AutoT text="[등급] 1급/2급"/></div>
+            <div>
+              <AutoT text="[종목] 댄스트레이너" />
+            </div>
+            <div>
+              <AutoT text="[등급] 1급/2급" />
+            </div>
           </div>
         ),
         label2: <AutoT text="자격의 종류" />,
@@ -55,7 +59,7 @@ const CERTIFICATE_INFO: {
         label: <AutoT text="기관명" />,
         value: <AutoT text="글로벌사이버대학교" />,
         label2: <AutoT text="대표자" />,
-        value2: <AutoT text="유병영" />,
+        value2: <AutoT text="공병영" />,
       },
       {
         label: <AutoT text="연락처" />,
@@ -64,8 +68,7 @@ const CERTIFICATE_INFO: {
         value2: (
           <a
             href="mailto:broaden@global.ac.kr"
-            className="text-blue-600 hover:underline"
-          >
+            className="text-blue-600 hover:underline">
             <AutoT text="broaden@global.ac.kr" />
           </a>
         ),
@@ -74,8 +77,12 @@ const CERTIFICATE_INFO: {
         label: <AutoT text="소재지" />,
         value: (
           <div className="space-y-1">
-            <div><AutoT text="충남 천안시 동남구"/></div>
-            <div><AutoT text="목천읍 지산리 189-4"/></div>
+            <div>
+              <AutoT text="충남 천안시 동남구" />
+            </div>
+            <div>
+              <AutoT text="목천읍 지산리 189-4" />
+            </div>
           </div>
         ),
         label2: <AutoT text="홈페이지" />,
@@ -84,9 +91,8 @@ const CERTIFICATE_INFO: {
             href="https://www.global.ac.kr/"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-blue-600 hover:underline break-all"
-          >
-            <AutoT text="https://www.global.ac.kr/"/>
+            className="text-blue-600 hover:underline break-all">
+            <AutoT text="https://www.global.ac.kr/" />
           </a>
         ),
       },
@@ -114,8 +120,12 @@ const CERTIFICATE_INFO: {
         label: <AutoT text="자격명" />,
         value: (
           <div className="space-y-1">
-            <div><AutoT text="[종목] 보컬트레이너"/></div>
-            <div><AutoT text="[등급] 1급/2급"/></div>
+            <div>
+              <AutoT text="[종목] 보컬트레이너" />
+            </div>
+            <div>
+              <AutoT text="[등급] 1급/2급" />
+            </div>
           </div>
         ),
         label2: <AutoT text="자격의 종류" />,
@@ -140,8 +150,7 @@ const CERTIFICATE_INFO: {
         value2: (
           <a
             href="mailto:broaden@global.ac.kr"
-            className="text-blue-600 hover:underline"
-          >
+            className="text-blue-600 hover:underline">
             <AutoT text="broaden@global.ac.kr" />
           </a>
         ),
@@ -150,8 +159,12 @@ const CERTIFICATE_INFO: {
         label: <AutoT text="소재지" />,
         value: (
           <div className="space-y-1">
-            <div><AutoT text="충남 천안시 동남구"/></div>
-            <div><AutoT text="목천읍 지산리 189-4"/></div>
+            <div>
+              <AutoT text="충남 천안시 동남구" />
+            </div>
+            <div>
+              <AutoT text="목천읍 지산리 189-4" />
+            </div>
           </div>
         ),
         label2: <AutoT text="홈페이지" />,
@@ -160,9 +173,8 @@ const CERTIFICATE_INFO: {
             href="https://www.global.ac.kr/"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-blue-600 hover:underline break-all"
-          >
-            <AutoT text="https://www.global.ac.kr/"/>
+            className="text-blue-600 hover:underline break-all">
+            <AutoT text="https://www.global.ac.kr/" />
           </a>
         ),
       },
@@ -190,8 +202,12 @@ const CERTIFICATE_INFO: {
         label: <AutoT text="자격명" />,
         value: (
           <div className="space-y-1">
-            <div><AutoT text="[종목] 케이팝댄스핏트레이너"/></div>
-            <div><AutoT text="[등급] 1급/2급"/></div>
+            <div>
+              <AutoT text="[종목] 케이팝댄스핏트레이너" />
+            </div>
+            <div>
+              <AutoT text="[등급] 1급/2급" />
+            </div>
           </div>
         ),
         label2: <AutoT text="자격의 종류" />,
@@ -207,7 +223,7 @@ const CERTIFICATE_INFO: {
         label: <AutoT text="기관명" />,
         value: <AutoT text="글로벌사이버대학교" />,
         label2: <AutoT text="대표자" />,
-        value2: <AutoT text="유병영" />,
+        value2: <AutoT text="공병영" />,
       },
       {
         label: <AutoT text="연락처" />,
@@ -216,8 +232,7 @@ const CERTIFICATE_INFO: {
         value2: (
           <a
             href="mailto:broaden@global.ac.kr"
-            className="text-blue-600 hover:underline"
-          >
+            className="text-blue-600 hover:underline">
             <AutoT text="broaden@global.ac.kr" />
           </a>
         ),
@@ -226,8 +241,12 @@ const CERTIFICATE_INFO: {
         label: <AutoT text="소재지" />,
         value: (
           <div className="space-y-1">
-            <div><AutoT text="충남 천안시 동남구"/></div>
-            <div><AutoT text="목천읍 지산리 189-4"/></div>
+            <div>
+              <AutoT text="충남 천안시 동남구" />
+            </div>
+            <div>
+              <AutoT text="목천읍 지산리 189-4" />
+            </div>
           </div>
         ),
         label2: <AutoT text="홈페이지" />,
@@ -236,9 +255,8 @@ const CERTIFICATE_INFO: {
             href="https://www.global.ac.kr/"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-blue-600 hover:underline break-all"
-          >
-            <AutoT text="https://www.global.ac.kr/"/>
+            className="text-blue-600 hover:underline break-all">
+            <AutoT text="https://www.global.ac.kr/" />
           </a>
         ),
       },
@@ -349,22 +367,32 @@ const CERTIFICATES: CertificateInfo[] = [
 function CertificateTable({ rows }: { rows: Row[] }) {
   if (!rows.length) return null;
   return (
-    <table className="w-full mt-4 mb-6 border border-gray-200 rounded overflow-hidden">
-      <tbody>
-        {rows.map((row, idx) => (
-          <tr key={idx} className="even:bg-gray-50 text-gray-900">
-            <th className="py-2 px-3 text-left align-top font-medium bg-gray-100 w-28 md:w-40 border-b border-gray-200">{row.label}</th>
-            <td className="py-2 px-3 align-top border-b border-gray-200">{row.value}</td>
-            {row.label2 && (
-              <>
-                <th className="py-2 px-3 text-left align-top font-medium bg-gray-100 w-28 md:w-40 border-b border-gray-200">{row.label2}</th>
-                <td className="py-2 px-3 align-top border-b border-gray-200">{row.value2}</td>
-              </>
-            )}
-          </tr>
-        ))}
-      </tbody>
-    </table>
+    <div className="w-full overflow-x-auto">
+      <table className="min-w-[320px] w-full mt-4 mb-6 border border-gray-200 rounded">
+        <tbody>
+          {rows.map((row, idx) => (
+            <tr key={idx} className="even:bg-gray-50 text-gray-900">
+              <th className="py-2 px-3 text-left align-top font-medium bg-gray-100 min-w-[7rem] md:min-w-[10rem] border-b border-gray-200 whitespace-nowrap">
+                {row.label}
+              </th>
+              <td className="py-2 px-3 align-top border-b border-gray-200">
+                {row.value}
+              </td>
+              {row.label2 && (
+                <>
+                  <th className="py-2 px-3 text-left align-top font-medium bg-gray-100 min-w-[7rem] md:min-w-[10rem] border-b border-gray-200 whitespace-nowrap">
+                    {row.label2}
+                  </th>
+                  <td className="py-2 px-3 align-top border-b border-gray-200">
+                    {row.value2}
+                  </td>
+                </>
+              )}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 }
 
@@ -385,9 +413,7 @@ function ProcessCertificateBlock({
         <AutoT text={cert.description} />
       </div>
       {/* 자격증 상세 설명 */}
-      <div className="mb-6">
-        {getCertificateDesc(idx)}
-      </div>
+      <div className="mb-6">{getCertificateDesc(idx)}</div>
       {/* 표 */}
       <CertificateTable rows={getCertificateRows(idx)} />
     </section>
@@ -403,7 +429,11 @@ export default function CertificatesAboutPage() {
             <AutoT text="자격증 소개" />
           </h1>
           {CERTIFICATES.map((cert, idx) => (
-            <ProcessCertificateBlock key={cert.name + idx} cert={cert} idx={idx} />
+            <ProcessCertificateBlock
+              key={cert.name + idx}
+              cert={cert}
+              idx={idx}
+            />
           ))}
         </div>
       </div>
