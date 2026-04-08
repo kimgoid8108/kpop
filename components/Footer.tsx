@@ -1,7 +1,7 @@
 "use client";
 
 import React, { memo } from "react";
-import logo from "../public/global_Logo_shot.png";
+import logo from "../public/footer_logo.png";
 import { AutoT } from "./AutoT";
 import { useAutoTranslate } from "./useAutoTranslate";
 
@@ -26,7 +26,7 @@ export const Footer = memo(function Footer() {
           <div className="flex flex-1 items-start md:items-center gap-2 sm:gap-3 leading-tight pr-0 md:pr-8 min-w-0">
             {/* 하단 로고 */}
             <img
-              src={logo?.src || "/fallback.png"}
+              src={logo?.src || "/footer_logo.png"}
               alt={footerLogoAlt}
               className="w-16 h-10 sm:w-20 sm:h-12 md:w-24 md:h-14 lg:w-28 lg:h-16 flex-shrink-0"
               style={{ objectFit: "contain" }}
@@ -103,7 +103,8 @@ export const Footer = memo(function Footer() {
               className="text-xs text-gray-500 mt-2 break-words"
               style={{ marginTop: 12 }}
             >
-              &copy; {new Date().getFullYear()} <AutoT text="글로벌케이팝진흥원. All rights reserved." />
+              &copy; {new Date().getFullYear()}{" "}
+              <AutoT text="글로벌케이팝진흥원. All rights reserved." />
             </div>
           </div>
         </div>

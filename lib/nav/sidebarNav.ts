@@ -25,10 +25,10 @@ export const sidebarSubmenuData: SidebarNavMenuItem[] = [
     ],
   },
   {
-    label: "자격증 안내",
+    label: "자격증 발급",
     path: "/certificates",
     submenu: [
-      { label: "종류 안내", path: "/certificates" },
+      { label: "발급 안내", path: "/certificates" },
       { label: "발급 조건", path: "/certificates/related" },
       { label: "샘플 이미지", path: "/certificates/samples" },
       { label: "FAQ", path: "/certificates/faq" },

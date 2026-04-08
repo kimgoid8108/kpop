@@ -25,7 +25,7 @@ export function SidebarMenuIcon({
         />
       </svg>
     ),
-    "자격증 안내": (
+    "자격증 발급": (
       <svg
         className={className}
         fill="none"

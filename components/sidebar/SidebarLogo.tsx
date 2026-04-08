@@ -13,7 +13,7 @@ export function SidebarLogo() {
       className="flex items-center justify-center hover:opacity-80 transition-opacity w-full"
     >
       <Image
-        src="/global_Logo.png"
+        src="/global_kpop_logo.png"
         alt={logoAlt}
         width={200}
         height={80}
