@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { Certificate } from "../../lib/certificates";
 import { AutoT } from "../AutoT";
+import { CertificateSampleGallery } from "./CertificateSampleGallery";
 
 interface CertificateListProps {
   certificates: Certificate[];
@@ -46,16 +47,7 @@ export function CertificateList({ certificates }: CertificateListProps) {
           <h2 className="mb-3 text-xl font-bold">
             <AutoT text="○ 자격증 형태 및 샘플이미지보기" />
           </h2>
-          <div className="rounded-md border border-gray-300 bg-gray-50 p-6 md:p-10">
-            <p className="mb-5 text-center text-sm text-gray-600">
-              <AutoT text="* 본 이미지는 예시이미지입니다. 자격기관별로 하단의 자격증 예시 이미지와 다를 수 있습니다." />
-            </p>
-            <div className="mx-auto flex h-[280px] max-w-2xl items-center justify-center rounded-md border-2 border-dashed border-gray-300 bg-white px-4 text-center">
-              <span className="text-sm text-gray-500">
-                <AutoT text="자격증 이미지 영역 (직접 이미지 추가 예정)" />
-              </span>
-            </div>
-          </div>
+          <CertificateSampleGallery />
         </div>
 
         <div>
